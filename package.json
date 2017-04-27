@@ -8,7 +8,8 @@
     "api": "node simple_api/server.js",
     "dev": "webpack-dev-server --hot --inline",
     "build": "webpack",
-    "eslint": " ./node_modules/.bin/eslint 'src/**'"
+    "lint": " ./node_modules/.bin/eslint 'src/**'",
+    "prepush": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -47,6 +48,7 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
+    "husky": "^0.13.3",
     "json-loader": "^0.5.4",
     "style-loader": "^0.16.1",
     "webpack": "^2.4.1",
