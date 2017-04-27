@@ -3,8 +3,11 @@ var path = require('path')
 module.exports = {
   devtool: 'source-map',
   entry: [
-    './src/index.js'
+    './src/index.jsx'
   ],
+  resolve: {
+    extensions: ['.jsx', '.json', '.js']
+  },
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'bundle.js',
@@ -20,13 +23,13 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js/,
-        loaders: ['babel-loader'],
+        test: /\.jsx?/,
+        loaders: ['babel-loader', 'eslint-loader'],
         include: path.join(__dirname, 'src')
       },
       {
         test: /\.css$/,
-        loader: "style-loader!css-loader"
+        loader: 'style-loader!css-loader'
       },
       {
         test: /\.json$/,

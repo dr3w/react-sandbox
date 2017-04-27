@@ -1,2 +1,3 @@
-# react-sandbox
-Fiddle
+- <s>add eslint</s>
+- test 
+- react-redux

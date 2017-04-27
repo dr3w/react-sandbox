@@ -1,0 +1,40 @@
+{
+    "parser": "babel-eslint",
+    "extends": [
+        "airbnb"
+    ],
+    "rules": {
+        "semi": [
+            2,
+            "never"
+        ],
+        "no-debugger": 1,
+        "no-console": 1,
+        "react/prop-types": 1,
+        "react/no-find-dom-node": 0,
+        "react/no-unused-prop-types": 0,
+        "react/forbid-prop-types": 0,
+        "jsx-a11y/anchor-has-content": 0,
+        "jsx-a11y/no-static-element-interactions": 0,
+        "jsx-a11y/href-no-hash": 0,
+        "react/jsx-no-bind": [
+            1,
+            {
+                "ignoreRefs": false,
+                "allowArrowFunctions": false,
+                "allowBind": false
+            }
+        ],
+        "no-alert": 0,
+        "no-prototype-builtins": 0,
+        "no-underscore-dangle": 0,
+        "comma-dangle": ["error", "never"],
+    },
+    "globals": {
+        "window": true,
+        "document": true,
+        "Headers": true,
+        "FileReader": true,
+        "FormData": true
+    }
+}
