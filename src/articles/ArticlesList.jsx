@@ -3,56 +3,53 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Route, Link } from 'react-router-dom'
 import { Article } from '../articles'
-import { increment } from './actions'
+import { getAllArticles } from './actions'
+import { mapToArray } from '../common/helpers'
 
-const ArticleList = (props) => {
-  const { match, counter } = props
-
-  const onClick = () => {
-    props.increment()
+class ArticleList extends React.PureComponent {
+  componentDidMount() {
+    this.props.getAllArticles()
   }
 
-  return (
-    <div>
-      <ul>
-        <li>
-          <Link to="/articles/1">Article 1</Link>
-        </li>
-        <li>
-          <Link to="/articles/2">Article 2</Link>
-        </li>
-        <li>
-          <Link to="/articles/3">Article 3</Link>
-        </li>
-        <li>
-          <Link to="/articles/4">Article 4</Link>
-        </li>
-      </ul>
-      <Route path={`${match.path}/:id`} component={Article} />
-      {counter}
-      <button onClick={onClick}>click</button>
-    </div>
-  )
+  render() {
+    const { match, articles } = this.props
+
+    const articleList = articles.map(article => (
+      <li key={article.id}>
+        <Link to={`/articles/${article.id}`}>{article.title}</Link>
+      </li>
+    ))
+
+    return (
+      <div>
+        <ul>
+          {articleList}
+        </ul>
+        <Route path={`${match.path}/:id`} component={Article} />
+      </div>
+    )
+  }
 }
 
 ArticleList.propTypes = {
   match: PropTypes.object.isRequired,
-  increment: PropTypes.func.isRequired,
-  counter: PropTypes.number
+  articles: PropTypes.array,
+  status: PropTypes.string.isRequired,
+  error: PropTypes.object,
+  getAllArticles: PropTypes.func.isRequired
 }
 
 ArticleList.defaultProps = {
-  counter: 0
+  articles: [],
+  error: null
 }
 
 const mapStateToProps = state => ({
-  counter: state.articles
+  articles: mapToArray(state.articles.entities),
+  status: state.articles.status,
+  error: state.articles.error
 })
 
-const mapDispatchToProps = dispatch => ({
-  increment: incBy => dispatch(increment(incBy))
-})
-// OR – just return object
-// const mapDispatchToProps = { increment }
+const mapDispatchToProps = { getAllArticles }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticleList)

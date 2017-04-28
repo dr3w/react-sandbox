@@ -1,8 +1,9 @@
-import { INCREMENT } from '../common/constants'
+import { GET_ALL_ARTICLES } from '../common/constants'
 
-const increment = incBy => ({
-  type: INCREMENT,
-  incBy
+const getAllArticles = () => ({
+  type: GET_ALL_ARTICLES,
+  api: '/api/article',
+  method: 'GET'
 })
 
-export { increment }
+export { getAllArticles }
