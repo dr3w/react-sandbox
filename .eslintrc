@@ -35,7 +35,9 @@
         "window": true,
         "document": true,
         "Headers": true,
+        "Request": true,
         "FileReader": true,
-        "FormData": true
+        "FormData": true,
+        "fetch": false
     }
 }
