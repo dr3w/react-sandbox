@@ -19,9 +19,6 @@ export default (state = new DefaultReducerState({}), action) => {
   const { type, error, response } = action
 
   switch (type) {
-    case GET_ALL_ARTICLES:
-      return state
-
     case GET_ALL_ARTICLES + START:
       return onApiStart(state)
 
