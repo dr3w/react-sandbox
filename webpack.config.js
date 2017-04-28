@@ -1,9 +1,10 @@
+/* eslint-disable no-var */
 var path = require('path')
 
 module.exports = {
   devtool: 'source-map',
   entry: [
-    './src/index.jsx'
+    './src/index.js'
   ],
   resolve: {
     extensions: ['.jsx', '.json', '.js']

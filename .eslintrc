@@ -10,6 +10,7 @@
         ],
         "no-debugger": 1,
         "no-console": 1,
+        "import/prefer-default-export": 0,
         "react/prop-types": 1,
         "react/no-find-dom-node": 0,
         "react/no-unused-prop-types": 0,
@@ -28,7 +29,7 @@
         "no-alert": 0,
         "no-prototype-builtins": 0,
         "no-underscore-dangle": 0,
-        "comma-dangle": ["error", "never"],
+        "comma-dangle": ["error", "never"]
     },
     "globals": {
         "window": true,
