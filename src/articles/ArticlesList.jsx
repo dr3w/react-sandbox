@@ -12,7 +12,7 @@ class ArticleList extends React.PureComponent {
   }
 
   render() {
-    const { match, articles } = this.props
+    const { match, articles, status, error } = this.props
 
     const articleList = articles.map(article => (
       <li key={article.id}>
@@ -22,6 +22,7 @@ class ArticleList extends React.PureComponent {
 
     return (
       <div>
+        <h4>{status} {error}</h4>
         <ul>
           {articleList}
         </ul>
@@ -35,7 +36,7 @@ ArticleList.propTypes = {
   match: PropTypes.object.isRequired,
   articles: PropTypes.array,
   status: PropTypes.string.isRequired,
-  error: PropTypes.object,
+  error: PropTypes.string,
   getAllArticles: PropTypes.func.isRequired
 }
 

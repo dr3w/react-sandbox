@@ -1,9 +1,6 @@
 import { Record, OrderedMap } from 'immutable'
-import { arrayToMap } from '../common/helpers'
-import {
-  GET_ALL_ARTICLES, START, SUCCESS, FAIL,
-  PRISTINE, LOADED, LOADING, FAILED
-} from '../common/constants'
+import { arrayToMap, onApiStart, onApiSuccess, onApiFail } from '../common/helpers'
+import { GET_ALL_ARTICLES, START, SUCCESS, FAIL, PRISTINE } from '../common/constants'
 
 const ArticleModel = Record({
   id: null,
@@ -26,19 +23,15 @@ export default (state = new DefaultReducerState({}), action) => {
       return state
 
     case GET_ALL_ARTICLES + START:
-      return state
-        .set('error', null)
-        .set('status', LOADING)
+      return onApiStart(state)
 
     case GET_ALL_ARTICLES + SUCCESS:
-      return state
+      return onApiSuccess(state
         .update('entities', entities => arrayToMap(response, ArticleModel).merge(entities))
-        .set('status', LOADED)
+      )
 
     case GET_ALL_ARTICLES + FAIL:
-      return state
-        .set('error', error)
-        .set('status', FAILED)
+      return onApiFail(state, error)
 
     default:
       return state
