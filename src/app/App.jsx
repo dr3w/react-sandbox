@@ -2,7 +2,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { Link, Route, Switch, Redirect } from 'react-router-dom'
 import store from '../store'
-import { ArticlesList } from '../articles'
+import { ArticleList } from '../articles'
 import FunctionalComponentStore from '../dummies/FunctionalComponentStore'
 
 const App = () => (
@@ -20,7 +20,7 @@ const App = () => (
 
       <Switch>
         <Redirect exact from="/" to="/articles" />
-        <Route path="/articles" component={ArticlesList} />
+        <Route path="/articles" component={ArticleList} />
         <Redirect to="/404" />
       </Switch>
     </div>
