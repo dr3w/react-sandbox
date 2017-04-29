@@ -1,4 +1,5 @@
 export const GET_ALL_ARTICLES = 'GET_ALL_ARTICLES'
+export const GET_ARTICLE = 'GET_ARTICLE'
 export const INCREMENT_DUMMY = 'INCREMENT_DUMMY'
 
 export const START = '_START'
