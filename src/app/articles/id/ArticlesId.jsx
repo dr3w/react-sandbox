@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getArticle } from 'app/articles/id/actions'
+import { Status } from 'common/components'
 import { LOADED, PRISTINE } from 'common/constants'
 
 class ArticlesId extends React.PureComponent {
@@ -21,7 +22,10 @@ class ArticlesId extends React.PureComponent {
 
     return (
       <div>
-        <h4>{status} {error}</h4>
+        <Status
+          status={status}
+          error={error}
+        />
         {body}
       </div>
     )

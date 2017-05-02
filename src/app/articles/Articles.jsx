@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 import { mapToArray } from 'common/helpers'
 import { getAllArticles } from 'app/articles/actions'
+import { Status } from 'common/components/'
 import { ArticlesList } from 'app/articles'
 import { ArticlesId } from 'app/articles/id'
 
@@ -17,7 +18,10 @@ class Articles extends React.PureComponent {
 
     return (
       <div>
-        <h4>{status} {error}</h4>
+        <Status
+          status={status}
+          error={error}
+        />
         <ArticlesList articles={articles} />
         <Route path={`${match.path}/:id`} component={ArticlesId} />
       </div>
