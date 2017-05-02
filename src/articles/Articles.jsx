@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Route, Link } from 'react-router-dom'
-import { Article } from '../articles'
-import { getAllArticles } from './actions'
-import { mapToArray } from '../common/helpers'
+import { mapToArray } from 'common/helpers'
+import { getAllArticles } from 'articles/actions'
+import ArticlesId from 'articles/id/ArticlesId'
 
-class ArticleList extends React.PureComponent {
+class Articles extends React.PureComponent {
   componentDidMount() {
     this.props.getAllArticles()
   }
@@ -26,13 +26,13 @@ class ArticleList extends React.PureComponent {
         <ul>
           {articleList}
         </ul>
-        <Route path={`${match.path}/:id`} component={Article} />
+        <Route path={`${match.path}/:id`} component={ArticlesId} />
       </div>
     )
   }
 }
 
-ArticleList.propTypes = {
+Articles.propTypes = {
   match: PropTypes.object.isRequired,
   articles: PropTypes.array,
   status: PropTypes.string.isRequired,
@@ -40,7 +40,7 @@ ArticleList.propTypes = {
   getAllArticles: PropTypes.func.isRequired
 }
 
-ArticleList.defaultProps = {
+Articles.defaultProps = {
   articles: [],
   error: null
 }
@@ -53,4 +53,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { getAllArticles }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArticleList)
+export default connect(mapStateToProps, mapDispatchToProps)(Articles)

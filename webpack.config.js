@@ -7,6 +7,7 @@ module.exports = {
     './src/index.js'
   ],
   resolve: {
+    modules: ['node_modules', 'src'],
     extensions: ['.jsx', '.json', '.js']
   },
   output: {

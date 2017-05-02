@@ -1,5 +1,5 @@
 import { OrderedMap } from 'immutable'
-import { LOADED, LOADING, FAILED, ERROR_GENERIC } from '../common/constants'
+import { LOADED, LOADING, FAILED, ERROR_GENERIC } from 'common/constants'
 
 export const arrayToMap = (arr, Model) => (
   arr.reduce((acc, entity) => {

@@ -39,5 +39,13 @@
         "FileReader": true,
         "FormData": true,
         "fetch": false
+    },
+    "settings": {
+        "import/resolver": {
+            "webpack": {
+                "config": "./webpack.config.js"
+            }
+        }
     }
+
 }

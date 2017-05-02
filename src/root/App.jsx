@@ -1,8 +1,8 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { Link, Route, Switch, Redirect } from 'react-router-dom'
-import store from '../store'
-import { ArticleList } from '../articles'
+import Articles from '../articles/Articles'
+import store from '../store/'
 
 const App = () => (
   <Provider store={store}>
@@ -17,7 +17,7 @@ const App = () => (
 
       <Switch>
         <Redirect exact from="/" to="/articles" />
-        <Route path="/articles" component={ArticleList} />
+        <Route path="/articles" component={Articles} />
         <Redirect to="/404" />
       </Switch>
     </div>

@@ -1,4 +1,4 @@
-import { GET_ALL_ARTICLES, GET_ARTICLE } from '../common/constants'
+import { GET_ALL_ARTICLES } from 'common/constants'
 
 const getAllArticles = () => ({
   type: GET_ALL_ARTICLES,
@@ -7,11 +7,4 @@ const getAllArticles = () => ({
   }
 })
 
-const getArticle = id => ({
-  type: GET_ARTICLE,
-  api: {
-    url: `/api/article/${id}`
-  }
-})
-
-export { getAllArticles, getArticle }
+export { getAllArticles }

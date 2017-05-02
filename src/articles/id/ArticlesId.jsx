@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getArticle } from './actions'
-import { LOADED } from '../common/constants'
+import { getArticle } from 'articles/id/actions'
+import { LOADED, PRISTINE } from 'common/constants'
 
-class Article extends React.Component {
+class ArticlesId extends React.PureComponent {
   componentWillReceiveProps(nextProps) {
-    if (nextProps.match.params.id === this.props.match.params.id) return
+    if (nextProps.status !== PRISTINE && nextProps.match.params.id === this.props.match.params.id) {
+      return
+    }
 
     nextProps.getArticle(nextProps.match.params.id)
   }
@@ -14,16 +16,18 @@ class Article extends React.Component {
   render() {
     const { article, status, error } = this.props
 
-    return (status === LOADED &&
+    const body = (status === LOADED && <div>{article.text}</div>)
+
+    return (
       <div>
         <h4>{status} {error}</h4>
-        <div>{article.text}</div>
+        {body}
       </div>
     )
   }
 }
 
-Article.propTypes = {
+ArticlesId.propTypes = {
   match: PropTypes.object.isRequired,
   article: PropTypes.object,
   status: PropTypes.string.isRequired,
@@ -31,17 +35,17 @@ Article.propTypes = {
   getArticle: PropTypes.func.isRequired
 }
 
-Article.defaultProps = {
+ArticlesId.defaultProps = {
   article: {},
   error: null
 }
 
 const mapStateToProps = (state, props) => ({
-  article: state.articles.entities.toJS()[props.match.params.id],
-  status: state.articles.status,
-  error: state.articles.error
+  article: state.articlesId.entities.toJS()[props.match.params.id],
+  status: state.articlesId.status,
+  error: state.articlesId.error
 })
 
 const mapDispatchToProps = { getArticle }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Article)
+export default connect(mapStateToProps, mapDispatchToProps)(ArticlesId)

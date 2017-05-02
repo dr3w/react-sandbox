@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import qs from 'qs'
-import { START, SUCCESS, FAIL } from '../common/constants'
+import { START, SUCCESS, FAIL } from 'common/constants'
 
 const headers = new Headers({
   'Content-Type': 'application/json'
