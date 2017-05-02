@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Route, Link } from 'react-router-dom'
 import { mapToArray } from 'common/helpers'
-import { getAllArticles } from 'articles/actions'
-import ArticlesId from 'articles/id/ArticlesId'
+import { getAllArticles } from 'app/articles/actions'
+import ArticlesId from 'app/articles/id/ArticlesId'
 
 class Articles extends React.PureComponent {
   componentDidMount() {

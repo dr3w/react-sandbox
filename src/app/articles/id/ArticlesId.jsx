@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getArticle } from 'articles/id/actions'
+import { getArticle } from 'app/articles/id/actions'
 import { LOADED, PRISTINE } from 'common/constants'
 
 class ArticlesId extends React.PureComponent {

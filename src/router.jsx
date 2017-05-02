@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import NoMatch from 'no-match/NoMatch'
-import App from 'root/App'
+import NoMatch from 'app/no-match/NoMatch'
+import App from 'app/App'
 
 export default (
   <Router>

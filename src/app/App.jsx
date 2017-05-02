@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { Link, Route, Switch, Redirect } from 'react-router-dom'
-import Articles from '../articles/Articles'
+import Articles from 'app/articles/Articles'
 import store from '../store/'
 
 const App = () => (
