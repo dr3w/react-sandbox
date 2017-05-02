@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Route, Link } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import { mapToArray } from 'common/helpers'
 import { getAllArticles } from 'app/articles/actions'
-import ArticlesId from 'app/articles/id/ArticlesId'
+import { ArticlesList } from 'app/articles'
+import { ArticlesId } from 'app/articles/id'
 
 class Articles extends React.PureComponent {
   componentDidMount() {
@@ -14,18 +15,10 @@ class Articles extends React.PureComponent {
   render() {
     const { match, articles, status, error } = this.props
 
-    const articleList = articles.map(article => (
-      <li key={article.id}>
-        <Link to={`/articles/${article.id}`}>{article.title}</Link>
-      </li>
-    ))
-
     return (
       <div>
         <h4>{status} {error}</h4>
-        <ul>
-          {articleList}
-        </ul>
+        <ArticlesList articles={articles} />
         <Route path={`${match.path}/:id`} component={ArticlesId} />
       </div>
     )

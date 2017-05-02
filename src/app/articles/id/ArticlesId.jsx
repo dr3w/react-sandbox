@@ -6,6 +6,7 @@ import { LOADED, PRISTINE } from 'common/constants'
 
 class ArticlesId extends React.PureComponent {
   componentWillReceiveProps(nextProps) {
+    // TODO: fix check, first loading does not work
     if (nextProps.status !== PRISTINE && nextProps.match.params.id === this.props.match.params.id) {
       return
     }
