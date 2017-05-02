@@ -3,11 +3,14 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getArticle } from 'app/articles/id/actions'
 import { Status } from 'common/components'
-import { LOADED } from 'common/constants'
+import { LOADED, LOADING } from 'common/constants'
 
 const load = (props) => {
-  const { match, article } = props
-  return !article.id && props.getArticle(match.params.id)
+  const { match, article, status } = props
+
+  if(!article.id && status !== LOADING) {
+    props.getArticle(match.params.id)
+  }
 }
 
 class ArticlesId extends React.PureComponent {
@@ -15,7 +18,9 @@ class ArticlesId extends React.PureComponent {
     load(this.props)
   }
 
-  componentWillReceiveProps = load
+  componentWillReceiveProps(nextProps) {
+    load(nextProps)
+  }
 
   render() {
     const { article, status, error } = this.props

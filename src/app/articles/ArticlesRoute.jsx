@@ -6,7 +6,8 @@ import { mapToArray } from 'common/helpers'
 import { getAllArticles } from 'app/articles/actions'
 import { Status } from 'common/components/'
 import { ArticlesList } from 'app/articles'
-import { ArticlesId } from 'app/articles/id'
+import { ArticlesIdRoute } from 'app/articles/id'
+import { LOADED } from 'common/constants'
 
 class Articles extends React.PureComponent {
   componentDidMount() {
@@ -22,8 +23,8 @@ class Articles extends React.PureComponent {
           status={status}
           error={error}
         />
-        <ArticlesList articles={articles} />
-        <Route path={`${match.path}/:id`} component={ArticlesId} />
+        {status === LOADED && <ArticlesList articles={articles} />}
+        <Route path={`${match.path}/:id`} component={ArticlesIdRoute} />
       </div>
     )
   }

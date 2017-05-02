@@ -1,1 +1,1 @@
-export { default as ArticlesId } from './ArticlesId'
+export { default as ArticlesIdRoute } from './ArticlesIdRoute'
