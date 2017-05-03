@@ -60,8 +60,7 @@ const apiMiddleware = (/* store */) => next => (action) => {
       .then((response) => {
         cache.put(queryUrl, response, 60 * 1000)
         onSuccess(response)
-      })
-      .catch(onFail)
+      }, onFail)
   }
 
   return true
