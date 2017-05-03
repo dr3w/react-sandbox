@@ -2,18 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getArticle } from 'app/articles/id/actions'
-import { Status } from 'common/components'
+import { Status, FancyButton } from 'common/components'
 import { LOADED, LOADING } from 'common/constants'
 
 const load = (props) => {
   const { match, article, status } = props
 
-  if(!article.id && status !== LOADING) {
+  if (!article.id && status !== LOADING) {
     props.getArticle(match.params.id)
   }
 }
 
-class ArticlesId extends React.PureComponent {
+class ArticlesIdCmp extends React.PureComponent {
   componentDidMount() {
     load(this.props)
   }
@@ -33,13 +33,14 @@ class ArticlesId extends React.PureComponent {
           status={status}
           error={error}
         />
+        <FancyButton text="BUTTON!" />
         {body}
       </div>
     )
   }
 }
 
-ArticlesId.propTypes = {
+ArticlesIdCmp.propTypes = {
   match: PropTypes.object.isRequired,
   article: PropTypes.object,
   status: PropTypes.string.isRequired,
@@ -47,7 +48,7 @@ ArticlesId.propTypes = {
   getArticle: PropTypes.func.isRequired
 }
 
-ArticlesId.defaultProps = {
+ArticlesIdCmp.defaultProps = {
   article: {},
   error: null
 }
@@ -60,4 +61,6 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = { getArticle }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArticlesId)
+const ArticlesIdRoute = connect(mapStateToProps, mapDispatchToProps)(ArticlesIdCmp)
+
+export default ArticlesIdRoute

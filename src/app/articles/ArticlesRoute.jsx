@@ -9,7 +9,7 @@ import { ArticlesList } from 'app/articles'
 import { ArticlesIdRoute } from 'app/articles/id'
 import { LOADED } from 'common/constants'
 
-class Articles extends React.PureComponent {
+class ArticlesCmp extends React.PureComponent {
   componentDidMount() {
     this.props.getAllArticles()
   }
@@ -30,7 +30,7 @@ class Articles extends React.PureComponent {
   }
 }
 
-Articles.propTypes = {
+ArticlesCmp.propTypes = {
   match: PropTypes.object.isRequired,
   articles: PropTypes.array,
   status: PropTypes.string.isRequired,
@@ -38,7 +38,7 @@ Articles.propTypes = {
   getAllArticles: PropTypes.func.isRequired
 }
 
-Articles.defaultProps = {
+ArticlesCmp.defaultProps = {
   articles: [],
   error: null
 }
@@ -51,4 +51,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { getAllArticles }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Articles)
+const ArticlesRoute = connect(mapStateToProps, mapDispatchToProps)(ArticlesCmp)
+
+export default ArticlesRoute
