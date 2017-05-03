@@ -39,14 +39,16 @@ class ArticlesIdCmp extends React.PureComponent {
           status={status}
           error={error}
         />
-        
-        { status === LOADED &&
-        <ArticleBody
-          text={article.text}
-          date={article.date}
-          comments={article.commentsFull}
-          loadComments={this.loadComments}
-        /> }
+
+        {
+          status === LOADED &&
+          <ArticleBody
+            text={article.text}
+            date={article.date}
+            comments={article.commentsFull}
+            loadComments={this.loadComments}
+          />
+        }
       </div>
     )
   }

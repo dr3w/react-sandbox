@@ -23,8 +23,13 @@ class ArticlesCmp extends React.PureComponent {
           status={status}
           error={error}
         />
-        {status === LOADED && <ArticlesList articles={articles} />}
-        <Route path={`${match.path}/:id`} component={ArticlesIdRoute} />
+        {
+          status === LOADED &&
+          <div>
+            <ArticlesList articles={articles} />
+            <Route path={`${match.path}/:id`} component={ArticlesIdRoute} />
+          </div>
+        }
       </div>
     )
   }

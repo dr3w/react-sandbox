@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const ArticlesList = ({ articles }) => {
   const articleList = articles.map(article => (
     <li key={article.id}>
-      <Link to={`/articles/${article.id}`}>{article.title}</Link>
+      <NavLink activeClassName="is-active" to={`/articles/${article.id}`}>{article.title}</NavLink>
     </li>
   ))
 

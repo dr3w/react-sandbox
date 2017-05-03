@@ -33,7 +33,7 @@ const articlesReducer = (state = new DefaultReducerState({}), action) => {
 
     case GET_ARTICLE + SUCCESS:
       return state
-        .updateIn(['entities', response.id], entity => ArticleModel(response).merge(entity))
+        .setIn(['entities', response.id, 'text'], response.text)
 
     case GET_ARTICLE_COMMENTS + SUCCESS:
       return state

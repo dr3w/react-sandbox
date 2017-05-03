@@ -1,6 +1,6 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { Link, Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch, Redirect, NavLink } from 'react-router-dom'
 import { ArticlesRoute } from 'app/articles'
 import store from '../store/'
 
@@ -10,9 +10,9 @@ const App = () => (
       <h1>Articles app</h1>
 
       <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/articles">Articles</Link></li>
-        <li><Link to="/nothing">404</Link></li>
+        <li><NavLink activeClassName="is-active" exact to="/">Home</NavLink></li>
+        <li><NavLink activeClassName="is-active" to="/articles">Articles</NavLink></li>
+        <li><NavLink activeClassName="is-active" to="/nothing">404</NavLink></li>
       </ul>
 
       <Switch>
