@@ -6,6 +6,9 @@ var port = 3001;
 
 var app = express();
 
+app.use(function (req, res, next) {
+    setTimeout(next, 750)
+});
 app.use(bodyParser.json());
 app.use('/api', api)
 
