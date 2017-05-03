@@ -1,10 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import qs from 'qs'
+import cache from 'memory-cache'
 import { START, SUCCESS, FAIL } from 'common/constants'
-
-const headers = new Headers({
-  'Content-Type': 'application/json'
-})
 
 const getRequestBody = (method, data) => (
   (!(method === 'GET' || method === 'HEAD') && data && JSON.stringify(data)) || null
@@ -27,31 +24,47 @@ const onFetch = response => (
   })
 )
 
-export default (/* store */) => next => (action) => {
+const doFetch = (url, method, body) => {
+  const request = new Request(url, {
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    }),
+    method,
+    body
+  })
+
+  return fetch(request)
+    .then(onFetch)
+}
+
+const apiMiddleware = (/* store */) => next => (action) => {
   const { api, type, ...rest } = action
 
   if (!api) return next(action)
 
+  const { url, method = 'GET', data } = api
+
+  const body = getRequestBody(method, data)
+  const queryUrl = url + getQueryParams(method, data)
+  const cachedResponse = cache.get(queryUrl)
+
   const onSuccess = response => next({ ...rest, type: type + SUCCESS, response })
   const onFail = error => next({ ...rest, type: type + FAIL, error })
-  const doFetch = ({ url, method = 'GET', data }) => {
-    const body = getRequestBody(method, data)
-    const queryUrl = url + getQueryParams(method, data)
 
-    const request = new Request(queryUrl, {
-      method, body, headers
-    })
+  next({ ...rest, type: type + START })
 
-    // TODO: remove
-    setTimeout(() => {
-      fetch(request)
-        .then(onFetch)
-        .then(onSuccess)
-        .catch(onFail)
-    }, 1000)
+  if (cachedResponse) {
+    onSuccess(cachedResponse)
+  } else {
+    doFetch(queryUrl, method, body)
+      .then((response) => {
+        cache.put(queryUrl, response, 60 * 1000)
+        onSuccess(response)
+      })
+      .catch(onFail)
   }
 
-  doFetch(api)
-
-  return next({ ...rest, type: type + START })
+  return true
 }
+
+export default apiMiddleware
