@@ -13,7 +13,7 @@ const load = (props, oldProps) => {
   }
 }
 
-class ArticlesIdCmp extends React.PureComponent {
+class ArticlesIdRoute extends React.PureComponent {
   constructor(props) {
     super(props)
 
@@ -43,6 +43,7 @@ class ArticlesIdCmp extends React.PureComponent {
         {
           status === LOADED &&
           <ArticleBody
+            // key={article.id}
             text={article.text}
             date={article.date}
             comments={article.commentsFull}
@@ -54,7 +55,7 @@ class ArticlesIdCmp extends React.PureComponent {
   }
 }
 
-ArticlesIdCmp.propTypes = {
+ArticlesIdRoute.propTypes = {
   match: PropTypes.object.isRequired,
   article: PropTypes.shape({
     id: PropTypes.string,
@@ -68,7 +69,7 @@ ArticlesIdCmp.propTypes = {
   getArticleComments: PropTypes.func.isRequired
 }
 
-ArticlesIdCmp.defaultProps = {
+ArticlesIdRoute.defaultProps = {
   article: {},
   error: null
 }
@@ -81,6 +82,4 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = { getArticle, getArticleComments }
 
-const ArticlesIdRoute = connect(mapStateToProps, mapDispatchToProps)(ArticlesIdCmp)
-
-export default ArticlesIdRoute
+export default connect(mapStateToProps, mapDispatchToProps)(ArticlesIdRoute)
