@@ -1,19 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getArticle } from 'app/articles/actions'
+import { getArticle, getArticleComments } from 'app/articles/actions'
 import { ArticleBody } from 'app/articles/id'
 import { Status } from 'common/components'
 import { LOADED } from 'common/constants'
 
 const load = (props, oldProps) => {
   if (!oldProps.match ||
-      (oldProps.match && oldProps.match.params.id !== props.match.params.id)) {
+    (oldProps.match && oldProps.match.params.id !== props.match.params.id)) {
     props.getArticle(props.match.params.id)
   }
 }
 
 class ArticlesIdCmp extends React.PureComponent {
+  constructor(props) {
+    super(props)
+
+    this.loadComments.bind(this)
+  }
+
   componentDidMount() {
     load(this.props, {})
   }
@@ -21,6 +27,8 @@ class ArticlesIdCmp extends React.PureComponent {
   componentWillReceiveProps(nextProps) {
     load(nextProps, this.props)
   }
+
+  loadComments = () => this.props.getArticleComments(this.props.match.params.id)
 
   render() {
     const { article, status, error } = this.props
@@ -31,7 +39,14 @@ class ArticlesIdCmp extends React.PureComponent {
           status={status}
           error={error}
         />
-        { status === LOADED && <ArticleBody text={article.text} date={article.date} /> }
+        
+        { status === LOADED &&
+        <ArticleBody
+          text={article.text}
+          date={article.date}
+          comments={article.commentsFull}
+          loadComments={this.loadComments}
+        /> }
       </div>
     )
   }
@@ -39,10 +54,16 @@ class ArticlesIdCmp extends React.PureComponent {
 
 ArticlesIdCmp.propTypes = {
   match: PropTypes.object.isRequired,
-  article: PropTypes.object,
+  article: PropTypes.shape({
+    id: PropTypes.string,
+    text: PropTypes.string,
+    date: PropTypes.string,
+    commentsFull: PropTypes.array
+  }),
   status: PropTypes.string.isRequired,
   error: PropTypes.string,
-  getArticle: PropTypes.func.isRequired
+  getArticle: PropTypes.func.isRequired,
+  getArticleComments: PropTypes.func.isRequired
 }
 
 ArticlesIdCmp.defaultProps = {
@@ -56,7 +77,7 @@ const mapStateToProps = (state, props) => ({
   error: state.articlesId.error
 })
 
-const mapDispatchToProps = { getArticle }
+const mapDispatchToProps = { getArticle, getArticleComments }
 
 const ArticlesIdRoute = connect(mapStateToProps, mapDispatchToProps)(ArticlesIdCmp)
 

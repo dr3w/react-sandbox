@@ -1,16 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const CommentList = ({ text }) => (
-  <div>{ text }</div>
-)
+const CommentList = ({ comments }) => {
+  const commentList = comments.map(comment => (
+    <li key={comment.id}>
+      { comment.text }
+    </li>
+  ))
 
+  return (
+    <ul>
+      {commentList}
+    </ul>
+  )
+}
 CommentList.propTypes = {
-  text: PropTypes.string
+  comments: PropTypes.array
 }
 
 CommentList.defaultProps = {
-  text: 'Press me'
+  comments: []
 }
 
 export default CommentList

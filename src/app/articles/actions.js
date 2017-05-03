@@ -1,4 +1,4 @@
-import { GET_ALL_ARTICLES, GET_ARTICLE } from 'common/constants'
+import { GET_ALL_ARTICLES, GET_ARTICLE, GET_ARTICLE_COMMENTS } from 'common/constants'
 
 const getAllArticles = () => ({
   type: GET_ALL_ARTICLES,
@@ -9,10 +9,20 @@ const getAllArticles = () => ({
 
 const getArticle = id => ({
   type: GET_ARTICLE,
-  id,
   api: {
     url: `/api/article/${id}`
   }
 })
 
-export { getAllArticles, getArticle }
+const getArticleComments = articleId => ({
+  type: GET_ARTICLE_COMMENTS,
+  articleId,
+  api: {
+    url: '/api/comment',
+    data: {
+      article: articleId
+    }
+  }
+})
+
+export { getAllArticles, getArticle, getArticleComments }
