@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getArticle } from 'app/articles/id/actions'
-import { Status, FancyButton } from 'common/components'
+import { ArticleBody } from 'app/articles/id'
+import { Status } from 'common/components'
 import { LOADED, LOADING } from 'common/constants'
 
 const load = (props) => {
@@ -25,16 +26,13 @@ class ArticlesIdCmp extends React.PureComponent {
   render() {
     const { article, status, error } = this.props
 
-    const body = (status === LOADED && <div>{article.text}</div>)
-
     return (
       <div>
         <Status
           status={status}
           error={error}
         />
-        <FancyButton text="BUTTON!" />
-        {body}
+        { status === LOADED && <ArticleBody text={article.text} date={article.date} /> }
       </div>
     )
   }

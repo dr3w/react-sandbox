@@ -10,7 +10,7 @@ Button.propTypes = {
 }
 
 Button.defaultProps = {
-  text: 'String'
+  text: 'Press me'
 }
 
 export default Button
