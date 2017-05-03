@@ -4,23 +4,22 @@ import { connect } from 'react-redux'
 import { getArticle } from 'app/articles/actions'
 import { ArticleBody } from 'app/articles/id'
 import { Status } from 'common/components'
-import { LOADED, LOADING } from 'common/constants'
+import { LOADED } from 'common/constants'
 
-const load = (props) => {
-  const { match, article, status } = props
-
-  if (!article.text && status !== LOADING) {
-    props.getArticle(match.params.id)
+const load = (props, oldProps) => {
+  if (!oldProps.match ||
+      (oldProps.match && oldProps.match.params.id !== props.match.params.id)) {
+    props.getArticle(props.match.params.id)
   }
 }
 
 class ArticlesIdCmp extends React.PureComponent {
   componentDidMount() {
-    load(this.props)
+    load(this.props, {})
   }
 
   componentWillReceiveProps(nextProps) {
-    load(nextProps)
+    load(nextProps, this.props)
   }
 
   render() {

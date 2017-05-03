@@ -9,6 +9,7 @@ const getAllArticles = () => ({
 
 const getArticle = id => ({
   type: GET_ARTICLE,
+  id,
   api: {
     url: `/api/article/${id}`
   }
