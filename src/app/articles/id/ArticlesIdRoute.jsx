@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getArticle } from 'app/articles/id/actions'
+import { getArticle } from 'app/articles/actions'
 import { ArticleBody } from 'app/articles/id'
 import { Status } from 'common/components'
 import { LOADED, LOADING } from 'common/constants'
@@ -9,7 +9,7 @@ import { LOADED, LOADING } from 'common/constants'
 const load = (props) => {
   const { match, article, status } = props
 
-  if (!article.id && status !== LOADING) {
+  if (!article.text && status !== LOADING) {
     props.getArticle(match.params.id)
   }
 }
@@ -52,7 +52,7 @@ ArticlesIdCmp.defaultProps = {
 }
 
 const mapStateToProps = (state, props) => ({
-  article: state.articlesId.entities.toJS()[props.match.params.id],
+  article: state.articles.entities.toJS()[props.match.params.id],
   status: state.articlesId.status,
   error: state.articlesId.error
 })
