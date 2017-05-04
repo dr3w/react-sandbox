@@ -38,8 +38,8 @@ class ArticlesRoute extends React.PureComponent {
 
 ArticlesRoute.propTypes = {
   match: PropTypes.object.isRequired,
-  articles: PropTypes.array,
   status: PropTypes.string.isRequired,
+  articles: PropTypes.array,
   error: PropTypes.string,
 
   getAllArticles: PropTypes.func.isRequired

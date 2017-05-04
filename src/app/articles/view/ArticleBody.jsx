@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ArticleComments from 'app/articles/comments/ArticleComments' // TODO: index or direct linking?
+import { ArticleComments } from 'app/articles/comments/'
 
 const ArticleBody = ({ text, date, articleId }) => (
   <div>

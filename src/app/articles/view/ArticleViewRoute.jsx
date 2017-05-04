@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getArticle, getArticleComments } from 'app/articles/actions'
+import { getArticle } from 'app/articles/actions'
 import { ArticleBody } from 'app/articles/view'
 import { Status } from 'common/components'
 import { LOADING } from 'common/constants'
 
-const load = (props, oldProps) => {
+const loadData = (props, oldProps) => {
   if (!oldProps || (oldProps.match.params.id !== props.match.params.id)) {
     props.getArticle(props.match.params.id)
   }
@@ -14,11 +14,11 @@ const load = (props, oldProps) => {
 
 class ArticleViewRoute extends React.PureComponent {
   componentDidMount() {
-    load(this.props)
+    loadData(this.props)
   }
 
   componentWillReceiveProps(nextProps) {
-    load(nextProps, this.props)
+    loadData(nextProps, this.props)
   }
 
   render() {
@@ -46,16 +46,15 @@ class ArticleViewRoute extends React.PureComponent {
 
 ArticleViewRoute.propTypes = {
   match: PropTypes.object.isRequired,
+  status: PropTypes.string.isRequired,
   article: PropTypes.shape({
     id: PropTypes.string,
     text: PropTypes.string,
     date: PropTypes.string
   }),
-  status: PropTypes.string.isRequired,
   error: PropTypes.string,
 
-  getArticle: PropTypes.func.isRequired,
-  getArticleComments: PropTypes.func.isRequired
+  getArticle: PropTypes.func.isRequired
 }
 
 ArticleViewRoute.defaultProps = {
@@ -69,6 +68,6 @@ const mapStateToProps = (state, props) => ({
   error: state.articleView.error
 })
 
-const mapDispatchToProps = { getArticle, getArticleComments }
+const mapDispatchToProps = { getArticle }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticleViewRoute)

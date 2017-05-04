@@ -6,12 +6,6 @@ import { CommentListLazy } from 'common/components'
 import { mapToArray } from 'common/helpers'
 
 class ArticleComments extends React.PureComponent {
-  constructor(props) {
-    super(props)
-
-    this.loadComments.bind(this)
-  }
-
   loadComments = () => this.props.getArticleComments(this.props.articleId)
 
   render() {
