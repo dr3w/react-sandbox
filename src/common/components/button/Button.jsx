@@ -2,7 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Button = ({ text, isDisabled, onClick }) => (
-  <button onClick={onClick} disabled={isDisabled}>{ text }</button>
+  <button
+    className="btn btn-primary"
+    onClick={onClick}
+    disabled={isDisabled}
+  >{ text }</button>
 )
 
 Button.propTypes = {

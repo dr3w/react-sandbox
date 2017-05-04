@@ -1,10 +1,11 @@
+import 'bootstrap/dist/css/bootstrap.css'
+import 'app/App.scss'
+
 import React from 'react'
 import { Provider } from 'react-redux'
 import { Route, Switch, Redirect, NavLink } from 'react-router-dom'
 import { ArticlesRoute } from 'app/articles'
 import store from '../store/'
-
-import './App.scss'
 
 const App = () => (
   <Provider store={store}>
