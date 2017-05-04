@@ -4,10 +4,12 @@ import { Route, Switch, Redirect, NavLink } from 'react-router-dom'
 import { ArticlesRoute } from 'app/articles'
 import store from '../store/'
 
+import './App.scss'
+
 const App = () => (
   <Provider store={store}>
     <div>
-      <h1>Articles app</h1>
+      <h1 className="hot-sauce">Articles app</h1>
 
       <ul>
         <li><NavLink activeClassName="is-active" exact to="/">Home</NavLink></li>
