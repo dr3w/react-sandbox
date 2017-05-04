@@ -6,8 +6,8 @@ import { mapToArray } from 'common/helpers'
 import { getAllArticles } from 'app/articles/actions'
 import { Status } from 'common/components/'
 import { ArticlesList } from 'app/articles'
-import { ArticlesIdRoute } from 'app/articles/id'
-import { LOADED } from 'common/constants'
+import { ArticleViewRoute } from 'app/articles/view'
+import { LOADING } from 'common/constants'
 
 class ArticlesRoute extends React.PureComponent {
   componentDidMount() {
@@ -23,12 +23,13 @@ class ArticlesRoute extends React.PureComponent {
           status={status}
           error={error}
         />
+
         {
-          status === LOADED &&
-          <div>
-            <ArticlesList articles={articles} />
-            <Route path={`${match.path}/:id`} component={ArticlesIdRoute} />
-          </div>
+          (status !== LOADING && articles.length) ?
+            <div>
+              <ArticlesList articles={articles} />
+              <Route path={`${match.path}/:id`} component={ArticleViewRoute} />
+            </div> : ''
         }
       </div>
     )
@@ -40,6 +41,7 @@ ArticlesRoute.propTypes = {
   articles: PropTypes.array,
   status: PropTypes.string.isRequired,
   error: PropTypes.string,
+
   getAllArticles: PropTypes.func.isRequired
 }
 

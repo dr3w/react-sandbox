@@ -1,10 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, CommentList } from 'common/components'
+import { Button, CommentList, Status } from 'common/components'
 
 // TODO: add loading state?
-const CommentListLazy = ({ comments, loadComments }) => (
+const CommentListLazy = ({ status, error, comments, loadComments }) => (
   <div>
+    <Status
+      status={status}
+      error={error}
+    />
     { comments.length ?
       <CommentList comments={comments} /> : <Button text="Load comments" onClick={loadComments} /> }
   </div>
@@ -12,12 +16,15 @@ const CommentListLazy = ({ comments, loadComments }) => (
 
 CommentListLazy.propTypes = {
   comments: PropTypes.array,
-  loadComments: PropTypes.func
+  status: PropTypes.string,
+  error: PropTypes.string,
+  loadComments: PropTypes.func.isRequired
 }
 
 CommentListLazy.defaultProps = {
   comments: [],
-  loadComments: () => null
+  status: '',
+  error: ''
 }
 
 export default CommentListLazy

@@ -2,33 +2,24 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getArticle, getArticleComments } from 'app/articles/actions'
-import { ArticleBody } from 'app/articles/id'
+import { ArticleBody } from 'app/articles/view'
 import { Status } from 'common/components'
-import { LOADED } from 'common/constants'
+import { LOADING } from 'common/constants'
 
 const load = (props, oldProps) => {
-  if (!oldProps.match ||
-    (oldProps.match && oldProps.match.params.id !== props.match.params.id)) {
+  if (!oldProps || (oldProps.match.params.id !== props.match.params.id)) {
     props.getArticle(props.match.params.id)
   }
 }
 
-class ArticlesIdRoute extends React.PureComponent {
-  constructor(props) {
-    super(props)
-
-    this.loadComments.bind(this)
-  }
-
+class ArticleViewRoute extends React.PureComponent {
   componentDidMount() {
-    load(this.props, {})
+    load(this.props)
   }
 
   componentWillReceiveProps(nextProps) {
     load(nextProps, this.props)
   }
-
-  loadComments = () => this.props.getArticleComments(this.props.match.params.id)
 
   render() {
     const { article, status, error } = this.props
@@ -41,13 +32,11 @@ class ArticlesIdRoute extends React.PureComponent {
         />
 
         {
-          status === LOADED &&
+          status !== LOADING && article &&
           <ArticleBody
-            // key={article.id}
             text={article.text}
             date={article.date}
-            comments={article.commentsFull}
-            loadComments={this.loadComments}
+            articleId={article.id}
           />
         }
       </div>
@@ -55,31 +44,31 @@ class ArticlesIdRoute extends React.PureComponent {
   }
 }
 
-ArticlesIdRoute.propTypes = {
+ArticleViewRoute.propTypes = {
   match: PropTypes.object.isRequired,
   article: PropTypes.shape({
     id: PropTypes.string,
     text: PropTypes.string,
-    date: PropTypes.string,
-    commentsFull: PropTypes.array
+    date: PropTypes.string
   }),
   status: PropTypes.string.isRequired,
   error: PropTypes.string,
+
   getArticle: PropTypes.func.isRequired,
   getArticleComments: PropTypes.func.isRequired
 }
 
-ArticlesIdRoute.defaultProps = {
-  article: {},
+ArticleViewRoute.defaultProps = {
+  article: null,
   error: null
 }
 
 const mapStateToProps = (state, props) => ({
-  article: state.articles.entities.toJS()[props.match.params.id],
-  status: state.articlesId.status,
-  error: state.articlesId.error
+  article: state.articleView.entities.toJS()[props.match.params.id],
+  status: state.articleView.status,
+  error: state.articleView.error
 })
 
 const mapDispatchToProps = { getArticle, getArticleComments }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArticlesIdRoute)
+export default connect(mapStateToProps, mapDispatchToProps)(ArticleViewRoute)

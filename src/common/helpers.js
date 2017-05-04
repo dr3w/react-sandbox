@@ -8,7 +8,8 @@ export const arrayToMap = (arr, Model) => (
   }, new OrderedMap({}))
 )
 
-export const mapToArray = immutableMap => immutableMap.valueSeq().toArray()
+export const mapToArray = immutableMap =>
+  (immutableMap instanceof OrderedMap && immutableMap.valueSeq().toArray()) || []
 
 export const onApiStart = stateRecord => (
   stateRecord
