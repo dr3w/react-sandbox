@@ -26,8 +26,9 @@ const NavLinkLi = (props) => {
 NavLinkLi.propTypes = {
   to: PropTypes.string.isRequired,
   match: PropTypes.object.isRequired,
-  exact: PropTypes.bool,
-  children: PropTypes.string
+  location: PropTypes.object.isRequired,
+  children: PropTypes.string,
+  exact: PropTypes.bool
 }
 
 NavLinkLi.defaultProps = {

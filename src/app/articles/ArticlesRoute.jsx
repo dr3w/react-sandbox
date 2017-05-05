@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 import { mapToArray } from 'common/helpers'
+import { resetStatus } from 'app/actions'
 import { getAllArticles } from 'app/articles/actions'
 import { Status } from 'common/components'
 import { ArticlesList } from 'app/articles'
@@ -11,6 +12,7 @@ import { LOADING } from 'common/constants'
 
 class ArticlesRoute extends React.PureComponent {
   componentDidMount() {
+    this.props.resetStatus()
     this.props.getAllArticles()
   }
 
@@ -47,7 +49,8 @@ ArticlesRoute.propTypes = {
   articles: PropTypes.array,
   error: PropTypes.string,
 
-  getAllArticles: PropTypes.func.isRequired
+  getAllArticles: PropTypes.func.isRequired,
+  resetStatus: PropTypes.func.isRequired
 }
 
 ArticlesRoute.defaultProps = {
@@ -61,6 +64,6 @@ const mapStateToProps = state => ({
   error: state.articles.error
 })
 
-const mapDispatchToProps = { getAllArticles }
+const mapDispatchToProps = { getAllArticles, resetStatus }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticlesRoute)

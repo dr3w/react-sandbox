@@ -1,7 +1,7 @@
 import { Record, OrderedMap } from 'immutable'
-import { arrayToMap, onApiStart, onApiSuccess, onApiFail } from 'common/helpers'
+import { arrayToMap, onApiStart, onApiSuccess, onApiFail, resetStatus } from 'common/helpers'
 import {
-  GET_ALL_ARTICLES,
+  GET_ALL_ARTICLES, RESET_STATUS,
   START, SUCCESS, FAIL, PRISTINE
 } from 'common/constants'
 
@@ -25,6 +25,9 @@ const articlesReducer = (state = new DefaultReducerState({}), action) => {
       return onApiSuccess(state
         .update('entities', entities => arrayToMap(response, ArticleListModel).merge(entities))
       )
+
+    case RESET_STATUS:
+      return resetStatus(state)
 
     case GET_ALL_ARTICLES + START:
       return onApiStart(state)

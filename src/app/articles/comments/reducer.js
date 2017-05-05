@@ -1,6 +1,6 @@
 import { Record, OrderedMap } from 'immutable'
-import { arrayToMap, onApiStart, onApiSuccess, onApiFail } from 'common/helpers'
-import { GET_ARTICLE_COMMENTS, START, SUCCESS, FAIL, PRISTINE } from 'common/constants'
+import { arrayToMap, onApiStart, onApiSuccess, onApiFail, resetStatus } from 'common/helpers'
+import { GET_ARTICLE_COMMENTS, RESET_STATUS, START, SUCCESS, FAIL, PRISTINE } from 'common/constants'
 
 const ArticleCommentsModel = Record({
   id: null,
@@ -22,6 +22,9 @@ const articleCommentsReducer = (state = new DefaultReducerState({}), action) => 
       return onApiSuccess(state
         .setIn(['entities', articleId], arrayToMap(response, ArticleCommentsModel))
       )
+
+    case RESET_STATUS:
+      return resetStatus(state)
 
     case GET_ARTICLE_COMMENTS + START:
       return onApiStart(state)

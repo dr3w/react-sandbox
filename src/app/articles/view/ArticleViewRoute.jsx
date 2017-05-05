@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { resetStatus } from 'app/actions'
 import { getArticle } from 'app/articles/actions'
 import { ArticleBody } from 'app/articles/view'
 import { Status } from 'common/components'
@@ -8,6 +9,7 @@ import { LOADING } from 'common/constants'
 
 const loadData = (props, oldProps) => {
   if (!oldProps || (oldProps.match.params.id !== props.match.params.id)) {
+    props.resetStatus()
     props.getArticle(props.match.params.id)
   }
 }
@@ -55,7 +57,8 @@ ArticleViewRoute.propTypes = {
   }),
   error: PropTypes.string,
 
-  getArticle: PropTypes.func.isRequired
+  getArticle: PropTypes.func.isRequired,
+  resetStatus: PropTypes.func.isRequired
 }
 
 ArticleViewRoute.defaultProps = {
@@ -69,6 +72,6 @@ const mapStateToProps = (state, props) => ({
   error: state.articleView.error
 })
 
-const mapDispatchToProps = { getArticle }
+const mapDispatchToProps = { getArticle, resetStatus }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticleViewRoute)

@@ -1,5 +1,5 @@
 import { OrderedMap } from 'immutable'
-import { LOADED, LOADING, FAILED, ERROR_GENERIC } from 'common/constants'
+import { PRISTINE, LOADED, LOADING, FAILED, ERROR_GENERIC } from 'common/constants'
 
 export const arrayToMap = (arr, Model) => (
   arr.reduce((acc, entity) => {
@@ -27,4 +27,10 @@ export const onApiFail = (stateRecord, error) => (
   stateRecord
     .set('error', (error && error.message) || ERROR_GENERIC)
     .set('status', FAILED)
+)
+
+export const resetStatus = stateRecord => (
+  stateRecord
+    .set('error', null)
+    .set('status', PRISTINE)
 )

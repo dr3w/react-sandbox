@@ -1,6 +1,6 @@
 import { Record, OrderedMap } from 'immutable'
-import { onApiStart, onApiSuccess, onApiFail } from 'common/helpers'
-import { GET_ARTICLE, START, SUCCESS, FAIL, PRISTINE } from 'common/constants'
+import { onApiStart, onApiSuccess, onApiFail, resetStatus } from 'common/helpers'
+import { GET_ARTICLE, RESET_STATUS, START, SUCCESS, FAIL, PRISTINE } from 'common/constants'
 
 const ArticleModel = Record({
   id: null,
@@ -23,6 +23,9 @@ const articleViewReducer = (state = new DefaultReducerState({}), action) => {
       return onApiSuccess(state
         .setIn(['entities', response.id], new ArticleModel(response))
       )
+
+    case RESET_STATUS:
+      return resetStatus(state)
 
     case GET_ARTICLE + START:
       return onApiStart(state)
