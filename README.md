@@ -36,4 +36,5 @@
 
 ## TODO:
 
-- styles (LESS / SASS)
+- -styles (LESS / SASS)-
+- Jest

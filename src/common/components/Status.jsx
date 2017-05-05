@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Status = ({ status, error }) => (
-  <h3>∆ {status} {error}</h3>
+  <h3>{status} {error}</h3>
 )
 
 Status.propTypes = {

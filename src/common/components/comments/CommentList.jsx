@@ -9,7 +9,7 @@ const CommentList = ({ comments }) => {
   ))
 
   return (
-    <ul>
+    <ul className="comment-list">
       {commentList}
     </ul>
   )
