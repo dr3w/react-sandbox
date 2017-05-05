@@ -37,4 +37,5 @@
 ## TODO:
 
 - -styles (LESS / SASS)-
+- ERROR and STATUS in store
 - Jest

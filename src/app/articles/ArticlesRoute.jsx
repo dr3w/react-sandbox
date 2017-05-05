@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 import { mapToArray } from 'common/helpers'
 import { getAllArticles } from 'app/articles/actions'
-import { Status } from 'common/components/'
+import { Status } from 'common/components'
 import { ArticlesList } from 'app/articles'
 import { ArticleViewRoute } from 'app/articles/view'
 import { LOADING } from 'common/constants'
@@ -18,19 +18,24 @@ class ArticlesRoute extends React.PureComponent {
     const { match, articles, status, error } = this.props
 
     return (
-      <div>
-        <Status
-          status={status}
-          error={error}
-        />
+      <div className="row">
+        <div className="col-md-4">
+          <Status
+            status={status}
+            error={error}
+          />
 
-        {
-          (status !== LOADING && articles.length) ?
-            <div>
-              <ArticlesList articles={articles} />
-              <Route path={`${match.path}/:id`} component={ArticleViewRoute} />
-            </div> : ''
-        }
+          {
+            (status !== LOADING && articles.length) ?
+              <ArticlesList
+                url={match.url}
+                articles={articles}
+              /> : ''
+          }
+        </div>
+        <div className="col-md-8">
+          <Route path={`${match.path}/:id`} component={ArticleViewRoute} />
+        </div>
       </div>
     )
   }

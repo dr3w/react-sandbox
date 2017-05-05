@@ -6,31 +6,47 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import { Button, CommentList, Status } from 'common/components'
 import { LOADING } from 'common/constants'
 
-const CommentListLazy = ({ status, error, comments, loadComments }) => (
-  <div>
-    <Status
-      status={status}
-      error={error}
-    />
-    {
-      comments.length ?
-        <CSSTransitionGroup
-          transitionName="comment-list-lazy"
-          transitionAppear
-          transitionAppearTimeout={500}
-          transitionEnter={false}
-          transitionLeave={false}
-        >
-          <CommentList comments={comments} />
-        </CSSTransitionGroup> :
-        <Button
-          text="Load comments"
-          onClick={loadComments}
-          isDisabled={status === LOADING}
-        />
-    }
-  </div>
-)
+const CommentListLazy = ({ status, error, comments, loadComments }) => {
+  const getCommentsComponent = () => {
+    if (!comments.length) return null
+
+    return (
+      <CSSTransitionGroup
+        transitionName="comment-list-lazy"
+        transitionAppear
+        transitionAppearTimeout={500}
+        transitionEnter={false}
+        transitionLeave={false}
+      >
+        <CommentList comments={comments} />
+      </CSSTransitionGroup>
+    )
+  }
+
+  const getLoadMoreButton = () => {
+    if (comments.length) return null
+
+    return (
+      <Button
+        text="Load comments"
+        onClick={loadComments}
+        isDisabled={status === LOADING}
+      />
+    )
+  }
+
+  return (
+    <div>
+      { getLoadMoreButton() }
+      { getCommentsComponent() }
+
+      <Status
+        status={status}
+        error={error}
+      />
+    </div>
+  )
+}
 
 CommentListLazy.propTypes = {
   status: PropTypes.string.isRequired,

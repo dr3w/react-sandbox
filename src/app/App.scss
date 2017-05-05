@@ -4,14 +4,22 @@
     padding: 20px 40px
 }
 
-p {
-    color: #555;
-}
-
 li {
     list-style-type: square;
 }
 
-.hot-sauce {
-    color: navy;
+.status-error {
+    padding: 10px;
+    margin: 20px;
 }
+
+.status-loading {
+    display: block;
+    height: 50px;
+    width: 50px;
+    margin: 40px auto 10px;
+    background: url('/src/assets/img/loading.svg') center center no-repeat;
+}
+
+// Bootstrap overrides
+

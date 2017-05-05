@@ -3,23 +3,32 @@ import 'app/App.scss'
 
 import React from 'react'
 import { Provider } from 'react-redux'
-import { Route, Switch, Redirect, NavLink } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
+import { NavLinkLi } from 'common/components'
 import { ArticlesRoute } from 'app/articles'
 import store from '../store/'
 
 const App = () => (
   <Provider store={store}>
     <div>
-      <h1 className="hot-sauce">Articles app</h1>
+      <nav className="navbar navbar-default">
+        <div className="container-fluid">
+          <div className="navbar-header">
+            <a className="navbar-brand" href="#">Stories</a>
+          </div>
 
-      <ul>
-        <li><NavLink activeClassName="is-active" exact to="/">Home</NavLink></li>
-        <li><NavLink activeClassName="is-active" to="/articles">Articles</NavLink></li>
-        <li><NavLink activeClassName="is-active" to="/nothing">404</NavLink></li>
-      </ul>
+          <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul className="nav navbar-nav">
+              <NavLinkLi exact to="/">Home</NavLinkLi>
+              <NavLinkLi to="/articles">Articles</NavLinkLi>
+              <NavLinkLi to="/nothing">404</NavLinkLi>
+            </ul>
+          </div>
+        </div>
+      </nav>
 
       <Switch>
-        <Redirect exact from="/" to="/articles" />
+        <Route exact path="/" />
         <Route path="/articles" component={ArticlesRoute} />
         <Redirect to="/404" />
       </Switch>

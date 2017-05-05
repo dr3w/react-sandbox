@@ -6,14 +6,14 @@ module.exports = {
   entry: [
     './src/index.js'
   ],
-  resolve: {
-    modules: ['node_modules', 'src'],
-    extensions: ['.jsx', '.json', '.js']
-  },
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'bundle.js',
     publicPath: '/static/'
+  },
+  resolve: {
+    modules: ['node_modules', 'src'],
+    extensions: ['.jsx', '.json', '.js']
   },
   devServer: {
     proxy: [{

@@ -2,17 +2,21 @@ import 'app/articles/Articles.scss'
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { NavLink } from 'react-router-dom'
+import { NavLinkLi } from 'common/components'
 
 const ArticlesList = ({ articles }) => {
   const articleList = articles.map(article => (
-    <li key={article.id}>
-      <NavLink activeClassName="is-active" to={`/articles/${article.id}`}>{article.title}</NavLink>
-    </li>
+    <NavLinkLi
+      key={article.id}
+      to={`/articles/${article.id}`}
+      exact
+    >
+      {article.title}
+    </NavLinkLi>
   ))
 
   return (
-    <ul>
+    <ul className="nav nav-pills nav-stacked">
       {articleList}
     </ul>
   )

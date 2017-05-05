@@ -34,6 +34,7 @@ class ArticleViewRoute extends React.PureComponent {
         {
           status !== LOADING && article &&
           <ArticleBody
+            title={article.title}
             text={article.text}
             date={article.date}
             articleId={article.id}
