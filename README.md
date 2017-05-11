@@ -39,3 +39,6 @@
 - -styles (LESS / SASS)-
 - ERROR and STATUS in store
 - Jest
+
+- Status as HOC
+   - status as a separate reducer
