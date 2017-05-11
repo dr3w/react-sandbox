@@ -1,23 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getArticleComments } from 'app/articles/actions'
+import { getArticleComments, addArticleComment } from 'app/articles/actions'
+import { ArticleCommentAdd } from 'app/articles/view/comments'
 import { CommentListLazy } from 'common/components'
 import { mapToArray } from 'common/helpers'
 
 class ArticleComments extends React.PureComponent {
+  onSubmit = values => this.props.addArticleComment(this.props.articleId, values)
   loadComments = () => this.props.getArticleComments(this.props.articleId)
 
   render() {
     const { comments, status, error } = this.props
 
     return (
-      <CommentListLazy
-        error={error}
-        status={status}
-        comments={comments}
-        loadComments={this.loadComments}
-      />
+      <section>
+        <ArticleCommentAdd
+          onSubmit={this.onSubmit}
+        />
+        <CommentListLazy
+          error={error}
+          status={status}
+          comments={comments}
+          loadComments={this.loadComments}
+        />
+      </section>
     )
   }
 }
@@ -28,7 +35,8 @@ ArticleComments.propTypes = {
   error: PropTypes.string,
   comments: PropTypes.array,
 
-  getArticleComments: PropTypes.func.isRequired
+  getArticleComments: PropTypes.func.isRequired,
+  addArticleComment: PropTypes.func.isRequired
 }
 
 ArticleComments.defaultProps = {
@@ -42,6 +50,6 @@ const mapStateToProps = (state, props) => ({
   error: state.articleComments.error
 })
 
-const mapDispatchToProps = { getArticleComments }
+const mapDispatchToProps = { getArticleComments, addArticleComment }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticleComments)

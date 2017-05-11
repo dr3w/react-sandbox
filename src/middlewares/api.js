@@ -46,7 +46,7 @@ const apiMiddleware = (/* store */) => next => (action) => {
 
   const body = getRequestBody(method, data)
   const queryUrl = url + getQueryParams(method, data)
-  const cachedResponse = cache.get(queryUrl)
+  const cachedResponse = method === 'GET' && cache.get(queryUrl)
 
   const onSuccess = response => next({ ...rest, type: type + SUCCESS, response })
   const onFail = error => next({ ...rest, type: type + FAIL, error })
@@ -58,7 +58,10 @@ const apiMiddleware = (/* store */) => next => (action) => {
   } else {
     doFetch(queryUrl, method, body)
       .then((response) => {
-        cache.put(queryUrl, response, 60 * 1000)
+        if (method === 'GET') {
+          cache.put(queryUrl, response, 60 * 1000)
+        }
+
         onSuccess(response)
       }, onFail)
   }

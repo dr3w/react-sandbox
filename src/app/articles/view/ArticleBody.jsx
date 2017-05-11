@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ArticleComments } from 'app/articles/comments'
+import { ArticleComments } from 'app/articles/view/comments'
 
 const ArticleBody = ({ text, date, title, articleId }) => (
   <article>
