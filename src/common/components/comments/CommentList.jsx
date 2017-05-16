@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import './comments.scss'
+
 const CommentList = ({ comments }) => {
   const commentList = comments.map(comment => (
     <li key={comment.id}>
@@ -14,6 +16,7 @@ const CommentList = ({ comments }) => {
     </ul>
   )
 }
+
 CommentList.propTypes = {
   comments: PropTypes.array
 }

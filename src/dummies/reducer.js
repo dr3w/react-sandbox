@@ -1,4 +1,4 @@
-import { INCREMENT_DUMMY } from '../common/constants'
+import { INCREMENT_DUMMY } from 'common/constants'
 
 const increment = (state = 0, action) => {
   switch (action.type) {

@@ -1,17 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getArticleComments, addArticleComment } from 'app/articles/actions'
-import { ArticleCommentAdd } from 'app/articles/view/comments'
+import { getArticleComments, addArticleComment } from 'app/article/actions'
 import { CommentListLazy } from 'common/components'
 import { mapToArray } from 'common/helpers'
+import ArticleCommentAdd from 'app/article/comments/ArticleCommentAdd'
 
 class ArticleComments extends React.PureComponent {
   onSubmit = values => this.props.addArticleComment(this.props.articleId, values)
   loadComments = () => this.props.getArticleComments(this.props.articleId)
 
   render() {
-    const { comments, status, error } = this.props
+    const { comments } = this.props
 
     return (
       <section>
@@ -19,8 +19,6 @@ class ArticleComments extends React.PureComponent {
           onSubmit={this.onSubmit}
         />
         <CommentListLazy
-          error={error}
-          status={status}
           comments={comments}
           loadComments={this.loadComments}
         />
@@ -31,8 +29,6 @@ class ArticleComments extends React.PureComponent {
 
 ArticleComments.propTypes = {
   articleId: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
-  error: PropTypes.string,
   comments: PropTypes.array,
 
   getArticleComments: PropTypes.func.isRequired,
@@ -40,14 +36,11 @@ ArticleComments.propTypes = {
 }
 
 ArticleComments.defaultProps = {
-  comments: [],
-  error: null
+  comments: []
 }
 
 const mapStateToProps = (state, props) => ({
-  comments: mapToArray(state.articleComments.getIn(['entities', props.articleId])),
-  status: state.articleComments.status,
-  error: state.articleComments.error
+  comments: mapToArray(state.article.getIn(['comments', props.articleId]))
 })
 
 const mapDispatchToProps = { getArticleComments, addArticleComment }

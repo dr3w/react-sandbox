@@ -3,6 +3,9 @@ import qs from 'qs'
 import cache from 'memory-cache'
 import { START, SUCCESS, FAIL } from 'common/constants'
 
+
+// TODO: https://github.com/zellwk/zl-fetch
+
 const getRequestBody = (method, data) => (
   (!(method === 'GET' || method === 'HEAD') && data && JSON.stringify(data)) || null
 )

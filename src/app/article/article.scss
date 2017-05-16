@@ -1,0 +1,12 @@
+li {
+    color: #555;
+
+    a {
+        color: #555;
+    }
+
+    a.is-active {
+        color: #000;
+        font-weight: bold;
+    }
+}

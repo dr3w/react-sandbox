@@ -1,12 +1,9 @@
-import 'common/components/comments/CommentList.scss'
-
 import React from 'react'
 import PropTypes from 'prop-types'
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
-import { Button, CommentList, Status } from 'common/components'
-import { LOADING } from 'common/constants'
+import { Button, CommentList } from 'common/components'
 
-const CommentListLazy = ({ status, error, comments, loadComments }) => {
+const CommentListLazy = ({ comments, loadComments }) => {
   const getCommentsComponent = () => {
     if (!comments.length) return null
 
@@ -30,7 +27,6 @@ const CommentListLazy = ({ status, error, comments, loadComments }) => {
       <Button
         text="Load comments"
         onClick={loadComments}
-        isDisabled={status === LOADING}
       />
     )
   }
@@ -39,26 +35,18 @@ const CommentListLazy = ({ status, error, comments, loadComments }) => {
     <div>
       { getLoadMoreButton() }
       { getCommentsComponent() }
-
-      <Status
-        status={status}
-        error={error}
-      />
     </div>
   )
 }
 
 CommentListLazy.propTypes = {
-  status: PropTypes.string.isRequired,
   comments: PropTypes.array,
-  error: PropTypes.string,
 
   loadComments: PropTypes.func.isRequired
 }
 
 CommentListLazy.defaultProps = {
-  comments: [],
-  error: ''
+  comments: []
 }
 
 export default CommentListLazy

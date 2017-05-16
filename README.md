@@ -1,5 +1,27 @@
-# The conventions (DRAFT):
 
+
+## TODO:
+
+- -styles (LESS / SASS)-
+- ERROR and STATUS in store
+- Jest
+
+- Status as HOC
+   - status as a separate reducer
+
+
+- Recompose
+- Redux saga
+- Ducks
+move comments as a sibling?
+
+
+----------
+
+
+DEPRECATED >>>
+
+# The conventions (DRAFT):
 
 - components are pascal cased and have .jsx ext
 - default exports (classes, function, vars) should be named the same way as the file
@@ -33,12 +55,3 @@
 ## Middleware
 
 ----------
-
-## TODO:
-
-- -styles (LESS / SASS)-
-- ERROR and STATUS in store
-- Jest
-
-- Status as HOC
-   - status as a separate reducer
