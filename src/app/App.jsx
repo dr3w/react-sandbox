@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import React from 'react'
 import { Link, Route, Switch, Redirect } from 'react-router-dom'
 import { NavLinkLi } from 'components'
-import ArticleListContainer from 'app/article/ArticleListContainer'
+import ArticleListContainer from 'app/article/list'
 import NoMatch from 'app/no-match/NoMatch'
 
 const App = () => (

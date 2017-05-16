@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { articleActions, getArticleById, getArticleComments } from 'reducers/article'
 import { CommentListLazy } from 'components'
-import ArticleView from 'app/article/ArticleView'
+import ArticleView from 'app/article/view/ArticleView'
 
 const loadData = (props, oldProps) => {
   if (!oldProps || (oldProps.match.params.id !== props.match.params.id)) {

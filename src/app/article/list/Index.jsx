@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { articleActions, getAllArticles } from 'reducers/article'
-import ArticleList from 'app/article/ArticleList'
+import ArticleList from 'app/article/list/ArticleList'
 
 class ArticleListContainer extends React.PureComponent {
   componentDidMount() {
