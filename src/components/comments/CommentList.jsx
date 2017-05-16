@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './comments.scss'
-
 const CommentList = ({ comments }) => {
+  if (!comments.length) return null
+
   const commentList = comments.map(comment => (
     <li key={comment.id}>
       { comment.text }

@@ -1,8 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import qs from 'qs'
 import cache from 'memory-cache'
-import { START, SUCCESS, FAIL } from 'common/constants'
-
+import { START, SUCCESS, FAIL } from 'reducers/app'
 
 // TODO: https://github.com/zellwk/zl-fetch
 

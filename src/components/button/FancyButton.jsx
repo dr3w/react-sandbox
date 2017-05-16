@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'common/components'
+import Button from './Button'
 
 const FancyButton = props => (
   <div

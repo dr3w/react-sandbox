@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
-import { Button, CommentList } from 'common/components'
+import { Button, CommentList } from 'components'
 
 const CommentListLazy = ({ comments, loadComments }) => {
   const getCommentsComponent = () => {
@@ -41,7 +41,6 @@ const CommentListLazy = ({ comments, loadComments }) => {
 
 CommentListLazy.propTypes = {
   comments: PropTypes.array,
-
   loadComments: PropTypes.func.isRequired
 }
 
