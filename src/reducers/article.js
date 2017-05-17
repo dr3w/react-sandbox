@@ -1,6 +1,6 @@
 import { Record, OrderedMap } from 'immutable'
 import { arrayToMap, mapToArray } from 'common/helpers'
-import { SUCCESS } from 'reducers/app'
+import { SUCCESS } from 'common/constants'
 
 const GET_ALL_ARTICLES = 'GET_ALL_ARTICLES'
 const GET_ARTICLE = 'GET_ARTICLE'

@@ -8,7 +8,6 @@ import ArticleView from 'app/article/view/ArticleView'
 const loadData = (props, oldProps) => {
   if (!oldProps || (oldProps.match.params.id !== props.match.params.id)) {
     props.getArticle(props.match.params.id)
-    // props.getArticleComments(props.match.params.id)
   }
 }
 
