@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
 import { NavLinkLi } from 'components'
-import ArticleViewContainer from 'app/article/view'
+import ArticleViewContainer from 'app/article/view/ArticleViewContainer'
 
-const ArticleList = ({ articles }) => {
-  const articleList = articles.map(article => (
+const ArticleList = ({ list }) => {
+  const articleList = list.map(article => (
     <NavLinkLi
       key={article.id}
       to={`/articles/${article.id}`}
@@ -33,10 +33,11 @@ const ArticleList = ({ articles }) => {
 }
 
 ArticleList.propTypes = {
-  articles: PropTypes.array
+  list: PropTypes.array
 }
 
 ArticleList.defaultProps = {
-  articles: []
+  list: []
 }
+
 export default ArticleList

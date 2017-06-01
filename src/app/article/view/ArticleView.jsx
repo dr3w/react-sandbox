@@ -1,23 +1,25 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { articleShape } from 'common/shapes'
+import { CommentList } from 'components'
 
-const ArticleView = ({ article }) => (
-  <article>
-    <h3>{article.title}</h3>
-    <p>{article.text}</p>
-    <p><b>{article.date}</b></p>
-  </article>
+const ArticleView = ({ article, comments }) => (
+  <div>
+    <article>
+      <h3>{article.title}</h3>
+      <p>{article.text}</p>
+      <p><b>{article.date}</b></p>
+    </article>
+
+    <CommentList comments={comments} />
+  </div>
 )
 
 ArticleView.propTypes = {
-  article: PropTypes.shape({
-    id: PropTypes.string,
-    text: PropTypes.string,
-    date: PropTypes.string
-  })
+  article: articleShape
 }
 
 ArticleView.defaultProps = {
   article: {}
 }
+
 export default ArticleView
