@@ -1,5 +1,8 @@
 /* eslint-disable no-var */
 var path = require('path')
+var fs = require('fs')
+
+const appDirectory = fs.realpathSync(process.cwd())
 
 module.exports = {
   devtool: 'source-map',
@@ -8,7 +11,7 @@ module.exports = {
     './src/index.jsx'
   ],
   output: {
-    path: path.join(__dirname, 'build'),
+    path: path.join(appDirectory, 'build'),
     filename: 'bundle.js',
     publicPath: '/static/'
   },
@@ -28,7 +31,7 @@ module.exports = {
       {
         test: /\.jsx?/,
         loaders: ['babel-loader', 'eslint-loader'],
-        include: path.join(__dirname, 'src')
+        include: path.join(appDirectory, 'src')
       },
       {
         test: /\.css$/,
