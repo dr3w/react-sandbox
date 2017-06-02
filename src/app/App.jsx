@@ -1,10 +1,10 @@
-import 'bootstrap/dist/css/bootstrap.css'
-
 import React from 'react'
 import { Link, Route, Switch, Redirect } from 'react-router-dom'
 import { NavLinkLi } from 'components'
 import ArticleListContainer from 'app/article/list/ArticleListContainer'
 import NoMatch from 'app/no-match/NoMatch'
+
+import 'bootstrap/dist/css/bootstrap.css'
 
 const App = () => (
   <div>
