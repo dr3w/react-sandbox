@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import './CommentList.scss'
 
 const CommentList = ({ comments }) => {
-  if (!comments.length) return null
+  if (!comments) return null
 
   const commentList = comments.map(comment => (
     <li key={comment.id}>
@@ -13,7 +13,7 @@ const CommentList = ({ comments }) => {
   ))
 
   return (
-    <ul className="comment-list">
+    <ul className="comment-list comment-list-normal">
       {commentList}
     </ul>
   )
@@ -21,10 +21,6 @@ const CommentList = ({ comments }) => {
 
 CommentList.propTypes = {
   comments: PropTypes.array
-}
-
-CommentList.defaultProps = {
-  comments: []
 }
 
 export default CommentList

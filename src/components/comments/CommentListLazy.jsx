@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import { Button, CommentList } from 'components'
 
+import './CommentListLazy.scss'
+
 const CommentListLazy = ({ comments, loadComments }) => {
   const getCommentsComponent = () => {
-    if (!comments.length) return null
+    if (!comments) return null
 
     return (
       <CSSTransitionGroup
@@ -21,7 +23,7 @@ const CommentListLazy = ({ comments, loadComments }) => {
   }
 
   const getLoadMoreButton = () => {
-    if (comments.length) return null
+    if (comments) return null
 
     return (
       <Button
@@ -41,11 +43,7 @@ const CommentListLazy = ({ comments, loadComments }) => {
 
 CommentListLazy.propTypes = {
   comments: PropTypes.array,
-  loadComments: PropTypes.func.isRequired
-}
-
-CommentListLazy.defaultProps = {
-  comments: []
+  loadComments: PropTypes.func
 }
 
 export default CommentListLazy

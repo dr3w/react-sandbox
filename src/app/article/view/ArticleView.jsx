@@ -1,28 +1,28 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { articleShape } from 'common/shapes'
-import { CommentList } from 'components'
+import { CommentListLazy } from 'components'
 
-const ArticleView = ({ article, comments }) => (
-  <div>
-    <article>
-      <h3>{article.title}</h3>
-      <p>{article.text}</p>
-      <p><b>{article.date}</b></p>
-    </article>
+const ArticleView = ({ article, comments, loadComments }) => {
+  const loadArticleComments = () => loadComments(article.id)
 
-    <CommentList comments={comments} />
-  </div>
-)
+  return (
+    <div>
+      <article>
+        <h3>{article.title}</h3>
+        <p>{article.text}</p>
+        <p><b>{article.date}</b></p>
+      </article>
+
+      <CommentListLazy comments={comments} loadComments={loadArticleComments} />
+    </div>
+  )
+}
 
 ArticleView.propTypes = {
   article: articleShape,
-  comments: PropTypes.array
-}
-
-ArticleView.defaultProps = {
-  article: {},
-  comments: []
+  comments: PropTypes.array,
+  loadComments: PropTypes.func
 }
 
 export default ArticleView

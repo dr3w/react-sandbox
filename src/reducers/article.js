@@ -2,7 +2,7 @@ import { handle } from 'redux-pack'
 import callAPI from 'common/api'
 import { Record } from 'immutable'
 import {
-  StatusMap, onStart, onSuccess, onFailure, onInvalidate, isStatusPristine
+  StatusMap, onStart, onSuccess, onFailure, isStatusPristine
 } from 'common/helpers'
 
 const FETCH_ARTICLE = 'FETCH_ARTICLE'
@@ -32,7 +32,7 @@ const articleReducer = (state = new DefaultReducerState({}), action) => {
       })
 
     case INVALIDATE_ARTICLE_STATE:
-      return onInvalidate(state)
+      return new DefaultReducerState({})
 
     default:
       return state
@@ -55,16 +55,25 @@ const invalidatedState = {
   type: INVALIDATE_ARTICLE_STATE
 }
 
-export const articleActions = {
-  checkAndFetchArticle: articleId => (dispatch, getState) => {
-    const state = getState()
-    const article = getArticle(state)
-    const status = getArticleStatus(state)
+const checkAndInvalidateArticle = articleId => (dispatch, getState) => {
+  const article = getArticle(getState())
 
-    if (isStatusPristine(status)) {
-      dispatch(fetchArticle(articleId))
-    } else if (article && article.id !== articleId) {
-      dispatch(invalidatedState)
-    }
+  if (article && article.id !== articleId) {
+    dispatch(invalidatedState)
   }
+}
+
+const checkAndFetchArticle = articleId => (dispatch, getState) => {
+  const status = getArticleStatus(getState())
+
+  if (isStatusPristine(status)) {
+    dispatch(fetchArticle(articleId))
+  } else {
+    dispatch(checkAndInvalidateArticle(articleId))
+  }
+}
+
+export const articleActions = {
+  checkAndInvalidateArticle,
+  checkAndFetchArticle
 }

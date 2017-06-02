@@ -1,10 +1,5 @@
-.comment-list {
-    list-style-type: none;
-    margin: 20px 0 10px;
-    padding: 10px 20px 0;
-    border-top: 1px solid #efefef;
+@import './Comment.scss';
 
-    li {
-        margin: 10px 0;
-    }
+.comment-list-normal {
+    color: #333333;
 }

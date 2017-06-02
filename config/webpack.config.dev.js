@@ -5,6 +5,9 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 var appDirectory = fs.realpathSync(process.cwd())
 
+var vendorStyles = new ExtractTextPlugin({ filename: 'style/vendor.css', disable: false, allChunks: true })
+var appStyles = new ExtractTextPlugin({ filename: 'style/app.css', disable: false, allChunks: true })
+
 module.exports = {
   devtool: 'source-map',
   entry: [
@@ -27,23 +30,25 @@ module.exports = {
     }],
     historyApiFallback: true
   },
-  plugins: [
-    new ExtractTextPlugin({ filename: 'style/style.css', disable: false, allChunks: true })
-  ],
+  plugins: [vendorStyles, appStyles],
   module: {
     loaders: [
       {
-        test: /\.jsx?/,
+        test: /\.jsx?$/,
         loaders: ['babel-loader', 'eslint-loader'],
         include: path.join(appDirectory, 'src')
       },
-      // {
-      //   test: /\.css$/,
-      //   loader: 'style-loader!css-loader'
-      // },
+      {
+        test: /node_modules\/.*\.s?css$/,
+        use: vendorStyles.extract({
+          fallback: 'style-loader',
+          use: ['css-loader']
+        })
+      },
       {
         test: /\.s?css$/,
-        use: ExtractTextPlugin.extract({
+        exclude: [/node_modules/],
+        use: appStyles.extract({
           fallback: 'style-loader',
           use: ['css-loader', 'sass-loader']
         })
