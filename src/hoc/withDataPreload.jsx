@@ -1,3 +1,4 @@
+/* eslint react/prop-types: 0 */
 import 'hoc/withDataPreload.scss'
 
 import React from 'react'
@@ -31,9 +32,9 @@ const withDataPreload = (
   }),
   branch(
     errorMessage,
-    renderComponent(withProps(
-      props => ({ errorMessage: errorMessage(props) })
-    )(Error))
+    renderComponent(
+      withProps(props => ({ errorMessage: errorMessage(props) || '' }))(Error)
+    )
   ),
   branch(
     isLoaded,

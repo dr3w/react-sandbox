@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { articleShape } from 'common/shapes'
 import { CommentList } from 'components'
 
@@ -15,11 +16,13 @@ const ArticleView = ({ article, comments }) => (
 )
 
 ArticleView.propTypes = {
-  article: articleShape
+  article: articleShape,
+  comments: PropTypes.array
 }
 
 ArticleView.defaultProps = {
-  article: {}
+  article: {},
+  comments: []
 }
 
 export default ArticleView
