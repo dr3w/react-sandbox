@@ -7,7 +7,7 @@
     "start": "concurrently \"npm run dev\" \"npm run api\"",
     "api": "node simple_api/server.js",
     "dev": "webpack-dev-server --config ./config/webpack.config.dev.js --hot --inline",
-    "build": "webpack",
+    "build": "webpack --config ./config/webpack.config.dev.js",
     "lint": " ./node_modules/.bin/eslint 'src/**/*.js*'",
     "prepush": "npm run lint"
   },
@@ -20,6 +20,7 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "bootstrap-sass": "^3.3.7",
+    "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.1",
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",

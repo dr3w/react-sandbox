@@ -1,8 +1,9 @@
 /* eslint-disable no-var */
 var path = require('path')
 var fs = require('fs')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-const appDirectory = fs.realpathSync(process.cwd())
+var appDirectory = fs.realpathSync(process.cwd())
 
 module.exports = {
   devtool: 'source-map',
@@ -26,6 +27,9 @@ module.exports = {
     }],
     historyApiFallback: true
   },
+  plugins: [
+    new ExtractTextPlugin({ filename: 'style/style.css', disable: false, allChunks: true })
+  ],
   module: {
     loaders: [
       {
@@ -39,7 +43,10 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader']
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
       },
       {
         test: /\.json$/,

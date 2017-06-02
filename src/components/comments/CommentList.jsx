@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import './CommentList.scss'
+
 const CommentList = ({ comments }) => {
   if (!comments.length) return null
 
