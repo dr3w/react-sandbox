@@ -1,28 +1,21 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { articleShape } from 'common/shapes'
-import { CommentListLazy } from 'components'
+import ArticleCommentContainer from 'app/article/comment/ArticleCommentContainer'
 
-const ArticleView = ({ article, comments, loadComments }) => {
-  const loadArticleComments = () => loadComments(article.id)
+const ArticleView = ({ article }) => (
+  <div>
+    <article>
+      <h3>{article.title}</h3>
+      <p>{article.text}</p>
+      <p><b>{article.date}</b></p>
+    </article>
 
-  return (
-    <div>
-      <article>
-        <h3>{article.title}</h3>
-        <p>{article.text}</p>
-        <p><b>{article.date}</b></p>
-      </article>
-
-      <CommentListLazy comments={comments} loadComments={loadArticleComments} />
-    </div>
-  )
-}
+    <ArticleCommentContainer articleId={article.id} />
+  </div>
+)
 
 ArticleView.propTypes = {
-  article: articleShape,
-  comments: PropTypes.array,
-  loadComments: PropTypes.func
+  article: articleShape
 }
 
 export default ArticleView

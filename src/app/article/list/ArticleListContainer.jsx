@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { compose } from 'recompose'
+import { compose, pure } from 'recompose'
 import withDataPreload from 'hoc/withDataPreload'
 import { listActions, getList, getListsStatus } from 'reducers/list'
 import ArticleList from 'app/article/list/ArticleList'
@@ -33,6 +33,7 @@ const isReady = ({ status }) => status.loaded
 const errorMessage = ({ status }) => status.error && status.error.message
 
 const enhance = compose(
+  pure,
   connect(mapStateToProps, mapDispatchToProps),
   withDataPreload(loadData, isReady, errorMessage)
 )

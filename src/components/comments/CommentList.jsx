@@ -6,6 +6,8 @@ import './CommentList.scss'
 const CommentList = ({ comments }) => {
   if (!comments) return null
 
+  const emptyList = <p>No comments yet</p>
+
   const commentList = comments.map(comment => (
     <li key={comment.id}>
       { comment.text }
@@ -13,9 +15,10 @@ const CommentList = ({ comments }) => {
   ))
 
   return (
-    <ul className="comment-list comment-list-normal">
-      {commentList}
-    </ul>
+    comments && comments.length ?
+      <ul className="comment-list comment-list-normal">
+        {commentList}
+      </ul> : <div>{emptyList}</div>
   )
 }
 

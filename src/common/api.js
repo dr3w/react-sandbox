@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import cache from 'memory-cache'
 
-const cacheExpirationLimit = 15 * 60 * 1000
+const cacheExpirationLimit = 1 // 15 * 60 * 1000
 const isGETMethod = options => !options || !options.method || options.method === 'GET'
 
 export default async function callAPI(url, options, isForce) {

@@ -27,11 +27,8 @@ const commentReducer = (state = new DefaultReducerState({}), action) => {
   switch (type) {
     case FETCH_COMMENT:
       return handle(state, action, {
-        start: prevState => onStart(prevState),
-        success: prevState => onSuccess(
-          prevState.set('articleId', meta.articleId),
-          arrayToMap(payload, CommentModel)
-        ),
+        start: prevState => onStart(prevState.set('articleId', meta.articleId)),
+        success: prevState => onSuccess(prevState, arrayToMap(payload, CommentModel)),
         failure: prevState => onFailure(prevState, payload)
       })
 
@@ -63,7 +60,7 @@ const invalidatedState = {
 
 const checkAndInvalidateComments = articleId => (dispatch, getState) => {
   const currentArticleId = getArticleId(getState())
-
+  console.log('!!', currentArticleId, articleId)
   if (currentArticleId && currentArticleId !== articleId) {
     dispatch(invalidatedState)
   }

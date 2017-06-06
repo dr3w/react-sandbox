@@ -5,6 +5,7 @@ import ArticleListContainer from 'app/article/list/ArticleListContainer'
 import NoMatch from 'app/no-match/NoMatch'
 
 import 'bootstrap/dist/css/bootstrap.css'
+import './App.scss'
 
 const App = () => (
   <div>
