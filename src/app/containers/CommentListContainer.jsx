@@ -4,7 +4,7 @@ import _get from 'lodash/get'
 import { connect } from 'react-redux'
 import { compose, pure } from 'recompose'
 import withDataPreload from 'hoc/withDataPreload'
-import { commentActions, getComments, getCommentsStatus } from 'reducers/comment'
+import { commentActions, getComments, getCommentsStatus } from 'store/comment'
 import CommentListLazy from 'components/comment/CommentListLazy'
 
 const CommentListContainer = ({ articleId, comments, checkAndFetchComments }) => {

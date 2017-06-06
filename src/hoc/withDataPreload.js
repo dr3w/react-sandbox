@@ -1,21 +1,5 @@
-/* eslint react/prop-types: 0 */
-import 'hoc/withDataPreload.scss'
-
-import React from 'react'
+import { Error, Spinner } from 'components'
 import { compose, lifecycle, branch, renderComponent, withProps } from 'recompose'
-
-const Spinner = () => (
-  <div className="spinner">
-    <div className="loader">Loading...</div>
-  </div>
-)
-
-const Error = ({ errorMessage }) => (
-  <div className="error">
-    <h3>ERROR!</h3>
-    <p>{errorMessage}</p>
-  </div>
-)
 
 const withDataPreload = (
   loadData = () => null,

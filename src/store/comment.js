@@ -60,7 +60,7 @@ const invalidatedState = {
 
 const checkAndInvalidateComments = articleId => (dispatch, getState) => {
   const currentArticleId = getArticleId(getState())
-  console.log('!!', currentArticleId, articleId)
+  // console.log('!!', currentArticleId, articleId)
   if (currentArticleId && currentArticleId !== articleId) {
     dispatch(invalidatedState)
   }

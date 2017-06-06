@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose, pure } from 'recompose'
 import withDataPreload from 'hoc/withDataPreload'
-import { listActions, getList, getListsStatus } from 'reducers/list'
+import { listActions, getList, getListsStatus } from 'store/list'
 import ArticleList from 'app/components/ArticleList'
 
 const ArticleListContainer = ({ list }) => <ArticleList list={list} />

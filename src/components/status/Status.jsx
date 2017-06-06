@@ -11,6 +11,7 @@ const Status = ({ status, error }) => {
 
   return null
 }
+
 Status.propTypes = {
   status: PropTypes.string,
   error: PropTypes.string
