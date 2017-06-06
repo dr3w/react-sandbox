@@ -1,6 +1,6 @@
 export { default as Status } from './status/Status'
 export { default as Button } from './button/Button'
 export { default as FancyButton } from './button/FancyButton'
-export { default as CommentList } from './comments/CommentList'
-export { default as CommentListLazy } from './comments/CommentListLazy'
+export { default as CommentList } from './comment/CommentList'
+export { default as CommentListLazy } from './comment/CommentListLazy'
 export { default as NavLinkLi } from './navigation/NavLinkLi'

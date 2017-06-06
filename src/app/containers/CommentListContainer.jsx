@@ -1,24 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import _get from 'lodash/get'
 import { connect } from 'react-redux'
 import { compose, pure } from 'recompose'
-import _get from 'lodash/get'
 import withDataPreload from 'hoc/withDataPreload'
 import { commentActions, getComments, getCommentsStatus } from 'reducers/comment'
-import ArticleCommentView from './ArticleCommentView'
+import CommentListLazy from 'components/comment/CommentListLazy'
 
-const CommentViewContainer = ({ articleId, comments, checkAndFetchComments }) => {
+const CommentListContainer = ({ articleId, comments, checkAndFetchComments }) => {
   const loadComments = () => checkAndFetchComments(articleId)
 
   return (
-    <ArticleCommentView
+    <CommentListLazy
       comments={comments}
       loadComments={loadComments}
     />
   )
 }
 
-CommentViewContainer.propTypes = {
+CommentListContainer.propTypes = {
   articleId: PropTypes.string.isRequired,
   comments: PropTypes.array,
   checkAndFetchComments: PropTypes.func
@@ -47,5 +47,5 @@ const enhance = compose(
   withDataPreload(loadData, isReady, errorMessage)
 )
 
-export default enhance(CommentViewContainer)
+export default enhance(CommentListContainer)
 

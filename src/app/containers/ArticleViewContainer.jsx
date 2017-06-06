@@ -6,7 +6,7 @@ import _get from 'lodash/get'
 import withDataPreload from 'hoc/withDataPreload'
 import { articleActions, getArticle, getArticleStatus } from 'reducers/article'
 import { articleShape } from 'common/shapes'
-import ArticleView from 'app/article/view/ArticleView'
+import ArticleView from 'app/components/ArticleView'
 
 const ArticleViewContainer = ({ article }) => <ArticleView article={article} />
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { articleShape } from 'common/shapes'
-import ArticleCommentContainer from 'app/article/comment/ArticleCommentContainer'
+import CommentListContainer from 'app/containers/CommentListContainer'
 
 const ArticleView = ({ article }) => (
   <div>
@@ -10,7 +10,7 @@ const ArticleView = ({ article }) => (
       <p><b>{article.date}</b></p>
     </article>
 
-    <ArticleCommentContainer articleId={article.id} />
+    <CommentListContainer articleId={article.id} />
   </div>
 )
 
