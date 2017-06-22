@@ -1,17 +1,17 @@
 import { Error, Spinner } from 'components'
 import { compose, lifecycle, branch, renderComponent, withProps } from 'recompose'
 
-const withDataPreload = (
+const withDataPreload = ({
   loadData = () => null,
-  isLoaded = () => false,
+  isReady = () => false,
   errorMessage = () => ''
-) => BaseComponent => compose(
+}) => BaseComponent => compose(
   lifecycle({
     componentDidMount() {
       loadData(this.props)
     },
-    componentDidUpdate() {
-      loadData(this.props)
+    componentDidUpdate(prevProps) {
+      loadData(this.props, prevProps)
     }
   }),
   branch(
@@ -21,7 +21,7 @@ const withDataPreload = (
     )
   ),
   branch(
-    isLoaded,
+    isReady,
     renderComponent(BaseComponent),
     renderComponent(Spinner)
   )

@@ -1,12 +1,11 @@
 import { handle } from 'redux-pack'
 import callAPI from 'common/api'
-import { Record } from 'immutable'
+import { Record, Map } from 'immutable'
 import {
-  StatusMap, onStart, onSuccess, onFailure, isStatusPristine
+  onStart, onSuccess, onFailure, shouldFetch
 } from 'common/helpers'
 
 const FETCH_ARTICLE = 'FETCH_ARTICLE'
-const INVALIDATE_ARTICLE_STATE = 'INVALIDATE_ARTICLE_STATE'
 
 const ArticleModel = Record({
   id: null,
@@ -15,24 +14,19 @@ const ArticleModel = Record({
   text: null
 })
 
-const DefaultReducerState = Record({
-  data: null,
-  status: new StatusMap()
-})
+const DefaultReducerState = Map
 
 const articleReducer = (state = new DefaultReducerState({}), action) => {
-  const { type, payload } = action
+  const { type, payload, meta = {} } = action
+  const { articleId } = meta
 
   switch (type) {
     case FETCH_ARTICLE:
       return handle(state, action, {
-        start: prevState => onStart(prevState),
-        success: prevState => onSuccess(prevState, new ArticleModel(payload)),
-        failure: prevState => onFailure(prevState, payload)
+        start: prevState => onStart(prevState, articleId),
+        success: prevState => onSuccess(prevState, articleId, new ArticleModel(payload)),
+        failure: prevState => onFailure(prevState, articleId, payload)
       })
-
-    case INVALIDATE_ARTICLE_STATE:
-      return new DefaultReducerState({})
 
     default:
       return state
@@ -42,38 +36,35 @@ const articleReducer = (state = new DefaultReducerState({}), action) => {
 export default articleReducer
 
 // SELECTORS
-export const getArticle = state => state.article.get('data')
-export const getArticleStatus = state => state.article.get('status').toJS()
+export const getArticle = (state, articleId) => {
+  const article = state.article.getIn([articleId, 'data'])
+
+  return article && article.toJS()
+}
+
+export const getArticleStatus = (state, articleId) => {
+  const status = state.article.getIn([articleId, 'status'])
+
+  return status && status.toJS()
+}
 
 // ACTIONS
 const fetchArticle = articleId => ({
   type: FETCH_ARTICLE,
+  meta: { articleId },
   promise: callAPI(`/api/article/${articleId}`)
 })
 
-const invalidatedState = {
-  type: INVALIDATE_ARTICLE_STATE
-}
+const checkAndFetchArticle = (articleId, force) => (dispatch, getState) => {
+  const state = getState()
+  const article = getArticle(state, articleId)
+  const status = getArticleStatus(state, articleId)
 
-const checkAndInvalidateArticle = articleId => (dispatch, getState) => {
-  const article = getArticle(getState())
-
-  if (article && article.id !== articleId) {
-    dispatch(invalidatedState)
-  }
-}
-
-const checkAndFetchArticle = articleId => (dispatch, getState) => {
-  const status = getArticleStatus(getState())
-
-  if (isStatusPristine(status)) {
+  if (shouldFetch(force, article, status)) {
     dispatch(fetchArticle(articleId))
-  } else {
-    dispatch(checkAndInvalidateArticle(articleId))
   }
 }
 
 export const articleActions = {
-  checkAndInvalidateArticle,
   checkAndFetchArticle
 }

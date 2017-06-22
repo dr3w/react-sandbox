@@ -12,32 +12,41 @@ const ArticleViewContainer = ({ article }) => <ArticleView article={article} />
 
 ArticleViewContainer.propTypes = {
   match: PropTypes.object.isRequired,
-  article: articleShape,
-  comments: PropTypes.array
+  status: PropTypes.object.isRequired,
+  article: articleShape
 }
 
-const mapStateToProps = state => ({
-  article: getArticle(state),
-  articleStatus: getArticleStatus(state)
-})
+const mapStateToProps = (state, props) => {
+  const articleId = props.match.params.id
+
+  return {
+    article: getArticle(state, articleId),
+    status: getArticleStatus(state, articleId)
+  }
+}
 
 const mapDispatchToProps = {
   checkAndFetchArticle: articleActions.checkAndFetchArticle
 }
 
-const loadData = ({ match, checkAndFetchArticle }) => {
+const loadData = ({ status, match, checkAndFetchArticle }, prevProps) => {
   const articleId = match.params.id
+  const force = status && status.error && prevProps.match.params.id !== articleId
 
-  checkAndFetchArticle(articleId)
+  checkAndFetchArticle(articleId, force)
 }
 
-const isReady = ({ articleStatus }) => articleStatus.loaded
-const errorMessage = ({ articleStatus }) => _get(articleStatus, ['error', 'message'])
+const isReady = ({ status }) => _get(status, ['loaded'])
+const errorMessage = ({ status }) => _get(status, ['error', 'message'])
 
 const enhance = compose(
   pure,
   connect(mapStateToProps, mapDispatchToProps),
-  withDataPreload(loadData, isReady, errorMessage)
+  withDataPreload({
+    loadData,
+    isReady,
+    errorMessage
+  })
 )
 
 export default enhance(ArticleViewContainer)

@@ -1,9 +1,8 @@
 import { handle } from 'redux-pack'
 import callAPI from 'common/api'
-import { Record, OrderedMap } from 'immutable'
+import { Map, Record } from 'immutable'
 import {
-  arrayToMap, mapToArray, StatusMap,
-  onStart, onSuccess, onFailure, isStatusPristine
+  onStart, onSuccess, onFailure, arrayToMap, mapToArray, shouldFetch
 } from 'common/helpers'
 
 const FETCH_LIST = 'FETCH_LIST'
@@ -13,10 +12,8 @@ const ListModel = Record({
   title: null
 })
 
-const DefaultReducerState = Record({
-  data: new OrderedMap({}),
-  status: new StatusMap({})
-})
+const DefaultReducerState = Map
+const entityId = 0
 
 const listReducer = (state = new DefaultReducerState({}), action) => {
   const { type, payload } = action
@@ -24,9 +21,9 @@ const listReducer = (state = new DefaultReducerState({}), action) => {
   switch (type) {
     case FETCH_LIST:
       return handle(state, action, {
-        start: onStart,
-        success: prevState => onSuccess(prevState, arrayToMap(payload, ListModel)),
-        failure: prevState => onFailure(prevState, payload)
+        start: prevState => onStart(prevState, entityId),
+        success: prevState => onSuccess(prevState, entityId, arrayToMap(payload, ListModel)),
+        failure: prevState => onFailure(prevState, entityId, payload)
       })
 
     default:
@@ -37,8 +34,17 @@ const listReducer = (state = new DefaultReducerState({}), action) => {
 export default listReducer
 
 // SELECTORS
-export const getList = state => mapToArray(state.list.get('data'))
-export const getListsStatus = state => state.list.get('status').toJS()
+export const getList = (state) => {
+  const list = state.list.getIn([entityId, 'data'])
+
+  return list && mapToArray(list)
+}
+
+export const getListStatus = (state) => {
+  const status = state.list.getIn([entityId, 'status'])
+
+  return status && status.toJS()
+}
 
 // ACTIONS
 const fetchList = () => ({
@@ -46,14 +52,16 @@ const fetchList = () => ({
   promise: callAPI('/api/article')
 })
 
-export const listActions = {
-  checkAndFetchList: articleId => (dispatch, getState) => {
-    const state = getState()
-    const status = getListsStatus(state)
+const checkAndFetchList = force => (dispatch, getState) => {
+  const state = getState()
+  const list = getList(state)
+  const status = getListStatus(state)
 
-    if (isStatusPristine(status)) {
-      dispatch(fetchList(articleId))
-    }
+  if (shouldFetch(force, list, status)) {
+    dispatch(fetchList())
   }
 }
 
+export const listActions = {
+  checkAndFetchList
+}

@@ -1,4 +1,4 @@
-import { OrderedMap, Map } from 'immutable'
+import { OrderedMap } from 'immutable'
 
 export const arrayToMap = (arr = [], Model) => (
   arr.reduce((acc, entity) => {
@@ -10,39 +10,30 @@ export const arrayToMap = (arr = [], Model) => (
 export const mapToArray = immutableMap =>
   (immutableMap instanceof OrderedMap && immutableMap.valueSeq().toArray()) || null
 
-export const onStart = state => state
-  .setIn(['status', 'loading'], true)
-  .setIn(['status', 'loaded'], false)
-  .setIn(['status', 'error'], null)
+export const onStart = (state, entityId) => state
+  .setIn([entityId, 'data'], null)
+  .setIn([entityId, 'status', 'loading'], true)
+  .setIn([entityId, 'status', 'loaded'], false)
+  .setIn([entityId, 'status', 'error'], null)
 
-export const onSuccess = (state, data) => state
-  .set('data', data)
-  .setIn(['status', 'loading'], false)
-  .setIn(['status', 'loaded'], true)
-  .setIn(['status', 'error'], null)
+export const onSuccess = (state, entityId, data) => state
+  .setIn([entityId, 'data'], data)
+  .setIn([entityId, 'status', 'loading'], false)
+  .setIn([entityId, 'status', 'loaded'], true)
+  .setIn([entityId, 'status', 'error'], null)
 
-export const onFailure = (state, error) => state
-  .set('data', null)
-  .setIn(['status', 'loading'], false)
-  .setIn(['status', 'loaded'], false)
-  .setIn(['status', 'error'], error)
+export const onFailure = (state, entityId, error) => state
+  .setIn([entityId, 'data'], null)
+  .setIn([entityId, 'status', 'loading'], false)
+  .setIn([entityId, 'status', 'loaded'], true)
+  .setIn([entityId, 'status', 'error'], error)
 
-export const onInvalidate = state => state
-  .set('data', null)
-  .setIn(['status', 'loading'], false)
-  .setIn(['status', 'loaded'], false)
-  .setIn(['status', 'error'], null)
+export const isStatusPristine = (status = {}) => {
+  const { loading, loaded, error } = status
 
-export class StatusMap extends Map {
-  constructor(data) {
-    super(Object.assign({}, data, {
-      loading: false,
-      loaded: false,
-      error: null
-    }))
-  }
+  return !error && !loading && !loaded
 }
 
-export const isStatusPristine = ({ loading, loaded, error }) => (
-  !error && !loading && !loaded
+export const shouldFetch = (force, data, status) => (
+  force || (!data && isStatusPristine(status))
 )

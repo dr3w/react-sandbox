@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import _get from 'lodash/get'
+// import _get from 'lodash/get'
 import { connect } from 'react-redux'
 import { compose, pure } from 'recompose'
-import withDataPreload from 'hoc/withDataPreload'
+// import withDataPreload from 'hoc/withDataPreload'
 import { commentActions, getComments, getCommentsStatus } from 'store/comment'
 import CommentListLazy from 'components/comment/CommentListLazy'
 
@@ -24,28 +24,32 @@ CommentListContainer.propTypes = {
   checkAndFetchComments: PropTypes.func
 }
 
-const mapStateToProps = state => ({
-  comments: getComments(state),
-  commentStatus: getCommentsStatus(state)
+const mapStateToProps = (state, { articleId }) => ({
+  comments: getComments(state, articleId),
+  status: getCommentsStatus(state, articleId)
 })
 
 const mapDispatchToProps = {
-  checkAndInvalidateComments: commentActions.checkAndInvalidateComments,
   checkAndFetchComments: commentActions.checkAndFetchComments
 }
 
-const loadData = ({ articleId, checkAndInvalidateComments }) => {
-  checkAndInvalidateComments(articleId)
-}
-
-const isReady = () => true
-const errorMessage = ({ commentStatus }) => _get(commentStatus, ['error', 'message'])
+// const loadData = ({ status, articleId, checkAndFetchComments }, prevProps) => {
+//   const force = status && status.error && prevProps.articleId !== articleId
+//
+//   checkAndFetchComments(articleId, force)
+// }
+//
+// const isReady = ({ status }) => _get(status, ['loaded'])
+// const errorMessage = ({ status }) => _get(status, ['error', 'message'])
 
 const enhance = compose(
   pure,
   connect(mapStateToProps, mapDispatchToProps),
-  withDataPreload(loadData, isReady, errorMessage)
+  // withDataPreload({
+  //   loadData,
+  //   isReady,
+  //   errorMessage
+  // })
 )
 
 export default enhance(CommentListContainer)
-

@@ -1,13 +1,11 @@
 import { handle } from 'redux-pack'
 import callAPI from 'common/api'
-import { Record } from 'immutable'
+import { Record, Map } from 'immutable'
 import {
-  StatusMap, arrayToMap, mapToArray,
-  onStart, onSuccess, onFailure, isStatusPristine
+  onStart, onSuccess, onFailure, arrayToMap, mapToArray, shouldFetch
 } from 'common/helpers'
 
 const FETCH_COMMENT = 'FETCH_COMMENT'
-const INVALIDATE_COMMENT_STATE = 'INVALIDATE_COMMENT_STATE'
 
 const CommentModel = Record({
   id: null,
@@ -15,25 +13,19 @@ const CommentModel = Record({
   text: null
 })
 
-const DefaultReducerState = Record({
-  articleId: null,
-  data: null,
-  status: new StatusMap()
-})
+const DefaultReducerState = Map
 
 const commentReducer = (state = new DefaultReducerState({}), action) => {
-  const { type, payload, meta } = action
+  const { type, payload, meta = {} } = action
+  const { articleId } = meta
 
   switch (type) {
     case FETCH_COMMENT:
       return handle(state, action, {
-        start: prevState => onStart(prevState.set('articleId', meta.articleId)),
-        success: prevState => onSuccess(prevState, arrayToMap(payload, CommentModel)),
-        failure: prevState => onFailure(prevState, payload)
+        start: prevState => onStart(prevState, articleId),
+        success: prevState => onSuccess(prevState, articleId, arrayToMap(payload, CommentModel)),
+        failure: prevState => onFailure(prevState, articleId, payload)
       })
-
-    case INVALIDATE_COMMENT_STATE:
-      return new DefaultReducerState({})
 
     default:
       return state
@@ -43,40 +35,35 @@ const commentReducer = (state = new DefaultReducerState({}), action) => {
 export default commentReducer
 
 // SELECTORS
-export const getArticleId = state => state.comment.articleId
-export const getComments = state => mapToArray(state.comment.get('data'))
-export const getCommentsStatus = state => state.comment.get('status').toJS()
+export const getComments = (state, articleId) => {
+  const comments = state.comment.getIn([articleId, 'data'])
+
+  return comments && mapToArray(comments)
+}
+
+export const getCommentsStatus = (state, articleId) => {
+  const comments = state.comment.getIn([articleId, 'status'])
+
+  return comments && comments.toJS()
+}
 
 // ACTIONS
-const fetchComments = articleId => ({
+const fetchComment = articleId => ({
   type: FETCH_COMMENT,
-  promise: callAPI(`/api/comment/?article=${articleId}`),
-  meta: { articleId }
+  meta: { articleId },
+  promise: callAPI(`/api/comment/?article=${articleId}`)
 })
 
-const invalidatedState = {
-  type: INVALIDATE_COMMENT_STATE
-}
+const checkAndFetchComments = (articleId, force) => (dispatch, getState) => {
+  const state = getState()
+  const comments = getComments(state, articleId)
+  const status = getCommentsStatus(state, articleId)
 
-const checkAndInvalidateComments = articleId => (dispatch, getState) => {
-  const currentArticleId = getArticleId(getState())
-  // console.log('!!', currentArticleId, articleId)
-  if (currentArticleId && currentArticleId !== articleId) {
-    dispatch(invalidatedState)
-  }
-}
-
-const checkAndFetchComments = articleId => (dispatch, getState) => {
-  const status = getCommentsStatus(getState())
-
-  if (isStatusPristine(status)) {
-    dispatch(fetchComments(articleId))
-  } else {
-    dispatch(checkAndInvalidateComments(articleId))
+  if (shouldFetch(force, comments, status)) {
+    dispatch(fetchComment(articleId))
   }
 }
 
 export const commentActions = {
-  checkAndInvalidateComments,
   checkAndFetchComments
 }
