@@ -8,7 +8,7 @@ const withDataPreload = ({
 }) => BaseComponent => compose(
   lifecycle({
     componentDidMount() {
-      loadData(this.props)
+      loadData(this.props, {})
     },
     componentDidUpdate(prevProps) {
       loadData(this.props, prevProps)

@@ -1,20 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import _get from 'lodash/get'
 import { connect } from 'react-redux'
 import { compose, pure } from 'recompose'
+import withDataPreload from 'hoc/withDataPreload'
 import { commentActions, getComments, getCommentsStatus } from 'store/comment'
-import CommentListLazy from 'components/comment/CommentListLazy'
+import CommentList from 'components/comment/CommentList'
 
-const CommentListContainer = ({ articleId, comments, checkAndFetchComments }) => {
-  const loadComments = () => checkAndFetchComments(articleId)
-
-  return (
-    <CommentListLazy
-      comments={comments}
-      loadComments={loadComments}
-    />
-  )
-}
+const CommentListContainer = ({ comments }) => <CommentList comments={comments} />
 
 CommentListContainer.propTypes = {
   articleId: PropTypes.string.isRequired,
@@ -31,9 +24,23 @@ const mapDispatchToProps = {
   checkAndFetchComments: commentActions.checkAndFetchComments
 }
 
+const loadData = ({ articleId, checkAndFetchComments }, prevProps) => {
+  const force = prevProps.articleId !== articleId // force fetch on route change
+
+  checkAndFetchComments(articleId, force)
+}
+
+const isReady = ({ status }) => _get(status, ['loaded'])
+const errorMessage = ({ status }) => _get(status, ['error', 'message'])
+
 const enhance = compose(
   pure,
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps),
+  withDataPreload({
+    loadData,
+    isReady,
+    errorMessage
+  })
 )
 
 export default enhance(CommentListContainer)

@@ -1,6 +1,7 @@
 import React from 'react'
 import { articleShape } from 'common/shapes'
-import CommentListContainer from 'app/containers/CommentListContainer'
+// import CommentListContainer from 'app/containers/CommentListContainer'
+import CommentListContainerPreload from 'app/containers/CommentListContainerPreload'
 
 const ArticleView = ({ article }) => (
   <div>
@@ -10,7 +11,7 @@ const ArticleView = ({ article }) => (
       <p><b>{article.date}</b></p>
     </article>
 
-    <CommentListContainer articleId={article.id} />
+    <CommentListContainerPreload articleId={article.id} />
   </div>
 )
 
