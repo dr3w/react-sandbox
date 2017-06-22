@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose, pure } from 'recompose'
-import _get from 'lodash/get'
 import withDataPreload from 'hoc/withDataPreload'
 import { articleActions, getArticle, getArticleStatus } from 'store/article'
 import { articleShape } from 'common/shapes'
+import * as helper from 'common/helpers'
 import ArticleView from 'app/components/ArticleView'
 
 const ArticleViewContainer = ({ article }) => <ArticleView article={article} />
@@ -36,8 +36,8 @@ const loadData = ({ status, match, checkAndFetchArticle }, prevProps) => {
   checkAndFetchArticle(articleId, force)
 }
 
-const isReady = ({ status }) => _get(status, ['loaded'])
-const errorMessage = ({ status }) => _get(status, ['error', 'message'])
+const isReady = ({ status }) => helper.isReady([status])
+const errorMessage = ({ status }) => helper.errorMessage([status])
 
 const enhance = compose(
   pure,

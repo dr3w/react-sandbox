@@ -1,4 +1,6 @@
 import { OrderedMap } from 'immutable'
+import _get from 'lodash/get'
+import _find from 'lodash/find'
 
 export const arrayToMap = (arr = [], Model) => (
   arr.reduce((acc, entity) => {
@@ -37,3 +39,6 @@ export const isStatusPristine = (status = {}) => {
 export const shouldFetch = (force, data, status) => (
   force || (!data && isStatusPristine(status))
 )
+
+export const isReady = statuses => statuses.every(s => s && s.loaded)
+export const errorMessage = statuses => _get(_find(statuses, s => s && s.error), ['error', 'message'])

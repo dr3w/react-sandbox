@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import _get from 'lodash/get'
 import { connect } from 'react-redux'
 import { compose, pure } from 'recompose'
 import withDataPreload from 'hoc/withDataPreload'
 import { commentActions, getComments, getCommentsStatus } from 'store/comment'
+import * as helper from 'common/helpers'
 import CommentList from 'components/comment/CommentList'
 
 const CommentListContainer = ({ comments }) => <CommentList comments={comments} />
@@ -25,13 +25,13 @@ const mapDispatchToProps = {
 }
 
 const loadData = ({ articleId, checkAndFetchComments }, prevProps) => {
-  const force = prevProps.articleId !== articleId // force fetch on route change
+  const force = prevProps.articleId !== articleId // force fetch on each route change
 
   checkAndFetchComments(articleId, force)
 }
 
-const isReady = ({ status }) => _get(status, ['loaded'])
-const errorMessage = ({ status }) => _get(status, ['error', 'message'])
+const isReady = ({ status }) => helper.isReady([status])
+const errorMessage = ({ status }) => helper.errorMessage([status])
 
 const enhance = compose(
   pure,

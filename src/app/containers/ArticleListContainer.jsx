@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose, pure } from 'recompose'
-import _get from 'lodash/get'
 import withDataPreload from 'hoc/withDataPreload'
 import { listActions, getList, getListStatus } from 'store/list'
+import * as helper from 'common/helpers'
 import ArticleList from 'app/components/ArticleList'
 
 const ArticleListContainer = ({ list }) => <ArticleList list={list} />
@@ -26,9 +26,8 @@ const loadData = ({ checkAndFetchList }) => {
   checkAndFetchList()
 }
 
-// TODO: move to helper
-const isReady = ({ status }) => _get(status, ['loaded'])
-const errorMessage = ({ status }) => _get(status, ['error', 'message'])
+const isReady = ({ status }) => helper.isReady([status])
+const errorMessage = ({ status }) => helper.errorMessage([status])
 
 const enhance = compose(
   pure,
