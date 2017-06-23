@@ -2,7 +2,7 @@ import { handle } from 'redux-pack'
 import callAPI from 'common/api'
 import { Record, Map } from 'immutable'
 import {
-  onStart, onSuccess, onFailure, arrayToMap, mapToArray, shouldFetch
+  onStart, onSuccess, onFailure, arrayToMap, shouldFetch, getData, getStatus
 } from 'common/helpers'
 
 const FETCH_COMMENT = 'FETCH_COMMENT'
@@ -35,17 +35,8 @@ const commentReducer = (state = new DefaultReducerState({}), action) => {
 export default commentReducer
 
 // SELECTORS
-export const getComments = (state, articleId) => {
-  const comments = state.comment.getIn([articleId, 'data'])
-
-  return comments && mapToArray(comments)
-}
-
-export const getCommentsStatus = (state, articleId) => {
-  const comments = state.comment.getIn([articleId, 'status'])
-
-  return comments && comments.toJS()
-}
+export const getComments = (state, articleId) => getData(state.comment, articleId)
+export const getCommentsStatus = (state, articleId) => getStatus(state.comment, articleId)
 
 // ACTIONS
 const fetchComment = articleId => ({

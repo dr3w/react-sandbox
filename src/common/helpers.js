@@ -1,4 +1,4 @@
-import { OrderedMap } from 'immutable'
+import { OrderedMap, Map } from 'immutable'
 import _get from 'lodash/get'
 import _find from 'lodash/find'
 
@@ -10,7 +10,7 @@ export const arrayToMap = (arr = [], Model) => (
 )
 
 export const mapToArray = immutableMap =>
-  (immutableMap instanceof OrderedMap && immutableMap.valueSeq().toArray()) || null
+(immutableMap instanceof OrderedMap && immutableMap.valueSeq().toArray()) || null
 
 export const onStart = (state, entityId) => state
   .setIn([entityId, 'data'], null)
@@ -39,6 +39,24 @@ export const isStatusPristine = (status = {}) => {
 export const shouldFetch = (force, data, status) => (
   force || (!data && isStatusPristine(status))
 )
+
+export const getData = (reducerState, id) => {
+  const data = reducerState.getIn([id, 'data'])
+
+  if (Map.isMap(data)) {
+    return mapToArray(data)
+  } else if (data) {
+    return data.toJS()
+  }
+
+  return null
+}
+
+export const getStatus = (reducerState, id) => {
+  const status = reducerState.getIn([id, 'status'])
+
+  return status && status.toJS()
+}
 
 export const isReady = statuses => statuses.every(s => s && s.loaded)
 export const errorMessage = statuses => _get(_find(statuses, s => s && s.error), ['error', 'message'])
