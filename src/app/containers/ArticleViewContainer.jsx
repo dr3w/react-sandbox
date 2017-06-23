@@ -36,8 +36,8 @@ const loadData = ({ status, match, checkAndFetchArticle }, prevProps) => {
   checkAndFetchArticle(articleId, force)
 }
 
-const isReady = ({ status }) => helper.isReady([status])
-const errorMessage = ({ status }) => helper.errorMessage([status])
+const isReady = ({ status }) => helper.isStatusReady([status])
+const errorMessage = ({ status }) => helper.statusErrorMessage([status])
 
 const enhance = compose(
   pure,

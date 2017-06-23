@@ -40,7 +40,7 @@ export const shouldFetch = (force, data, status) => (
   force || (!data && isStatusPristine(status))
 )
 
-export const getData = (reducerState, id) => {
+export const getReducerData = (reducerState, id) => {
   const data = reducerState.getIn([id, 'data'])
 
   if (Map.isMap(data)) {
@@ -52,11 +52,11 @@ export const getData = (reducerState, id) => {
   return null
 }
 
-export const getStatus = (reducerState, id) => {
+export const getReducerStatus = (reducerState, id) => {
   const status = reducerState.getIn([id, 'status'])
 
   return status && status.toJS()
 }
 
-export const isReady = statuses => statuses.every(s => s && s.loaded)
-export const errorMessage = statuses => _get(_find(statuses, s => s && s.error), ['error', 'message'])
+export const isStatusReady = statuses => statuses.every(s => s && s.loaded)
+export const statusErrorMessage = statuses => _get(_find(statuses, s => s && s.error), ['error', 'message'])

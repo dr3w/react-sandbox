@@ -2,7 +2,7 @@ import { handle } from 'redux-pack'
 import callAPI from 'common/api'
 import { Record, Map } from 'immutable'
 import {
-  onStart, onSuccess, onFailure, shouldFetch, getData, getStatus
+  onStart, onSuccess, onFailure, shouldFetch, getReducerData, getReducerStatus
 } from 'common/helpers'
 
 const FETCH_ARTICLE = 'FETCH_ARTICLE'
@@ -36,8 +36,8 @@ const articleReducer = (state = new DefaultReducerState({}), action) => {
 export default articleReducer
 
 // SELECTORS
-export const getArticle = (state, articleId) => getData(state.article, articleId)
-export const getArticleStatus = (state, articleId) => getStatus(state.article, articleId)
+export const getArticle = (state, articleId) => getReducerData(state.article, articleId)
+export const getArticleStatus = (state, articleId) => getReducerStatus(state.article, articleId)
 
 // ACTIONS
 const fetchArticle = articleId => ({

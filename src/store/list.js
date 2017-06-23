@@ -2,7 +2,7 @@ import { handle } from 'redux-pack'
 import callAPI from 'common/api'
 import { Map, Record } from 'immutable'
 import {
-  onStart, onSuccess, onFailure, arrayToMap, shouldFetch, getData, getStatus
+  onStart, onSuccess, onFailure, arrayToMap, shouldFetch, getReducerData, getReducerStatus
 } from 'common/helpers'
 
 const FETCH_LIST = 'FETCH_LIST'
@@ -34,8 +34,8 @@ const listReducer = (state = new DefaultReducerState({}), action) => {
 export default listReducer
 
 // SELECTORS
-export const getList = state => getData(state.list, entityId)
-export const getListStatus = state => getStatus(state.list, entityId)
+export const getList = state => getReducerData(state.list, entityId)
+export const getListStatus = state => getReducerStatus(state.list, entityId)
 
 // ACTIONS
 const fetchList = () => ({
