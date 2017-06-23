@@ -6,7 +6,7 @@ import withDataPreload from 'hoc/withDataPreload'
 import { articleActions, getArticle, getArticleStatus } from 'store/article'
 import { articleShape } from 'common/shapes'
 import * as helper from 'common/helpers'
-import ArticleView from 'app/components/ArticleView'
+import ArticleView from 'app/components/article/ArticleView'
 
 const ArticleViewContainer = ({ article }) => <ArticleView article={article} />
 

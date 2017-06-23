@@ -5,7 +5,7 @@ import { compose, pure } from 'recompose'
 import withDataPreload from 'hoc/withDataPreload'
 import { listActions, getList, getListStatus } from 'store/list'
 import * as helper from 'common/helpers'
-import ArticleList from 'app/components/ArticleList'
+import ArticleList from 'app/components/article/ArticleList'
 
 const ArticleListContainer = ({ list }) => <ArticleList list={list} />
 

@@ -1,7 +1,9 @@
 import React from 'react'
 import { articleShape } from 'common/shapes'
-// import CommentListContainer from 'app/containers/CommentListContainer'
-import CommentListContainerPreload from 'app/containers/CommentListContainerPreload'
+// import CommentListContainer from 'app/containers/comment/CommentListContainer'
+import CommentListContainerPreload from 'app/containers/comment/CommentListContainerPreload'
+
+import './ArticleView.scss'
 
 const ArticleView = ({ article }) => (
   <div>
