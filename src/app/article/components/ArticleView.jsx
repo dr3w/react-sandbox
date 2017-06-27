@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { articleShape } from 'common/shapes'
 // import CommentListContainer from 'app/comment/containers/CommentListContainer'
-import CommentListContainerPreload from 'app/comment/containers/CommentListContainerPreload'
+import CommentListPreloadContainer from 'app/comment/containers/CommentListPreloadContainer'
 
 import './ArticleView.scss'
 
-const ArticleView = ({ article, location }) => (
+const ArticleView = ({ article }) => (
   <div>
     <article>
       <h3>{article.title}</h3>
@@ -14,7 +14,7 @@ const ArticleView = ({ article, location }) => (
       <p><b>{article.date}</b></p>
     </article>
 
-    <CommentListContainerPreload articleId={article.id} location={location} />
+    <CommentListPreloadContainer articleId={article.id} />
   </div>
 )
 

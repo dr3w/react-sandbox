@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose, pure } from 'recompose'
+import { withRouter } from 'react-router'
 import withRouteOnEnter from 'hoc/withRouteOnEnter'
 import withStatusHandling from 'hoc/withStatusHandling'
 import { commentActions, getComments, getCommentsStatus } from 'store/comment'
@@ -13,7 +14,6 @@ const CommentListContainer = ({ comments }) => <CommentList comments={comments} 
 CommentListContainer.propTypes = {
   articleId: PropTypes.string.isRequired,
   comments: PropTypes.array,
-  location: PropTypes.object,
   checkAndFetchComments: PropTypes.func
 }
 
@@ -35,6 +35,7 @@ const errorMessage = ({ status }) => helper.statusErrorMessage([status])
 
 const enhance = compose(
   pure,
+  withRouter,
   connect(mapStateToProps, mapDispatchToProps),
   withRouteOnEnter(loadData),
   withStatusHandling({

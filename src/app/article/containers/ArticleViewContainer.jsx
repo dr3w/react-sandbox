@@ -9,8 +9,8 @@ import { articleShape } from 'common/shapes'
 import * as helper from 'common/helpers'
 import ArticleView from 'app/article/components/ArticleView'
 
-const ArticleViewContainer = ({ article, location }) =>
-  <ArticleView article={article} location={location} />
+const ArticleViewContainer = ({ article }) =>
+  <ArticleView article={article} />
 
 ArticleViewContainer.propTypes = {
   match: PropTypes.object.isRequired,
