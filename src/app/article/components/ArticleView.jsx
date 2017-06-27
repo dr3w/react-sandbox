@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { articleShape } from 'common/shapes'
-// import CommentListContainer from 'app/containers/comment/CommentListContainer'
-import CommentListContainerPreload from 'app/containers/comment/CommentListContainerPreload'
+// import CommentListContainer from 'app/comment/containers/CommentListContainer'
+import CommentListContainerPreload from 'app/comment/containers/CommentListContainerPreload'
 
 import './ArticleView.scss'
 

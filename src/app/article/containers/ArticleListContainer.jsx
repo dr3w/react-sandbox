@@ -6,7 +6,7 @@ import withRouteOnEnter from 'hoc/withRouteOnEnter'
 import withStatusHandling from 'hoc/withStatusHandling'
 import { listActions, getList, getListStatus } from 'store/list'
 import * as helper from 'common/helpers'
-import ArticleList from 'app/components/article/ArticleList'
+import ArticleList from 'app/article/components/ArticleList'
 
 const ArticleListContainer = ({ list }) => <ArticleList list={list} />
 

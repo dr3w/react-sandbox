@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
 import { NavLinkLi } from 'components'
-import ArticleViewContainer from 'app/containers/article/ArticleViewContainer'
+import ArticleViewContainer from 'app/article/containers/ArticleViewContainer'
 
 const ArticleList = ({ list }) => {
   const articleList = list.map(article => (

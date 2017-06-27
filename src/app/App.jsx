@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link, Route, Switch, Redirect } from 'react-router-dom'
 import { NavLinkLi } from 'components'
-import ArticleListContainer from 'app/containers/article/ArticleListContainer'
-import NoMatch from 'app/components/NoMatch'
+import ArticleListContainer from 'app/article/containers/ArticleListContainer'
+import NoMatch from 'app/noMatch/components/NoMatch'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.scss'

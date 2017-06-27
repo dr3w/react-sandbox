@@ -7,7 +7,7 @@ import withRouteOnEnter from 'hoc/withRouteOnEnter'
 import { articleActions, getArticle, getArticleStatus } from 'store/article'
 import { articleShape } from 'common/shapes'
 import * as helper from 'common/helpers'
-import ArticleView from 'app/components/article/ArticleView'
+import ArticleView from 'app/article/components/ArticleView'
 
 const ArticleViewContainer = ({ article, location }) =>
   <ArticleView article={article} location={location} />
