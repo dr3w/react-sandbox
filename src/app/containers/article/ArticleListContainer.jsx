@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose, pure } from 'recompose'
-import withDataPreload from 'hoc/withDataPreload'
+import withRouteOnEnter from 'hoc/withRouteOnEnter'
+import withStatusHandling from 'hoc/withStatusHandling'
 import { listActions, getList, getListStatus } from 'store/list'
 import * as helper from 'common/helpers'
 import ArticleList from 'app/components/article/ArticleList'
@@ -32,8 +33,8 @@ const errorMessage = ({ status }) => helper.statusErrorMessage([status])
 const enhance = compose(
   pure,
   connect(mapStateToProps, mapDispatchToProps),
-  withDataPreload({
-    loadData,
+  withRouteOnEnter(loadData),
+  withStatusHandling({
     isReady,
     errorMessage
   })
