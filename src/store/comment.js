@@ -5,7 +5,9 @@ import {
   onStart, onSuccess, onFailure, arrayToMap, shouldFetch, getReducerData, getReducerStatus
 } from 'common/helpers'
 
+// TODO: NAMING!
 const FETCH_COMMENT = 'FETCH_COMMENT'
+const POST_COMMENT = 'POST_COMMENT'
 
 const CommentModel = Record({
   id: null,
@@ -27,6 +29,13 @@ const commentReducer = (state = new DefaultReducerState({}), action) => {
         failure: prevState => onFailure(prevState, articleId, payload)
       })
 
+    // case POST_COMMENT:
+    //   return handle(state, action, {
+    //     start: prevState => onStart(prevState, articleId),
+    //     success: prevState => onSuccess(prevState, articleId, arrayToMap(payload, CommentModel)),
+    //     failure: prevState => onFailure(prevState, articleId, payload)
+    //   })
+
     default:
       return state
   }
@@ -45,6 +54,15 @@ const fetchComment = articleId => ({
   promise: callAPI(`/api/comment/?article=${articleId}`)
 })
 
+const postComment = (articleId, data) => ({
+  type: POST_COMMENT,
+  meta: { articleId },
+  promise: callAPI('/api/comment', {
+    method: 'POST',
+    data: Object.assign({ article: articleId }, data)
+  })
+})
+
 const checkAndFetchComments = (articleId, force) => (dispatch, getState) => {
   const state = getState()
   const comments = getComments(state, articleId)
@@ -55,6 +73,11 @@ const checkAndFetchComments = (articleId, force) => (dispatch, getState) => {
   }
 }
 
+const submitComment = (articleId, data) => (dispatch) => {
+  dispatch(postComment(articleId, data))
+}
+
 export const commentActions = {
-  checkAndFetchComments
+  checkAndFetchComments,
+  submitComment
 }

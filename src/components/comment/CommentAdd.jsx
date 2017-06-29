@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm, reset } from 'redux-form'
 
-const ArticleCommentAdd = (props) => {
+const CommentAdd = (props) => {
   const { handleSubmit } = props
 
   return (
@@ -20,13 +20,13 @@ const ArticleCommentAdd = (props) => {
   )
 }
 
-ArticleCommentAdd.propTypes = {
+CommentAdd.propTypes = {
   handleSubmit: PropTypes.func.isRequired
 }
 
-const afterSubmit = (result, dispatch) => dispatch(reset('articleCommentAdd'))
+const onSubmitSuccess = (result, dispatch) => dispatch(reset('articleCommentAdd'))
 
 export default reduxForm({
   form: 'articleCommentAdd',
-  onSubmitSuccess: afterSubmit
-})(ArticleCommentAdd)
+  onSubmitSuccess
+})(CommentAdd)

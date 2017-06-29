@@ -5,12 +5,20 @@ import { compose, pure } from 'recompose'
 import withStatusHandling from 'hoc/withStatusHandling'
 import withRouteOnEnter from 'hoc/withRouteOnEnter'
 import { articleActions, getArticle, getArticleStatus } from 'store/article'
+import { commentActions } from 'store/comment'
 import { articleShape } from 'common/shapes'
 import * as helper from 'common/helpers'
 import ArticleView from 'app/article/components/ArticleView'
 
-const ArticleViewContainer = ({ article }) =>
-  <ArticleView article={article} />
+const onCommentSubmit = (articleId, submitComment) => (data) => {
+  submitComment(articleId, data)
+}
+
+const ArticleViewContainer = ({ article, submitComment }) =>
+  <ArticleView
+    article={article}
+    onCommentSubmit={onCommentSubmit(article.id, submitComment)}
+  />
 
 ArticleViewContainer.propTypes = {
   match: PropTypes.object.isRequired,
@@ -29,6 +37,7 @@ const mapStateToProps = (state, props) => {
 }
 
 const mapDispatchToProps = {
+  submitComment: commentActions.submitComment,
   checkAndFetchArticle: articleActions.checkAndFetchArticle
 }
 
