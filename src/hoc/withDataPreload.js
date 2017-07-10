@@ -7,11 +7,11 @@ const withDataPreload = ({
   errorMessage = () => ''
 }) => BaseComponent => compose(
   lifecycle({
-    componentDidMount() {
+    componentWillMount() {
       loadData(this.props, {})
     },
-    componentDidUpdate(prevProps) {
-      loadData(this.props, prevProps)
+    componentWillReceiveProps(nextProps) {
+      loadData(nextProps, this.props)
     }
   }),
   branch(
