@@ -17,8 +17,8 @@ const rootReducer = combineReducers({
 })
 
 const loggerMiddleware = createLogger({
-  collapsed: true,
-  predicate: () => false
+  collapsed: true
+  // predicate: () => false
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

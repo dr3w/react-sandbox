@@ -26,6 +26,8 @@ const ArticleView = ({ article, comments, commentsStatus, onCommentSubmit }) => 
       <p><b>{article.date}</b></p>
     </article>
 
+    {commentsStatus.posted && 'posted'} - {commentsStatus.posting && 'posting'}
+
     <CommentAdd onSubmit={onCommentSubmit} />
     <CommentListEnhanced commentsStatus={commentsStatus} comments={comments} />
   </div>

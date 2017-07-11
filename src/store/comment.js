@@ -2,12 +2,14 @@ import { handle } from 'redux-pack'
 import callAPI from 'common/api'
 import { Record, Map } from 'immutable'
 import {
-  onStart, onSuccess, onFailure, arrayToMap, shouldFetch, getReducerData, getReducerStatus
+  onStart, onSuccess, onFailure, arrayToMap, shouldFetch, getReducerData, getReducerStatus,
+  onStartPost, onSuccessPost, onFailurePost, resetPostStatus
 } from 'common/helpers'
 
 // TODO: NAMING!
 const FETCH_COMMENT = 'FETCH_COMMENT'
 const POST_COMMENT = 'POST_COMMENT'
+const POST_INVALIDATE_COMMENT = 'POST_INVALIDATE_COMMENT'
 
 const CommentModel = Record({
   id: null,
@@ -29,12 +31,16 @@ const commentReducer = (state = new DefaultReducerState({}), action) => {
         failure: prevState => onFailure(prevState, articleId, payload)
       })
 
-    // case POST_COMMENT:
-    //   return handle(state, action, {
-    //     start: prevState => onStart(prevState, articleId),
-    //     success: prevState => onSuccess(prevState, articleId, arrayToMap(payload, CommentModel)),
-    //     failure: prevState => onFailure(prevState, articleId, payload)
-    //   })
+    case POST_COMMENT:
+      return handle(state, action, {
+        start: prevState => onStartPost(prevState, articleId),
+        success: prevState =>
+          onSuccessPost(prevState, articleId),
+        failure: prevState => onFailurePost(prevState, articleId, payload)
+      })
+
+    case POST_INVALIDATE_COMMENT:
+      return resetPostStatus(state, articleId)
 
     default:
       return state
@@ -63,6 +69,11 @@ const postComment = (articleId, data) => ({
   })
 })
 
+const invalidateCommentPostStatus = articleId => ({
+  type: POST_INVALIDATE_COMMENT,
+  meta: { articleId }
+})
+
 const checkAndFetchComments = (articleId, force) => (dispatch, getState) => {
   const state = getState()
   const comments = getComments(state, articleId)
@@ -75,6 +86,15 @@ const checkAndFetchComments = (articleId, force) => (dispatch, getState) => {
 
 const submitComment = (articleId, data) => (dispatch) => {
   dispatch(postComment(articleId, data))
+    .then(({ error }) => {
+      if (error) return null
+
+      setTimeout(() => {
+        dispatch(invalidateCommentPostStatus(articleId))
+      }, 4000)
+
+      return dispatch(fetchComment(articleId))
+    })
 }
 
 export const commentActions = {

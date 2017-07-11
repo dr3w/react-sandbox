@@ -13,7 +13,7 @@ export const mapToArray = immutableMap =>
 (immutableMap instanceof OrderedMap && immutableMap.valueSeq().toArray()) || null
 
 export const onStart = (state, entityId) => state
-  .setIn([entityId, 'data'], null)
+  .setIn([entityId, 'status', 'initialLoad'], !state.data)
   .setIn([entityId, 'status', 'loading'], true)
   .setIn([entityId, 'status', 'loaded'], false)
   .setIn([entityId, 'status', 'error'], null)
@@ -25,10 +25,29 @@ export const onSuccess = (state, entityId, data) => state
   .setIn([entityId, 'status', 'error'], null)
 
 export const onFailure = (state, entityId, error) => state
-  .setIn([entityId, 'data'], null)
   .setIn([entityId, 'status', 'loading'], false)
   .setIn([entityId, 'status', 'loaded'], true)
   .setIn([entityId, 'status', 'error'], error)
+
+export const onStartPost = (state, entityId) => state
+  .setIn([entityId, 'status', 'posting'], true)
+  .setIn([entityId, 'status', 'posted'], false)
+  .setIn([entityId, 'status', 'error'], null)
+
+export const onSuccessPost = (state, entityId) => state
+  .setIn([entityId, 'status', 'posting'], false)
+  .setIn([entityId, 'status', 'posted'], true)
+  .setIn([entityId, 'status', 'error'], null)
+
+export const onFailurePost = (state, entityId, error) => state
+  .setIn([entityId, 'status', 'posting'], false)
+  .setIn([entityId, 'status', 'posted'], true)
+  .setIn([entityId, 'status', 'error'], error)
+
+export const resetPostStatus = (state, entityId) => state
+  .setIn([entityId, 'status', 'posting'], false)
+  .setIn([entityId, 'status', 'posted'], false)
+  .setIn([entityId, 'status', 'error'], null)
 
 export const isStatusPristine = (status = {}) => {
   const { loading, loaded, error } = status
