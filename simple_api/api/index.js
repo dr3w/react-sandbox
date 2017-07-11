@@ -57,14 +57,24 @@ router.get('/comment', function (req, res, next) {
 });
 
 router.post('/comment', function (req, res, next) {
+    var newId = Date.now()
+    var articleId = req.body.article
+
+    var articleIndex = mocks.articles.findIndex(function(article) {
+        return article.id == articleId
+    })
+
     var comment = {
-        id : Date.now().toString(),
+        id : newId,
         text : req.body.text,
         date: new Date(),
         user: req.body.user,
-        article : req.body.article
+        article : articleId
     };
+
     mocks.comments.push(comment);
+    mocks.articles[articleIndex].comments.push(newId);
+
     res.json(comment)
 });
 
