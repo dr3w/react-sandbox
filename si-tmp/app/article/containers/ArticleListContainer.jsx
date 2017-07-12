@@ -27,7 +27,7 @@ const loadData = ({ checkAndFetchList }) => {
   checkAndFetchList()
 }
 
-const isReady = ({ status }) => helper.isStatusReady([status])
+const isReady = ({ status }) => helper.isStatusLoaded([status])
 const errorMessage = ({ status }) => helper.statusErrorMessage([status])
 
 const enhance = compose(

@@ -77,5 +77,15 @@ export const getReducerStatus = (reducerState, id) => {
   return status && status.toJS()
 }
 
-export const isStatusReady = statuses => statuses.every(s => s && s.loaded)
+export const isStatusLoaded = statuses => statuses.every(s => s && s.loaded)
+export const isStatusPosted = statuses => statuses.every(s => s && s.posted)
 export const statusErrorMessage = statuses => _get(_find(statuses, s => s && s.error), ['error', 'message'])
+
+export const createDispatchWithPromise = dispatch => actionCreator =>
+  dispatch(actionCreator)
+    .then(({ error, payload }) => new Promise((resolve, reject) => {
+      if (error) {
+        return reject(payload)
+      }
+      return resolve(payload)
+    }))

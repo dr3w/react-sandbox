@@ -58,7 +58,7 @@ const loadData = ({ match, checkAndFetchArticle, checkAndFetchComments }) => {
 }
 
 const isReady = ({ articleStatus }) =>
-  helper.isStatusReady([articleStatus])
+  helper.isStatusLoaded([articleStatus])
 
 const errorMessage = ({ articleStatus, commentsStatus }) =>
   helper.statusErrorMessage([articleStatus, commentsStatus])

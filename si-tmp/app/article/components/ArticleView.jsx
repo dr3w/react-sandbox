@@ -13,7 +13,7 @@ import './ArticleView.scss'
 
 const CommentListEnhanced = compose(
   withStatusHandling({
-    isReady: props => helper.isStatusReady([props.commentsStatus]),
+    isReady: props => helper.isStatusLoaded([props.commentsStatus]),
     errorMessage: props => helper.statusErrorMessage([props.commentsStatus])
   })
 )(CommentList)

@@ -5,14 +5,10 @@ import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
 import { reducer as form } from 'redux-form'
-import list from './list'
-import article from './article'
-import comment from './comment'
+import comment from './comment/reducer'
 
 const rootReducer = combineReducers({
   form,
-  list,
-  article,
   comment
 })
 
