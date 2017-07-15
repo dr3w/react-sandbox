@@ -18,6 +18,7 @@ class DefaultState {
   constructor({ data = null }) {
     this.status = new DefaultStatus()
     this.data = data
+    this.meta = {}
   }
 }
 

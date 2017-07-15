@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import createReducer, { normalizeResponseCollection } from 'common/createReducer'
 import {
-  TODOS, TODOS_ADD, TODOS_TOGGLE, TODOS_DELETE,
+  TODOS, TODOS_ADD, TODOS_TOGGLE, TODOS_DELETE, SET_TYPE,
   FETCH_SUCCEEDED, UPDATE_SUCCEEDED
 } from 'common/constants'
 
@@ -9,6 +9,10 @@ export default createReducer(
   {
     name: TODOS,
     handlers: [{
+      typePostfix: SET_TYPE,
+      handler: (state, payload, error, meta) =>
+        ({ ...state, meta: ({ ...state.meta, type: meta.type }) })
+    }, {
       typePostfix: FETCH_SUCCEEDED,
       handler: (state, payload) => ({ ...state, data: normalizeResponseCollection(payload) })
     }]

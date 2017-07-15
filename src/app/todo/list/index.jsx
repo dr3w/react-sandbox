@@ -9,7 +9,10 @@ import TodoView from 'app/todo/list/View'
 
 const TodoListContainer = props => <TodoView {...props} />
 
-const initialLoadData = ({ fetchTodos }) => {
+const initialLoadData = ({ fetchTodos, setTodoType, match }) => {
+  const type = match.params.type
+
+  setTodoType(type)
   fetchTodos()
 }
 
@@ -20,16 +23,13 @@ const mapStateToProps = state => ({
   todos: getTodos(state)
 })
 
-const mapDispatchToProps = (dispatch, { match }) => {
-  const type = match.params.type
-
-  return {
-    fetchTodos: () => dispatch(actions.fetchTodos(type)()),
-    setIsDoneTodo: (...args) => dispatch(actions.setIsDoneTodo(type)(...args)),
-    deleteTodo: (...args) => dispatch(actions.deleteTodo(type)(...args)),
-    onTodoAdd: data => dispatch(actions.addTodo(data))
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  setTodoType: type => dispatch(actions.setTodoType(type)),
+  fetchTodos: () => dispatch(actions.fetchTodos()),
+  setIsDoneTodo: (...args) => dispatch(actions.setIsDoneTodo(...args)),
+  deleteTodo: (...args) => dispatch(actions.deleteTodo(...args)),
+  onTodoAdd: data => dispatch(actions.addTodo(data))
+})
 
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),

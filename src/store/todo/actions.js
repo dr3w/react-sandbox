@@ -1,13 +1,17 @@
 import {
-  TODOS, TODOS_TOGGLE, TODOS_ADD, TODOS_DELETE,
+  TODOS, TODOS_TOGGLE, TODOS_ADD, TODOS_DELETE, SET_TYPE,
   FETCH_REQUESTED, UPDATE_REQUESTED
 } from 'common/constants'
 
-export const fetchTodos = type => () => ({
-  type: `${TODOS}_${FETCH_REQUESTED}`,
+export const setTodoType = type => ({
+  type: `${TODOS}_${SET_TYPE}`,
   meta: {
     type
   }
+})
+
+export const fetchTodos = () => ({
+  type: `${TODOS}_${FETCH_REQUESTED}`
 })
 
 export const addTodo = data => ({
@@ -17,19 +21,17 @@ export const addTodo = data => ({
   }
 })
 
-export const setIsDoneTodo = type => (id, isDone) => ({
+export const setIsDoneTodo = (id, isDone) => ({
   type: `${TODOS_TOGGLE}_${UPDATE_REQUESTED}`,
   meta: {
     id,
-    type,
     isDone
   }
 })
 
-export const deleteTodo = type => id => ({
+export const deleteTodo = id => ({
   type: `${TODOS_DELETE}_${UPDATE_REQUESTED}`,
   meta: {
-    id,
-    type
+    id
   }
 })

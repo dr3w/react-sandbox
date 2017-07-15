@@ -1,24 +1,19 @@
 {
   "todos": [
     {
-      "id": 1500125355626,
-      "isDone": true,
-      "text": "345"
-    },
-    {
-      "id": 1500125373302,
-      "isDone": true,
-      "text": "ertewrtwert"
-    },
-    {
-      "id": 1500132485382,
+      "id": 1500134077313,
       "isDone": false,
-      "text": "asdfasdfs"
+      "text": "First"
     },
     {
-      "id": 1500132606789,
+      "id": 1500134080509,
       "isDone": false,
-      "text": "asdfasdfasdf"
+      "text": "Another"
+    },
+    {
+      "id": 1500134088248,
+      "isDone": true,
+      "text": "Do this"
     }
   ]
 }

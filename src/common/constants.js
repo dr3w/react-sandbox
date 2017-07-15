@@ -9,8 +9,9 @@ export const UPDATE_START = 'UPDATE_START'
 export const UPDATE_SUCCEEDED = 'UPDATE_SUCCEEDED'
 export const UPDATE_FAILED = 'UPDATE_FAILED'
 
-// REDUCERS
+//
 export const TODOS_DELETE = 'TODOS_DELETE'
 export const TODOS_ADD = 'TODOS_ADD'
 export const TODOS_TOGGLE = 'TODOS_TOGGLE'
 export const TODOS = 'TODOS'
+export const SET_TYPE = 'SET_TYPE'

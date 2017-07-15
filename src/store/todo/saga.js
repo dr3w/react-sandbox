@@ -1,6 +1,7 @@
 import apiSaga from 'common/apiSaga'
-import { takeLatest } from 'redux-saga/effects'
+import { takeLatest, select } from 'redux-saga/effects'
 import { createActionNames } from 'common/createReducer'
+import { getTodosType } from 'store/todo/selectors'
 import * as c from 'common/constants'
 
 const TODOS = createActionNames(c.TODOS)
@@ -8,14 +9,15 @@ const TODOS_DELETE = createActionNames(c.TODOS_DELETE)
 const TODOS_ADD = createActionNames(c.TODOS_ADD)
 const TODOS_TOGGLE = createActionNames(c.TODOS_TOGGLE)
 
-function* fetchTodos({ meta }) {
+function* fetchTodos() {
+  const type = yield select(getTodosType)
   const query = {
     isDone: undefined
   }
 
-  if (meta.type === 'done') {
+  if (type === 'done') {
     query.isDone = 'true'
-  } else if (meta.type === 'todo') {
+  } else if (type === 'todo') {
     query.isDone = 'false'
   }
 
@@ -23,7 +25,6 @@ function* fetchTodos({ meta }) {
 
   yield apiSaga({
     args,
-    meta,
     type: {
       start: TODOS.FETCH_START,
       succeeded: TODOS.FETCH_SUCCEEDED,
@@ -50,7 +51,7 @@ function* addTodo({ meta }) {
       succeeded: TODOS_ADD.UPDATE_SUCCEEDED,
       failed: TODOS_ADD.UPDATE_FAILED
     },
-    before: () => fetchTodos({ meta })
+    before: () => fetchTodos()
   })
 }
 
@@ -68,7 +69,7 @@ function* toggleTodo({ meta }) {
       succeeded: TODOS_TOGGLE.UPDATE_SUCCEEDED,
       failed: TODOS_TOGGLE.UPDATE_FAILED
     },
-    before: () => fetchTodos({ meta })
+    before: () => fetchTodos()
   })
 }
 
