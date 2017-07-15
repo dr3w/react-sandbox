@@ -26,7 +26,8 @@ module.exports = {
   devServer: {
     proxy: [{
       path: '/api/',
-      target: 'http://localhost:3001'
+      target: 'http://localhost:3000',
+      pathRewrite: { '^/api': '' }
     }],
     historyApiFallback: true
   },
@@ -58,7 +59,7 @@ module.exports = {
         loader: 'json-loader'
       },
       {
-        test: /\.png$/,
+        test: /\.(png|ico)$/,
         loader: 'url-loader?limit=100000'
       },
       {

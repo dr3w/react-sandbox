@@ -1,1 +1,0 @@
-export const COMMENT_FETCH = 'COMMENT_FETCH'

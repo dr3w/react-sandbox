@@ -1,7 +1,7 @@
 import React from 'react'
-import { Link, Route, Switch } from 'react-router-dom'
+import { Link, Route, Redirect, Switch } from 'react-router-dom'
 import { NavLinkLi } from 'components'
-import CommentsRouteHandler from 'app/comment'
+import TodoListContainer from 'app/todo/list'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.scss'
@@ -11,21 +11,21 @@ const App = () => (
     <nav className="navbar navbar-default">
       <div className="container-fluid">
         <div className="navbar-header">
-          <Link className="navbar-brand" to="/">Stories</Link>
+          <Link className="navbar-brand" to="/">TODO</Link>
         </div>
 
         <ul className="nav navbar-nav">
-          <NavLinkLi exact to="/">Home</NavLinkLi>
-          <NavLinkLi to="/comments/56c782f18990ecf954f6e027">First article</NavLinkLi>
-          <NavLinkLi to="/comments/56c782f17b4e0ba78c7ad717">Second</NavLinkLi>
+          <NavLinkLi to="/todos/all">All</NavLinkLi>
+          <NavLinkLi to="/todos/done">Done</NavLinkLi>
+          <NavLinkLi to="/todos/todo">ToDo</NavLinkLi>
         </ul>
       </div>
     </nav>
 
     <section>
       <Switch>
-        <Route exact path="/" />
-        <Route path="/comments/:id" component={CommentsRouteHandler} />
+        <Redirect exact path="/" to="/todos/all" />
+        <Route path="/todos/:type" component={TodoListContainer} />
       </Switch>
     </section>
   </div>

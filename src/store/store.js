@@ -1,30 +1,27 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 
-import { middleware as reduxPackMiddleware } from 'redux-pack'
-import thunkMiddleware from 'redux-thunk'
+import createSagaMiddleware from 'redux-saga'
 import { createLogger } from 'redux-logger'
 
-import { reducer as form } from 'redux-form'
-import comment from './comment/reducer'
-
-const rootReducer = combineReducers({
-  form,
-  comment
-})
+import rootReducer from 'store/rootReducer'
+import rootSaga from 'store/rootSaga'
 
 const loggerMiddleware = createLogger({
-  collapsed: true
-  // predicate: () => false
+  collapsed: true,
+  predicate: () => false
 })
+
+const sagaMiddleware = createSagaMiddleware()
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const enhancer = composeEnhancers(applyMiddleware(
-  reduxPackMiddleware,
-  thunkMiddleware,
+  sagaMiddleware,
   loggerMiddleware
 ))
 
 const store = createStore(rootReducer, {}, enhancer)
+
+sagaMiddleware.run(rootSaga)
 
 // TODO: remove
 window.store = store

@@ -1,0 +1,19 @@
+{
+  "todos": [
+    {
+      "id": 1500125355626,
+      "isDone": true,
+      "text": "345"
+    },
+    {
+      "id": 1500125373302,
+      "isDone": false,
+      "text": "ertewrtwert"
+    },
+    {
+      "id": 1500125455511,
+      "isDone": false,
+      "text": "8888"
+    }
+  ]
+}

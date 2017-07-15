@@ -1,0 +1,19 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "text": "This is a first todo",
+      "isDone": false
+    },
+    {
+      "isDone": true,
+      "text": "Another onr",
+      "id": 10
+    },
+    {
+      "id": 2,
+      "text": "One more",
+      "isDone": false
+    }
+  ]
+}
