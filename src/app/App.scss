@@ -5,3 +5,10 @@ body {
 .clickable {
     cursor: pointer;
 }
+
+.status-indicator {
+    display: inline-block;
+    width: 14px;
+    font-size: 10px;
+    color: darkolivegreen;
+}

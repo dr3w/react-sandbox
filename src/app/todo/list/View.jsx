@@ -6,16 +6,36 @@ const TodoView = ({ todos, setIsDoneTodo, onTodoAdd, deleteTodo }) => {
   return (
     <div>
       <div>
-        Initial: {`${todos.status.isInitialLoad ? '∆' : ''}`}
+        <span className="status-indicator">
+          {todos.status.isInitialLoad ? '▶' : ''}
+        </span>
+        <span>
+          Initial:
+        </span>
       </div>
       <div>
-        Loading: {`${todos.status.isLoading ? '∆' : ''}`}
+        <span className="status-indicator">
+          {todos.status.isLoading ? '▶' : ''}
+        </span>
+        <span>
+          Loading:
+        </span>
       </div>
       <div>
-        Updating: {`${todos.status.isUpdating ? '∆' : ''}`}
+        <span className="status-indicator">
+          {todos.status.isUpdating ? '▶' : ''}
+        </span>
+        <span>
+          Updating:
+        </span>
       </div>
       <div>
-        Ready: {`${todos.status.isReady ? '∆' : ''}`}
+        <span className="status-indicator">
+          {todos.status.isReady ? '▶' : ''}
+        </span>
+        <span>
+          Ready:
+        </span>
       </div>
 
       <div>&nbsp;</div>
