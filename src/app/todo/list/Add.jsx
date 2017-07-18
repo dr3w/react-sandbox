@@ -31,7 +31,8 @@ const TodoAdd = (props) => {
 }
 
 TodoAdd.propTypes = {
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  isUpdating: PropTypes.bool
 }
 
 const onSubmitSuccess = (result, dispatch) => dispatch(reset('TodoAdd'))
