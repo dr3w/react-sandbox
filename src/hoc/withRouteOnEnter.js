@@ -9,7 +9,7 @@ const withRouteOnEnter = (callback) => {
 
   return compose(
     lifecycle({
-      componentWillMount() {
+      componentDidMount() {
         onRouteEnterCallback(this.props, {})
       },
       componentWillReceiveProps(nextProps) {
