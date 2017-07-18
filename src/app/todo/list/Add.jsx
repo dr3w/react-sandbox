@@ -3,36 +3,39 @@ import PropTypes from 'prop-types'
 import { Field, reduxForm, reset } from 'redux-form'
 
 const TodoAdd = (props) => {
-  const { handleSubmit, isUpdating } = props
+  const { handleSubmit, submitting } = props
+  const required = value => (value ? undefined : 'Required')
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} >
-        <div className="form-group">
-          <Field
-            name="text"
-            className="form-control"
-            component="input"
-            type="text"
-            placeholder="Todo"
-            disabled={isUpdating}
-          />
-        </div>
-        <button
-          className="btn btn-default"
-          type="submit"
-          disabled={isUpdating}
-        >
-          ADD
-        </button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit} className="todo-form-add">
+      <div className="input-group">
+        <Field
+          name="text"
+          className="form-control"
+          component="input"
+          type="text"
+          placeholder="Todo..."
+          disabled={submitting}
+          validate={[required]}
+        />
+        <span className="input-group-btn">
+          <button
+            className="btn btn-primary"
+            type="submit"
+            disabled={submitting}
+          >
+            ADD
+          </button>
+        </span>
+      </div>
+    </form>
   )
 }
 
 TodoAdd.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  isUpdating: PropTypes.bool
+  isUpdating: PropTypes.bool,
+  submitting: PropTypes.bool
 }
 
 const onSubmitSuccess = (result, dispatch) => dispatch(reset('TodoAdd'))

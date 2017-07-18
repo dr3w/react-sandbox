@@ -13,7 +13,8 @@ export default createReducer(
         ({ ...state, meta: ({ ...state.meta, type: meta.type }) })
     }, {
       type: TODOS.FETCH_SUCCEEDED,
-      handler: (state, payload) => ({ ...state, data: normalizeResponseCollection(payload) })
+      handler: (state, payload) =>
+        ({ ...state, data: normalizeResponseCollection(payload.reverse()) })
     }]
   },
   {

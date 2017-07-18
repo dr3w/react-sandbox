@@ -1,4 +1,5 @@
 export { default as Status } from './status/Status'
+export { default as StatusDev } from './status/StatusDev'
 export { default as Button } from './button/Button'
 export { default as FancyButton } from './button/FancyButton'
 export { default as CommentList } from './comment/CommentList'
