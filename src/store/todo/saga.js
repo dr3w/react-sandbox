@@ -1,13 +1,7 @@
 import apiSaga from 'common/apiSaga'
 import { takeLatest, select } from 'redux-saga/effects'
-import { createActionNames } from 'common/createReducer'
 import { getTodosType } from 'store/todo/selectors'
-import * as c from 'common/constants'
-
-const TODOS = createActionNames(c.TODOS)
-const TODOS_DELETE = createActionNames(c.TODOS_DELETE)
-const TODOS_ADD = createActionNames(c.TODOS_ADD)
-const TODOS_TOGGLE = createActionNames(c.TODOS_TOGGLE)
+import { TODOS, TODOS_ADD, TODOS_DELETE, TODOS_TOGGLE } from 'store/todo/actions'
 
 function* fetchTodos() {
   const type = yield select(getTodosType)
