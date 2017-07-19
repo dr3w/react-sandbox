@@ -2,7 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import withToggle from 'hoc/withToggle'
 
-const TodoItem = ({ toggleTodo, deleteTodo, item, status, show, hide, toggledOn }) => (
+import './Item.scss'
+
+const TodoItem = ({ toggleTodo, deleteTodo, item, show, hide, toggledOn }) => (
   <li
     className="list-group-item todo-list-item"
     onMouseEnter={show}
@@ -14,15 +16,7 @@ const TodoItem = ({ toggleTodo, deleteTodo, item, status, show, hide, toggledOn 
     >
       DELETE
     </button>
-    <input
-      type="checkbox"
-      id={item.id}
-      className="checkbox checkbox-inline"
-      disabled={status.isUpdating}
-      checked={item.isDone}
-      readOnly="true"
-      onClick={toggleTodo}
-    />
+    <span className={`glyphicon checkmark ${item.isDone ? 'glyphicon-check' : 'glyphicon-unchecked'}`} />
     <label
       htmlFor={item.id}
       className="clickable"

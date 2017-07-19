@@ -2,34 +2,6 @@ body {
     padding: 20px 20px 80px;
 }
 
-.todo-form-add {
-    margin: 5px 0 20px;
-}
-
 .clickable {
     cursor: pointer;
-}
-
-.status-indicator {
-    display: inline-block;
-    width: 14px;
-    font-size: 10px;
-    color: darkolivegreen;
-}
-
-.todo-list-item {
-    input[type=checkbox] {
-        float: left;
-        
-    }
-
-    label {
-        float: none;
-        display: block;
-        margin: 0 40px 0 25px;
-    }
-
-    button {
-        float: right;
-    }
 }

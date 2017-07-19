@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import withRouteHandler from 'hoc/withRouteHandler'
 import * as actions from 'store/todo/actions'
-import { getTodos } from 'store/todo/selectors'
+import { getTodos, getTodosStatus } from 'store/todo/selectors'
 
 import TodoView from 'app/todo/list/View'
 
@@ -16,11 +16,12 @@ const initialLoadData = ({ fetchTodos, setTodoType, match }) => {
   fetchTodos()
 }
 
-const isReady = ({ todos }) => todos.data
-const errorMessage = ({ todos }) => todos.status.error
+const isReady = ({ todos }) => todos
+const errorMessage = ({ todosStatus }) => todosStatus.error
 
 const mapStateToProps = state => ({
-  todos: getTodos(state)
+  todos: getTodos(state),
+  todosStatus: getTodosStatus(state)
 })
 
 const mapDispatchToProps = dispatch => ({

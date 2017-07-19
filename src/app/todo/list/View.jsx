@@ -1,15 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import TodoList from 'app/todo/list/List'
-import TodoAdd from 'app/todo/list/Add'
-// import { StatusDev } from 'components'
-// <StatusDev status={todos.status} />
+import { TodoList, TodoAdd, StatusDev } from 'components'
+import withStatusHandler from 'hoc/withStatusHandler'
 
-const TodoView = ({ todos, setIsDoneTodo, onTodoAdd, deleteTodo }) => (
+const TodoListEnhanced = withStatusHandler(
+  { isReady: ({ todosStatus }) => todosStatus && todosStatus.isReady }
+)(TodoList)
+
+const TodoView = ({ todos, todosStatus, setIsDoneTodo, onTodoAdd, deleteTodo }) => (
   <div>
+    <StatusDev status={todosStatus} />
     <TodoAdd onSubmit={onTodoAdd} />
-    <TodoList
-      todos={todos.data}
+    <TodoListEnhanced
+      todos={todos}
+      todosStatus={todosStatus}
       setIsDoneTodo={setIsDoneTodo}
       deleteTodo={deleteTodo}
     />
@@ -18,6 +22,7 @@ const TodoView = ({ todos, setIsDoneTodo, onTodoAdd, deleteTodo }) => (
 
 TodoView.propTypes = {
   todos: PropTypes.object,
+  todosStatus: PropTypes.object,
   setIsDoneTodo: PropTypes.func,
   onTodoAdd: PropTypes.func,
   deleteTodo: PropTypes.func

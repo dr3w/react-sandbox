@@ -1,12 +1,14 @@
 import { compose } from 'recompose'
 
 import withRouteOnEnter from 'hoc/withRouteOnEnter'
-import withStatusHandling from 'hoc/withStatusHandling'
+import withStatusHandler from 'hoc/withStatusHandler'
 
-export default ({ initialLoadData, isReady, errorMessage }) => compose(
+const withRouteHandler = ({ initialLoadData, isReady, errorMessage }) => compose(
   withRouteOnEnter(initialLoadData),
-  withStatusHandling({
+  withStatusHandler({
     isReady,
     errorMessage
   })
 )
+
+export default withRouteHandler

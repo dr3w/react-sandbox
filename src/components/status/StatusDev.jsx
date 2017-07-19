@@ -45,7 +45,7 @@ const StatusDev = ({ status }) => {
 }
 
 StatusDev.propTypes = {
-  status: PropTypes.string
+  status: PropTypes.object
 }
 
 export default StatusDev

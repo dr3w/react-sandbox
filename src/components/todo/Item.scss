@@ -1,0 +1,28 @@
+.todo-list-item {
+    .checkmark {
+        float: left;
+    }
+
+    .checkmark.glyphicon-check {
+         color: darkgreen
+     }
+
+    .checkmark.glyphicon-unchecked {
+        color: #a9a9a9;
+    }
+
+    label {
+        float: none;
+        display: block;
+        margin: 0 40px 0 25px;
+    }
+
+    button {
+        float: right;
+    }
+}
+
+.todo-list-item:hover .checkmark.glyphicon-unchecked {
+    color: #777;
+}
+

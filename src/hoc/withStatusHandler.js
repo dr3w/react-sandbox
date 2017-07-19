@@ -1,8 +1,8 @@
 import { Error, Spinner } from 'components'
 import { compose, branch, renderComponent, withProps } from 'recompose'
 
-const withDataPreload = ({
-  isReady = () => false,
+const withStatusHandler = ({
+  isReady = () => true,
   errorMessage = () => ''
 }) => BaseComponent => compose(
   branch(
@@ -18,4 +18,4 @@ const withDataPreload = ({
   )
 )(BaseComponent)
 
-export default withDataPreload
+export default withStatusHandler
