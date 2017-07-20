@@ -17,7 +17,7 @@ const initialLoadData = ({ fetchTodos, setTodoType, match }) => {
 }
 
 const isReady = ({ todos }) => todos
-const errorMessage = ({ todosStatus }) => todosStatus.error
+const errorMessage = () => false // todosStatus.error
 
 const mapStateToProps = state => ({
   todos: getTodos(state),

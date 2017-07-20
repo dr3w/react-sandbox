@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import _map from 'lodash/map'
 import { TodoItem } from 'components'
 
-const createTodoList = ({ todos, ...props }) => todos && _map(todos, (({ data, status }) => {
+const createTodoList = ({ todos, ...props }) => todos && _map(todos, (todo) => {
+  const { data, status } = todo || {}
+
   if (!data) return null
 
   const toggleTodo = () => props.setIsDoneTodo(data.id, !data.isDone)
@@ -18,7 +20,7 @@ const createTodoList = ({ todos, ...props }) => todos && _map(todos, (({ data, s
       status={status}
     />
   )
-}))
+})
 
 const TodoList = props => (
   <ul className="list-group">

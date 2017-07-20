@@ -1,33 +1,43 @@
 import _ from 'lodash'
-import createReducer, { normalizeResponseCollection } from 'common/createReducer'
-import * as c from 'common/constants'
-import { TODOS, TODOS_DELETE } from 'store/todo/actions'
+import { actions, reducer } from 'store/todo'
+import { normalizeResponseCollection } from 'common/createReducer'
 
-window.TODOS = TODOS
-export default createReducer(
-  {
-    name: c.TODOS,
-    handlers: [{
-      type: TODOS.SET_TYPE,
-      handler: (state, payload, error, meta) =>
-        ({ ...state, meta: ({ ...state.meta, type: meta.type }) })
-    }, {
-      type: TODOS.FETCH_SUCCEEDED,
-      handler: (state, payload) =>
-        ({ ...state, data: normalizeResponseCollection(payload.reverse()) })
-    }]
-  },
-  {
-    name: c.TODOS_DELETE,
-    handlers: [{
-      type: TODOS_DELETE.UPDATE_SUCCEEDED,
-      handler: (state, payload, error, meta) => {
-        const newStateData = _({ ...state.data }).omit(meta.id).value()
+const { TODOS, TODOS_TOGGLE, TODOS_DELETE } = actions
 
-        return { ...state, data: newStateData }
-      }
-    }]
-  },
-  { name: c.TODOS_ADD },
-  { name: c.TODOS_TOGGLE }
-)
+const todoReducer = (state, action) => {
+  const { type, payload, meta } = action
+
+  const newState = reducer(state, action)
+
+  switch (type) {
+    case TODOS.SET_TYPE:
+      return _(_.cloneDeep(newState))
+        .set(['meta', 'type'], meta.type)
+        .value()
+
+    case TODOS.FETCH_SUCCEEDED:
+      return _(_.cloneDeep(newState))
+        .set(['data'], normalizeResponseCollection(payload.reverse()))
+        .value()
+
+    case TODOS_TOGGLE.UPDATE_START:
+      return _(_.cloneDeep(newState))
+        .set(['data', meta.id, 'data', 'isDone'], meta.isDone)
+        .value()
+
+    case TODOS_TOGGLE.UPDATE_FAILED:
+      return _(_.cloneDeep(newState))
+        .set(['data', meta.id, 'data', 'isDone'], !meta.isDone)
+        .value()
+
+    case TODOS_DELETE.UPDATE_SUCCEEDED:
+      return _(_.cloneDeep(newState))
+        .set(['data', meta.id], null)
+        .value()
+
+    default:
+      return newState
+  }
+}
+
+export default todoReducer

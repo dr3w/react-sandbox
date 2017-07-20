@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import './StatusDev.scss'
 
 const StatusDev = ({ status }) => {
-  const { isInitialLoad, isLoading, isUpdating, isReady } = status
+  const { isInitialLoad, isLoading, isUpdating, isReady, error } = status
 
   return (
     <div className="status-dev">
@@ -40,6 +40,15 @@ const StatusDev = ({ status }) => {
           Ready:
         </span>
       </div>
+      <div>
+        <span className="status-indicator">
+          {error ? '▶' : ''}
+        </span>
+        <span>
+          Error: {error}
+        </span>
+      </div>
+
     </div>
   )
 }

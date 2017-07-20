@@ -4,26 +4,28 @@ import withToggle from 'hoc/withToggle'
 
 import './Item.scss'
 
-const TodoItem = ({ toggleTodo, deleteTodo, item, show, hide, toggledOn }) => (
+const TodoItem = ({ toggleTodo, deleteTodo, item, status, show, hide, toggledOn }) => (
   <li
-    className="list-group-item todo-list-item"
+    className={`list-group-item todo-list-item ${status.isUpdating ? 'item-updating' : ''}`}
     onMouseEnter={show}
     onMouseLeave={hide}
   >
     <button
-      className={`btn btn-xs btn-danger pull-right ${toggledOn ? '' : 'hidden'}`}
-      onClick={deleteTodo}
+      className={`btn btn-xs btn-danger ${toggledOn ? '' : 'hidden'}`}
+      onClick={!status.isUpdating && deleteTodo}
     >
       DELETE
     </button>
-    <span className={`glyphicon checkmark ${item.isDone ? 'glyphicon-check' : 'glyphicon-unchecked'}`} />
-    <label
+    <div
       htmlFor={item.id}
-      className="clickable"
-      onClick={toggleTodo}
+      className="item-label clickable"
+      onClick={!status.isUpdating && toggleTodo}
     >
-      {item.text}
-    </label>
+      <div className={`glyphicon checkmark ${item.isDone ? 'glyphicon-check' : 'glyphicon-unchecked'}`} />
+      <div className="item-text">
+        {item.text}
+      </div>
+    </div>
   </li>
 )
 

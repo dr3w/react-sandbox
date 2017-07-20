@@ -1,7 +1,9 @@
 import apiSaga from 'common/apiSaga'
 import { takeLatest, select } from 'redux-saga/effects'
 import { getTodosType } from 'store/todo/selectors'
-import { TODOS, TODOS_ADD, TODOS_DELETE, TODOS_TOGGLE } from 'store/todo/actions'
+import { actions } from 'store/todo'
+
+const { TODOS, TODOS_ADD, TODOS_TOGGLE, TODOS_DELETE } = actions
 
 function* fetchTodos() {
   const type = yield select(getTodosType)
@@ -62,8 +64,8 @@ function* toggleTodo({ meta }) {
       start: TODOS_TOGGLE.UPDATE_START,
       succeeded: TODOS_TOGGLE.UPDATE_SUCCEEDED,
       failed: TODOS_TOGGLE.UPDATE_FAILED
-    },
-    before: () => fetchTodos()
+    }
+    // before: () => fetchTodos()
   })
 }
 

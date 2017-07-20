@@ -22,23 +22,6 @@ class DefaultState {
   }
 }
 
-export const createActionTypes = (reducerName, actionTypes = []) =>
-  actionTypes.reduce((acc, type) => {
-    acc[type] = `${reducerName}_${type}`
-
-    return acc
-  }, {
-    FETCH_REQUESTED: `${reducerName}_${FETCH_REQUESTED}`,
-    FETCH_START: `${reducerName}_${FETCH_START}`,
-    FETCH_SUCCEEDED: `${reducerName}_${FETCH_SUCCEEDED}`,
-    FETCH_FAILED: `${reducerName}_${FETCH_FAILED}`,
-
-    UPDATE_REQUESTED: `${reducerName}_${UPDATE_REQUESTED}`,
-    UPDATE_START: `${reducerName}_${UPDATE_START}`,
-    UPDATE_SUCCEEDED: `${reducerName}_${UPDATE_SUCCEEDED}`,
-    UPDATE_FAILED: `${reducerName}_${UPDATE_FAILED}`
-  })
-
 export const normalizeResponseCollection = (payload) => {
   const p = _.isArray(payload) ? payload : [payload]
 
@@ -57,7 +40,7 @@ export const normalizeResponseCollection = (payload) => {
  * @param id
  * @returns {Array} A path to status object
  */
-const statusProps = id => (id ? ['data', id, 'status'] : ['status'])
+const statusProp = id => (id ? ['data', id, 'status'] : ['status'])
 
 /**
  * Updates `status` depending on the op
@@ -66,76 +49,85 @@ const statusProps = id => (id ? ['data', id, 'status'] : ['status'])
  * @type {*[]}
  */
 const defaultHandlers = [{
+  type: FETCH_REQUESTED
+}, {
+  type: UPDATE_REQUESTED
+}, {
   type: FETCH_START,
-  handler: newState => _({ ...newState })
+  handler: newState => _(_.cloneDeep(newState))
     .set(['status', 'isLoading'], true)
     .set(['status', 'isReady'], false)
     .set(['status', 'error'], null)
     .value()
 }, {
   type: FETCH_SUCCEEDED,
-  handler: newState => _({ ...newState })
+  handler: newState => _(_.cloneDeep(newState))
     .set(['status', 'isInitialLoad'], false)
     .set(['status', 'isLoading'], false)
     .set(['status', 'isReady'], true)
     .value()
 }, {
   type: FETCH_FAILED,
-  handler: (newState, payload, error) => _({ ...newState })
+  handler: (newState, payload, error) => _(_.cloneDeep(newState))
     .set(['status', 'isLoading'], false)
     .set(['status', 'isReady'], true)
     .set(['status', 'error'], error)
     .value()
 }, {
   type: UPDATE_START,
-  handler: (newState, payload, error, meta) => _({ ...newState })
-    .set([...statusProps(meta.id), 'isUpdating'], true)
-    .set([...statusProps(meta.id), 'isReady'], false)
-    .set([...statusProps(meta.id), 'error'], null)
+  handler: (newState, payload, error, meta) => _(_.cloneDeep(newState))
+    .set([...statusProp(meta.id), 'isUpdating'], true)
+    .set([...statusProp(meta.id), 'isReady'], false)
+    .set([...statusProp(meta.id), 'error'], null)
     .value()
 }, {
   type: UPDATE_SUCCEEDED,
-  handler: (newState, payload, error, meta) => _({ ...newState })
-    .set([...statusProps(meta.id), 'isInitialLoad'], false)
-    .set([...statusProps(meta.id), 'isUpdating'], false)
-    .set([...statusProps(meta.id), 'isReady'], true)
+  handler: (newState, payload, error, meta) => _(_.cloneDeep(newState))
+    .set([...statusProp(meta.id), 'isInitialLoad'], false)
+    .set([...statusProp(meta.id), 'isUpdating'], false)
+    .set([...statusProp(meta.id), 'isReady'], true)
     .value()
 }, {
   type: UPDATE_FAILED,
-  handler: (newState, payload, error, meta) => _({ ...newState })
-    .set([...statusProps(meta.id), 'isUpdating'], false)
-    .set([...statusProps(meta.id), 'isReady'], true)
-    .set([...statusProps(meta.id), 'error'], error)
+  handler: (newState, payload, error, meta) => _(_.cloneDeep(newState))
+    .set([...statusProp(meta.id), 'isUpdating'], false)
+    .set([...statusProp(meta.id), 'isReady'], true)
+    .set([...statusProp(meta.id), 'error'], error)
+    .set(['status', 'error'], error)
     .value()
 }]
 
-const getHandler = (type, handlers) => {
-  const handlerObject = _.find(handlers, ['type', type]) || {}
+const createActions = (prefixes = []) =>
+  _.reduce(prefixes, (a, prefix) =>
+      _.reduce(defaultHandlers, (actionsAcc, { type }) =>
+        _.set(actionsAcc, [prefix, type], `${prefix}/${type}`), a || {})
+    , {})
 
-  return handlerObject.handler
-}
+const createHandlers = (prefixes = []) =>
+  _.reduce(prefixes, (a, prefix) =>
+      _.reduce(defaultHandlers, (actionsAcc, { type, handler }) =>
+        _.set(actionsAcc, [prefix, type], handler), a || {})
+    , {})
 
-const createReducer = (...actions) => (state = new DefaultState({}), action) => {
-  const { type, payload, error, meta } = action
+const createReducer = (prefixes) => {
+  const actions = createActions(prefixes)
+  const handlers = createHandlers(prefixes)
 
-  let newState = { ...state }
+  const reducer = (state = new DefaultState({}), action) => {
+    const { type, payload, error, meta } = action
 
-  actions.forEach(({ name, handlers = {} }) => {
-    const typePostfix = type.replace(`${name}_`, '') // just postfix for auto-generated handlers
+    let newState = _.cloneDeep(state)
 
-    const defaultHandler = getHandler(typePostfix, defaultHandlers)
-    const customHandler = getHandler(type, handlers)
+    const handler = _.get(handlers, [...type.split('/')])
 
-    if (typeof defaultHandler === 'function') {
-      newState = defaultHandler(newState, payload, error, meta)
+    if (handler) {
+      newState = handler(newState, payload, error, meta)
     }
 
-    if (typeof customHandler === 'function') {
-      newState = customHandler(newState, payload, error, meta)
-    }
-  })
+    return newState
+  }
 
-  return newState
+  return { actions, reducer }
 }
 
 export default createReducer
