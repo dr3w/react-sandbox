@@ -1,11 +1,18 @@
 import callAPI from 'common/api'
 import { call, put } from 'redux-saga/effects'
 
+const noop = () => null
+
 export default function* apiSaga({
   args = [],
   isUpdate = false,
-  before = () => null,
-  after = () => null,
+
+  beforeStart = noop,
+  afterStart = noop,
+  beforeDone = noop,
+  afterDone = noop,
+  error = noop,
+
   meta, action, type
 }) {
   let t = type
@@ -19,14 +26,18 @@ export default function* apiSaga({
     }
   }
 
+  yield beforeStart(meta)
   yield put({ type: t.start, meta })
+  yield afterStart(meta)
 
   try {
     const payload = yield call(callAPI, ...args)
-    yield before(payload)
+
+    yield beforeDone(payload, meta)
     yield put({ type: t.succeeded, payload, meta })
-    yield after(payload)
+    yield afterDone(payload, meta)
   } catch (e) {
     yield put({ type: t.failed, error: e.message, meta })
+    yield error(e, meta)
   }
 }

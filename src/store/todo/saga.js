@@ -1,5 +1,5 @@
 import apiSaga from 'common/apiSaga'
-import { takeLatest, select } from 'redux-saga/effects'
+import { takeLatest, select, put } from 'redux-saga/effects'
 import { getTodosType } from 'store/todo/selectors'
 import { actions } from 'store/todo'
 
@@ -41,7 +41,7 @@ function* addTodo({ meta }) {
     meta,
     action: TODOS_ADD,
     isUpdate: true,
-    before: () => fetchTodos()
+    beforeDone: () => fetchTodos()
   })
 }
 
@@ -55,7 +55,8 @@ function* toggleTodo({ meta }) {
     args,
     meta,
     action: TODOS_TOGGLE,
-    isUpdate: true
+    isUpdate: true,
+    error: () => put({ type: TODOS_TOGGLE.RESET_PREV_STATE, meta })
   })
 }
 
@@ -68,7 +69,8 @@ function* deleteTodo({ meta }) {
     args,
     meta,
     action: TODOS_DELETE,
-    isUpdate: true
+    isUpdate: true,
+    error: () => put({ type: TODOS_DELETE.RESET_PREV_STATE, meta })
   })
 }
 

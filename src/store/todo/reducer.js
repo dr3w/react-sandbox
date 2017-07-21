@@ -25,12 +25,7 @@ const todoReducer = (state, action) => {
         .set(['data', meta.id, 'data', 'isDone'], meta.isDone)
         .value()
 
-    case TODOS_TOGGLE.UPDATE_FAILED:
-      return _(_.cloneDeep(newState))
-        .set(['data', meta.id, 'data', 'isDone'], !meta.isDone)
-        .value()
-
-    case TODOS_DELETE.UPDATE_SUCCEEDED:
+    case TODOS_DELETE.UPDATE_START:
       return _(_.cloneDeep(newState))
         .set(['data', meta.id], null)
         .value()

@@ -9,6 +9,8 @@ export const UPDATE_START = 'UPDATE_START'
 export const UPDATE_SUCCEEDED = 'UPDATE_SUCCEEDED'
 export const UPDATE_FAILED = 'UPDATE_FAILED'
 
+export const RESET_PREV_STATE = 'RESET_PREV_STATE'
+
 // REDUCER PREFIX
 export const TODOS = 'TODOS'
 export const TODOS_DELETE = 'TODOS_DELETE'
