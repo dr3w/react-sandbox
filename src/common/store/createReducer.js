@@ -1,38 +1,10 @@
 import _ from 'lodash'
+import { DefaultState } from 'common/store/defaults'
 import {
   FETCH_REQUESTED, FETCH_START, FETCH_SUCCEEDED, FETCH_FAILED,
   UPDATE_REQUESTED, UPDATE_START, UPDATE_SUCCEEDED, UPDATE_FAILED,
   RESET_PREV_STATE
 } from 'common/store/constants'
-
-class DefaultStatus {
-  constructor() {
-    this.isReady = true
-    this.isInitialLoad = true
-    this.isLoading = false
-    this.isUpdating = false
-    this.error = null
-  }
-}
-
-class DefaultState {
-  constructor({ data = null }) {
-    this.status = new DefaultStatus()
-    this.data = data
-    this.meta = {}
-    this.prevStateData = null
-  }
-}
-
-export const normalizeResponseCollection = (payload) => {
-  const p = _.isArray(payload) ? payload : [payload]
-
-  return p.reduce((acc, data) => {
-    acc[data.id || 0] = new DefaultState({ data })
-
-    return acc
-  }, {})
-}
 
 /**
  * Returns a path to status object,

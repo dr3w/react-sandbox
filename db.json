@@ -7,13 +7,18 @@
     },
     {
       "id": 1500551368550,
-      "isDone": true,
+      "isDone": false,
       "text": "One"
     },
     {
       "id": 1500551374246,
       "isDone": true,
       "text": "Two"
+    },
+    {
+      "id": 1500638022910,
+      "isDone": true,
+      "text": "Do this"
     }
   ]
 }
