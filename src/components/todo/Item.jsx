@@ -2,8 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import withToggle from 'hoc/withToggle'
 
-import './Item.scss'
-
 const TodoItem = ({ toggleTodo, deleteTodo, item, status, show, hide, toggledOn }) => (
   <li
     className={`list-group-item todo-list-item ${status.isUpdating ? 'item-updating' : ''}`}

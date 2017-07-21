@@ -1,3 +1,5 @@
+@import '../../common/style/color';
+
 .todo-list-item {
     .item-label {
         float: none;
@@ -8,11 +10,11 @@
             float: left;
 
             &.glyphicon-check {
-                color: darkgreen
+                color: $color-green
             }
 
             &.glyphicon-unchecked {
-                color: #a9a9a9;
+                color: $color-lighter;
             }
         }
 
@@ -38,5 +40,5 @@
 }
 
 .todo-list-item:hover .checkmark.glyphicon-unchecked {
-    color: #777;
+    color: $color-light;
 }

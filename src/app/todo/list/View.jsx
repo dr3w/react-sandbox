@@ -9,7 +9,7 @@ const TodoListEnhanced = withStatusHandler(
 )(TodoList)
 
 const TodoView = ({ todos, todosStatus, setIsDoneTodo, onTodoAdd, deleteTodo }) => (
-  <div>
+  <div className="todo-list">
     <StatusDev status={todosStatus} />
     <TodoAdd onSubmit={onTodoAdd} />
     <TodoListEnhanced

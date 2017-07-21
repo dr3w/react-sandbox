@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './StatusDev.scss'
-
 const StatusDev = ({ status }) => {
   const { isInitialLoad, isLoading, isUpdating, isReady, error } = status
 

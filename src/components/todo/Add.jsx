@@ -2,8 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm, reset } from 'redux-form'
 
-import './Add.scss'
-
 const TodoAdd = (props) => {
   const { handleSubmit, submitting } = props
   const required = value => (value ? undefined : 'Required')
