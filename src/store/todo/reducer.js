@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { actions, reducer } from 'store/todo'
-import { normalizeResponseCollection } from 'common/createReducer'
+import { normalizeResponseCollection } from 'common/store/createReducer'
 
 const { TODOS, TODOS_TOGGLE, TODOS_DELETE } = actions
 

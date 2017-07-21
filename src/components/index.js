@@ -1,5 +1,4 @@
 export { default as NavLinkLi } from './navigation/NavLinkLi'
-export { default as Status } from './status/Status'
 export { default as StatusDev } from './status/StatusDev'
 export { default as Error } from './status/Error'
 export { default as Spinner } from './status/Spinner'

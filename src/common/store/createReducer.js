@@ -3,7 +3,7 @@ import {
   FETCH_REQUESTED, FETCH_START, FETCH_SUCCEEDED, FETCH_FAILED,
   UPDATE_REQUESTED, UPDATE_START, UPDATE_SUCCEEDED, UPDATE_FAILED,
   RESET_PREV_STATE
-} from 'common/constants'
+} from 'common/store/constants'
 
 class DefaultStatus {
   constructor() {

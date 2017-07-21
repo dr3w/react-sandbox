@@ -1,4 +1,4 @@
-import createReducer from 'common/createReducer'
+import createReducer from 'common/store/createReducer'
 
 const { actions, reducer } = createReducer(
   ['TODOS', 'TODOS_ADD', 'TODOS_TOGGLE', 'TODOS_DELETE']

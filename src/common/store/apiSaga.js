@@ -1,4 +1,4 @@
-import callAPI from 'common/api'
+import callAPI from 'common/store/api'
 import { call, put } from 'redux-saga/effects'
 
 const noop = () => null

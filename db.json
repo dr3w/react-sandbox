@@ -2,23 +2,18 @@
   "todos": [
     {
       "id": 1500134080509,
-      "isDone": true,
+      "isDone": false,
       "text": "Another"
     },
     {
       "id": 1500551368550,
-      "isDone": false,
+      "isDone": true,
       "text": "One"
     },
     {
       "id": 1500551374246,
       "isDone": true,
       "text": "Two"
-    },
-    {
-      "id": 1500634844348,
-      "isDone": true,
-      "text": "2doo"
     }
   ]
 }
