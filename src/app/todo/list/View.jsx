@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { todoShape } from 'common/shapes'
 import { TodoList, TodoAdd, StatusDev } from 'components'
 import withStatusHandler from 'hoc/withStatusHandler'
 
@@ -21,7 +22,7 @@ const TodoView = ({ todos, todosStatus, setIsDoneTodo, onTodoAdd, deleteTodo }) 
 )
 
 TodoView.propTypes = {
-  todos: PropTypes.object,
+  todos: todoShape,
   todosStatus: PropTypes.object,
   setIsDoneTodo: PropTypes.func,
   onTodoAdd: PropTypes.func,
