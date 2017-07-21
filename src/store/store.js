@@ -8,7 +8,7 @@ import rootSaga from 'store/rootSaga'
 
 const loggerMiddleware = createLogger({
   collapsed: true,
-  predicate: () => false
+  predicate: () => false // do not show logs
 })
 
 const sagaMiddleware = createSagaMiddleware()

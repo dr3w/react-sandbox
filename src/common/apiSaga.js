@@ -3,23 +3,30 @@ import { call, put } from 'redux-saga/effects'
 
 export default function* apiSaga({
   args = [],
-  meta,
-  type = {
-    start: '',
-    succeeded: '',
-    failed: ''
-  },
+  isUpdate = false,
   before = () => null,
-  after = () => null
+  after = () => null,
+  meta, action, type
 }) {
-  yield put({ type: type.start, meta })
+  let t = type
+
+  if (!t && action) {
+    const op = isUpdate ? 'UPDATE' : 'FETCH'
+    t = {
+      start: action[`${op}_START`],
+      succeeded: action[`${op}_SUCCEEDED`],
+      failed: action[`${op}_FAILED`]
+    }
+  }
+
+  yield put({ type: t.start, meta })
 
   try {
     const payload = yield call(callAPI, ...args)
     yield before(payload)
-    yield put({ type: type.succeeded, payload, meta })
+    yield put({ type: t.succeeded, payload, meta })
     yield after(payload)
   } catch (e) {
-    yield put({ type: type.failed, error: e.message, meta })
+    yield put({ type: t.failed, error: e.message, meta })
   }
 }

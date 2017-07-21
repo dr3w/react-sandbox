@@ -21,11 +21,8 @@ function* fetchTodos() {
 
   yield apiSaga({
     args,
-    type: {
-      start: TODOS.FETCH_START,
-      succeeded: TODOS.FETCH_SUCCEEDED,
-      failed: TODOS.FETCH_FAILED
-    }
+    action: TODOS,
+    isUpdate: false
   })
 }
 
@@ -42,11 +39,8 @@ function* addTodo({ meta }) {
   yield apiSaga({
     args,
     meta,
-    type: {
-      start: TODOS_ADD.UPDATE_START,
-      succeeded: TODOS_ADD.UPDATE_SUCCEEDED,
-      failed: TODOS_ADD.UPDATE_FAILED
-    },
+    action: TODOS_ADD,
+    isUpdate: true,
     before: () => fetchTodos()
   })
 }
@@ -60,12 +54,8 @@ function* toggleTodo({ meta }) {
   yield apiSaga({
     args,
     meta,
-    type: {
-      start: TODOS_TOGGLE.UPDATE_START,
-      succeeded: TODOS_TOGGLE.UPDATE_SUCCEEDED,
-      failed: TODOS_TOGGLE.UPDATE_FAILED
-    }
-    // before: () => fetchTodos()
+    action: TODOS_TOGGLE,
+    isUpdate: true
   })
 }
 
@@ -77,12 +67,8 @@ function* deleteTodo({ meta }) {
   yield apiSaga({
     args,
     meta,
-    type: {
-      start: TODOS_DELETE.UPDATE_START,
-      succeeded: TODOS_DELETE.UPDATE_SUCCEEDED,
-      failed: TODOS_DELETE.UPDATE_FAILED
-    }
-    // before: () => fetchTodos({ meta })
+    action: TODOS_DELETE,
+    isUpdate: true
   })
 }
 

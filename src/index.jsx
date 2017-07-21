@@ -5,6 +5,9 @@ import { Provider } from 'react-redux'
 import store from 'store/store'
 import App from 'app/App'
 
+/*
+ * APP entry point, all connections go here
+ */
 ReactDOM.render((
   <Provider store={store}>
     <Router>
