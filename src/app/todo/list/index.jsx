@@ -3,28 +3,20 @@ import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import withRouteHandler from 'hoc/withRouteHandler'
 import * as actions from 'store/todo/actions'
-import { getTodos, getTodosStatus } from 'store/todo/selectors'
-
+import { initialLoadData, isReady, errorMessage } from 'app/todo/list/logic'
+import { getTodos, getTodosFilteredByType, getTodosStatus } from 'store/todo/selectors'
 import TodoView from 'app/todo/list/View'
 
 const TodoListContainer = props => <TodoView {...props} />
 
-const initialLoadData = ({ fetchTodos, setTodoType, match }) => {
-  const type = match.params.type
-
-  setTodoType(type)
-  fetchTodos()
-}
-
-const isReady = ({ todos }) => todos
-const errorMessage = () => false // todosStatus.error
-
 const mapStateToProps = state => ({
-  todos: getTodos(state),
+  allTodos: getTodos(state),
+  todos: getTodosFilteredByType(state),
   todosStatus: getTodosStatus(state)
 })
 
 const mapDispatchToProps = dispatch => ({
+  resetStatus: () => dispatch(actions.resetStatus()),
   setTodoType: type => dispatch(actions.setTodoType(type)),
   fetchTodos: () => dispatch(actions.fetchTodos()),
   setIsDoneTodo: (...args) => dispatch(actions.setIsDoneTodo(...args)),

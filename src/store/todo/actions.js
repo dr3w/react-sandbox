@@ -6,6 +6,11 @@ export const fetchTodos = () => ({
   type: TODOS.FETCH_REQUESTED
 })
 
+export const resetStatus = id => ({
+  type: TODOS.RESET_STATUS,
+  meta: { id }
+})
+
 export const setTodoType = type => ({
   type: TODOS.SET_TYPE,
   meta: {

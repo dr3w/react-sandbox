@@ -3,7 +3,7 @@ import { DefaultState } from 'common/store/defaults'
 import {
   FETCH_REQUESTED, FETCH_START, FETCH_SUCCEEDED, FETCH_FAILED,
   UPDATE_REQUESTED, UPDATE_START, UPDATE_SUCCEEDED, UPDATE_FAILED,
-  RESET_PREV_STATE
+  RESET_PREV_STATE, RESET_STATUS
 } from 'common/store/constants'
 
 /**
@@ -28,6 +28,14 @@ const defaultHandlers = [{
   type: FETCH_REQUESTED
 }, {
   type: UPDATE_REQUESTED
+}, {
+  type: RESET_STATUS,
+  handler: ({ newState, meta }) => _(_.cloneDeep(newState))
+    .set([...statusProp(meta.id), 'isReady'], true)
+    .set([...statusProp(meta.id), 'isLoading'], false)
+    .set([...statusProp(meta.id), 'isUpdating'], false)
+    .set([...statusProp(meta.id), 'error'], null)
+    .value()
 }, {
   type: RESET_PREV_STATE,
   handler: ({ newState, meta }) => _(_.cloneDeep(newState))

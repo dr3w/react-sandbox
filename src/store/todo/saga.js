@@ -1,23 +1,11 @@
 import apiSaga from 'common/store/apiSaga'
-import { takeLatest, select, put } from 'redux-saga/effects'
-import { getTodosType } from 'store/todo/selectors'
+import { takeEvery, put } from 'redux-saga/effects'
 import { actions } from 'store/todo'
 
 const { TODOS, TODOS_ADD, TODOS_TOGGLE, TODOS_DELETE } = actions
 
 function* fetchTodos() {
-  const type = yield select(getTodosType)
-  const query = {
-    isDone: undefined
-  }
-
-  if (type === 'done') {
-    query.isDone = 'true'
-  } else if (type === 'todo') {
-    query.isDone = 'false'
-  }
-
-  const args = ['todos', { query }]
+  const args = ['todos']
 
   yield apiSaga({
     args,
@@ -75,10 +63,10 @@ function* deleteTodo({ meta }) {
 }
 
 function* todoSaga() {
-  yield takeLatest(TODOS.FETCH_REQUESTED, fetchTodos)
-  yield takeLatest(TODOS_ADD.UPDATE_REQUESTED, addTodo)
-  yield takeLatest(TODOS_TOGGLE.UPDATE_REQUESTED, toggleTodo)
-  yield takeLatest(TODOS_DELETE.UPDATE_REQUESTED, deleteTodo)
+  yield takeEvery(TODOS.FETCH_REQUESTED, fetchTodos)
+  yield takeEvery(TODOS_ADD.UPDATE_REQUESTED, addTodo)
+  yield takeEvery(TODOS_TOGGLE.UPDATE_REQUESTED, toggleTodo)
+  yield takeEvery(TODOS_DELETE.UPDATE_REQUESTED, deleteTodo)
 }
 
 export default todoSaga

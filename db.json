@@ -2,7 +2,7 @@
   "todos": [
     {
       "id": 1500134080509,
-      "isDone": false,
+      "isDone": true,
       "text": "Another"
     },
     {
@@ -12,13 +12,18 @@
     },
     {
       "id": 1500551374246,
-      "isDone": true,
+      "isDone": false,
       "text": "Two"
     },
     {
       "id": 1500638022910,
       "isDone": true,
       "text": "Do this"
+    },
+    {
+      "id": 1500890890179,
+      "isDone": false,
+      "text": "One more"
     }
   ]
 }
