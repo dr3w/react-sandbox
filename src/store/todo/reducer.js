@@ -25,10 +25,13 @@ const todoReducer = (state, action) => {
         .set(['data', meta.id, 'data', 'isDone'], meta.isDone)
         .value()
 
-    case TODOS_DELETE.UPDATE_START:
-      return _(_.cloneDeep(newState))
-        .set(['data', meta.id], null)
-        .value()
+    case TODOS_DELETE.UPDATE_START: {
+      const temp = _.cloneDeep(newState)
+
+      delete temp.data[meta.id]
+
+      return temp
+    }
 
     default:
       return newState
