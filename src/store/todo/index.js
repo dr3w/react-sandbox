@@ -6,5 +6,6 @@ const { actions, reducer } = createReducer(
 
 // custom actions
 actions.TODOS.SET_TYPE = 'TODOS/SET_TYPE'
+actions.TODOS.INIT_LIST_ROUTE = 'TODOS/INIT_LIST_ROUTE'
 
 export { actions, reducer }

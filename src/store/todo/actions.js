@@ -2,6 +2,13 @@ import { actions } from 'store/todo'
 
 const { TODOS, TODOS_ADD, TODOS_TOGGLE, TODOS_DELETE } = actions
 
+export const initListRoute = type => ({
+  type: TODOS.INIT_LIST_ROUTE,
+  meta: {
+    type
+  }
+})
+
 export const fetchTodos = () => ({
   type: TODOS.FETCH_REQUESTED
 })

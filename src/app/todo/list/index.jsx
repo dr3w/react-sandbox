@@ -16,9 +16,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  resetStatus: () => dispatch(actions.resetStatus()),
-  setTodoType: type => dispatch(actions.setTodoType(type)),
-  fetchTodos: () => dispatch(actions.fetchTodos()),
+  initListRoute: type => dispatch(actions.initListRoute(type)),
   setIsDoneTodo: (...args) => dispatch(actions.setIsDoneTodo(...args)),
   deleteTodo: (...args) => dispatch(actions.deleteTodo(...args)),
   onTodoAdd: data => dispatch(actions.addTodo(data))

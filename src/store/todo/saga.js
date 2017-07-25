@@ -1,6 +1,8 @@
 import apiSaga from 'common/store/apiSaga'
-import { takeEvery, put } from 'redux-saga/effects'
+import { takeEvery, takeLatest, put, select } from 'redux-saga/effects'
 import { actions } from 'store/todo'
+import { getTodos } from 'store/todo/selectors'
+import * as AC from 'store/todo/actions'
 
 const { TODOS, TODOS_ADD, TODOS_TOGGLE, TODOS_DELETE } = actions
 
@@ -62,7 +64,17 @@ function* deleteTodo({ meta }) {
   })
 }
 
+function* initListRoute({ meta }) {
+  yield put(AC.resetStatus())
+  yield put(AC.setTodoType(meta.type))
+
+  const allTodos = yield select(getTodos)
+
+  if (!allTodos) yield put(AC.fetchTodos())
+}
+
 function* todoSaga() {
+  yield takeLatest(TODOS.INIT_LIST_ROUTE, initListRoute)
   yield takeEvery(TODOS.FETCH_REQUESTED, fetchTodos)
   yield takeEvery(TODOS_ADD.UPDATE_REQUESTED, addTodo)
   yield takeEvery(TODOS_TOGGLE.UPDATE_REQUESTED, toggleTodo)
