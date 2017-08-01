@@ -16,7 +16,7 @@ const loadingReducer = (state = {}, action) => {
   switch (apiStatus) {
     case 'API_START':
       return _(newState)
-        .set([reducerName, id], true)
+        .setWith([reducerName, id], true, Object)
         .value()
 
     case 'API_SUCCEEDED':

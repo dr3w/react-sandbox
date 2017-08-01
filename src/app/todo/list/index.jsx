@@ -3,14 +3,17 @@ import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import withRouteHandler from 'hoc/withRouteHandler'
 import * as AC from 'store/todo/AC'
+import * as errorAC from 'store/error/AC'
 import { initialLoadData, isReady, errorMessage } from 'app/todo/list/logic'
 import { getTodosFilteredByType } from 'store/todo/selectors'
 import { getIsLoading } from 'store/loading/selectors'
+import { getReducerErrors } from 'store/error/selectors'
 import TodoView from 'app/todo/list/View'
 
 const TodoListContainer = props => <TodoView {...props} />
 
 const mapStateToProps = state => ({
+  getReducerErrors: getReducerErrors(state),
   isLoading: getIsLoading(state),
   todos: getTodosFilteredByType(state)
 })
@@ -19,7 +22,8 @@ const mapDispatchToProps = ({
   routeInitList: AC.routeInitList,
   todoToggle: AC.todoToggle,
   todoDelete: AC.todoDelete,
-  todoAdd: AC.todoAdd
+  todoAdd: AC.todoAdd,
+  errorCloseById: errorAC.errorCloseById
 })
 
 const enhance = compose(

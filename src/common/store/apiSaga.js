@@ -20,8 +20,8 @@ export default function* apiSaga({
 
     yield success(payload)
     yield put({ type: actions.API_SUCCEEDED, meta, payload })
-  } catch (err) {
-    yield fail(err)
-    yield put({ type: actions.API_FAILED, meta, error: err })
+  } catch (error) {
+    yield fail(error)
+    yield put({ type: actions.API_FAILED, meta, error })
   }
 }
