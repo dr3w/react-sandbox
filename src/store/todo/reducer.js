@@ -1,40 +1,29 @@
 import _ from 'lodash'
-import { actions, reducer } from 'store/todo'
-import { normalizeResponseCollection } from 'common/store/helpers'
+import TODO from './actions'
 
-const { TODOS, TODOS_TOGGLE, TODOS_DELETE } = actions
-
-const todoReducer = (state, action) => {
+const todoReducer = (state = {}, action) => {
   const { type, payload, meta } = action
-
-  const newState = reducer(state, action)
+  const newState = _.cloneDeep(state)
 
   switch (type) {
-    case TODOS.SET_TYPE:
-      return _(_.cloneDeep(newState))
-        .set(['meta', 'type'], meta.type)
+    case TODO.FETCH.API_SUCCEEDED:
+      return payload.reverse().reduce((acc, item) => {
+        acc[item.id] = item
+        return acc
+      }, {})
+
+    case TODO.TOGGLE.API_SUCCEEDED:
+      return _(newState)
+        .set([meta.id, 'isDone'], meta.isDone)
         .value()
 
-    case TODOS.FETCH_SUCCEEDED:
-      return _(_.cloneDeep(newState))
-        .set(['data'], normalizeResponseCollection(payload.reverse()))
-        .value()
-
-    case TODOS_TOGGLE.UPDATE_START:
-      return _(_.cloneDeep(newState))
-        .set(['data', meta.id, 'data', 'isDone'], meta.isDone)
-        .value()
-
-    case TODOS_DELETE.UPDATE_START: {
-      const temp = _.cloneDeep(newState)
-
-      delete temp.data[meta.id]
-
-      return temp
+    case TODO.DELETE.API_SUCCEEDED: {
+      delete newState[meta.id]
+      return newState
     }
 
     default:
-      return newState
+      return state
   }
 }
 

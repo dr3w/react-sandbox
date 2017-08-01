@@ -38,8 +38,8 @@
     &.item-updating {
         pointer-events: none;
 
-        .item-text, .checkmark {
-            //color: #777 !important;
+        * {
+            opacity: .5 !important;
         }
     }
 }

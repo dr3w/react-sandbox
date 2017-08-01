@@ -1,3 +1,3 @@
-export const initialLoadData = ({ initListRoute, match }) => initListRoute(match.params.type)
-export const isReady = ({ todos }) => todos
-export const errorMessage = () => false // todosStatus.error
+export const initialLoadData = ({ routeInitList, match }) => routeInitList(match.params.type)
+export const isReady = () => true // !isLoading('todo')
+export const errorMessage = () => false // TODO: error reducer here

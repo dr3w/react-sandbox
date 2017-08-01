@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const StatusDev = ({ status }) => {
+const StatusDev = ({ status = {} }) => {
   const { isInitialLoad, isLoading, isUpdating, isReady, error } = status
 
   return (

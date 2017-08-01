@@ -1,22 +1,18 @@
 import apiSaga from 'common/store/apiSaga'
-import { takeEvery, takeLatest, put, select } from 'redux-saga/effects'
-import { actions } from 'store/todo'
-import { getTodos } from 'store/todo/selectors'
-import * as AC from 'store/todo/actions'
+import { takeEvery } from 'redux-saga/effects'
 
-const { TODOS, TODOS_ADD, TODOS_TOGGLE, TODOS_DELETE } = actions
+import TODO from 'store/todo/actions'
 
-function* fetchTodos() {
+function* fetchAllTodos() {
   const args = ['todos']
 
   yield apiSaga({
     args,
-    action: TODOS,
-    isUpdate: false
+    actions: TODO.FETCH
   })
 }
 
-function* addTodo({ meta }) {
+function* todoAdd({ meta }) {
   const args = ['todos', {
     method: 'POST',
     data: {
@@ -29,13 +25,12 @@ function* addTodo({ meta }) {
   yield apiSaga({
     args,
     meta,
-    action: TODOS_ADD,
-    isUpdate: true,
-    beforeDone: () => fetchTodos()
+    actions: TODO.ADD,
+    success: () => fetchAllTodos()
   })
 }
 
-function* toggleTodo({ meta }) {
+function* todoToggle({ meta }) {
   const args = [`todos/${meta.id}`, {
     method: 'PATCH',
     data: { isDone: meta.isDone }
@@ -44,13 +39,11 @@ function* toggleTodo({ meta }) {
   yield apiSaga({
     args,
     meta,
-    action: TODOS_TOGGLE,
-    isUpdate: true,
-    error: () => put({ type: TODOS_TOGGLE.RESET_PREV_STATE, meta })
+    actions: TODO.TOGGLE
   })
 }
 
-function* deleteTodo({ meta }) {
+function* todoDelete({ meta }) {
   const args = [`todos/${meta.id}`, {
     method: 'DELETE'
   }]
@@ -58,27 +51,15 @@ function* deleteTodo({ meta }) {
   yield apiSaga({
     args,
     meta,
-    action: TODOS_DELETE,
-    isUpdate: true,
-    error: () => put({ type: TODOS_DELETE.RESET_PREV_STATE, meta })
+    actions: TODO.DELETE
   })
 }
 
-function* initListRoute({ meta }) {
-  yield put(AC.resetStatus())
-  yield put(AC.setTodoType(meta.type))
-
-  const allTodos = yield select(getTodos)
-
-  if (!allTodos) yield put(AC.fetchTodos())
-}
-
 function* todoSaga() {
-  yield takeLatest(TODOS.INIT_LIST_ROUTE, initListRoute)
-  yield takeEvery(TODOS.FETCH_REQUESTED, fetchTodos)
-  yield takeEvery(TODOS_ADD.UPDATE_REQUESTED, addTodo)
-  yield takeEvery(TODOS_TOGGLE.UPDATE_REQUESTED, toggleTodo)
-  yield takeEvery(TODOS_DELETE.UPDATE_REQUESTED, deleteTodo)
+  yield takeEvery(TODO.FETCH.API_REQUESTED, fetchAllTodos)
+  yield takeEvery(TODO.ADD.API_REQUESTED, todoAdd)
+  yield takeEvery(TODO.TOGGLE.API_REQUESTED, todoToggle)
+  yield takeEvery(TODO.DELETE.API_REQUESTED, todoDelete)
 }
 
 export default todoSaga

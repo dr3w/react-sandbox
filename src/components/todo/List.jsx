@@ -4,20 +4,17 @@ import _map from 'lodash/map'
 import { TodoItem } from 'components'
 
 const createTodoList = ({ todos, ...props }) => todos && _map(todos, (todo) => {
-  const { data, status } = todo || {}
-
-  if (!data) return null
-
-  const toggleTodo = () => props.setIsDoneTodo(data.id, !data.isDone)
-  const deleteTodo = () => props.deleteTodo(data.id)
+  const todoToggle = () => props.todoToggle(todo.id, !todo.isDone)
+  const todoDelete = () => props.todoDelete(todo.id)
+  const isLoading = props.isLoading('todo', todo.id)
 
   return (
     <TodoItem
-      key={data.id}
-      toggleTodo={toggleTodo}
-      deleteTodo={deleteTodo}
-      item={data}
-      status={status}
+      key={todo.id}
+      item={todo}
+      isLoading={isLoading}
+      todoToggle={todoToggle}
+      todoDelete={todoDelete}
     />
   )
 })
@@ -30,8 +27,9 @@ const TodoList = props => (
 
 TodoList.propTypes = {
   todos: PropTypes.object,
-  toggleTodo: PropTypes.func,
-  deleteTodo: PropTypes.func
+  isLoading: PropTypes.func,
+  todoToggle: PropTypes.func,
+  todoDelete: PropTypes.func
 }
 
 export default TodoList
