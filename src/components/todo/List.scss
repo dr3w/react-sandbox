@@ -1,0 +1,8 @@
+@import '../../common/style/color';
+
+.list-group {
+    &.list-updating {
+        pointer-events: none;
+        opacity: .5 !important;
+    }
+}
