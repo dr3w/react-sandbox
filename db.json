@@ -17,18 +17,13 @@
     },
     {
       "id": 1501587134301,
-      "isDone": true,
+      "isDone": false,
       "text": "Set this as done"
     },
     {
-      "id": 1501587135673,
+      "id": 1501601760435,
       "isDone": true,
-      "text": "now!"
-    },
-    {
-      "id": 1501591871430,
-      "isDone": false,
-      "text": "z"
+      "text": "Ho!"
     }
   ]
 }

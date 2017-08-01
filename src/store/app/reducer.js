@@ -1,6 +1,6 @@
 import APP from './actions'
 
-const todoReducer = (state = {}, action) => {
+const appReducer = (state = {}, action) => {
   const { type, meta = {} } = action
 
   switch (type) {
@@ -12,4 +12,4 @@ const todoReducer = (state = {}, action) => {
   }
 }
 
-export default todoReducer
+export default appReducer

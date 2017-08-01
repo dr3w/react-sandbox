@@ -1,6 +1,7 @@
 import _ from 'lodash'
+import { API_REQUESTED, API_START, API_SUCCEEDED, API_FAILED } from 'common/store/constants'
 
-const defaultActionTypes = ['API_REQUESTED', 'API_START', 'API_SUCCEEDED', 'API_FAILED']
+const defaultActionTypes = [API_REQUESTED, API_START, API_SUCCEEDED, API_FAILED]
 
 /**
  *

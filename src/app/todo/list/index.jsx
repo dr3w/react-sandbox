@@ -14,7 +14,7 @@ const TodoListContainer = props => <TodoView {...props} />
 
 const mapStateToProps = state => ({
   getReducerErrors: getReducerErrors(state),
-  isLoading: getIsLoading(state),
+  getIsLoading: getIsLoading(state),
   todos: getTodosFilteredByType(state)
 })
 

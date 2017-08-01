@@ -1,15 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import _isEmpty from 'lodash/isEmpty'
 import { todoShape } from 'common/store/shapes'
 import { TodoList, TodoAdd, ErrorList } from 'components'
 import withStatusHandler from 'hoc/withStatusHandler'
 
-const TodoListEnhanced = withStatusHandler(
-  { isReady: ({ isLoading }) => !isLoading('todo') }
-)(TodoList)
+const TodoListEnhanced = withStatusHandler({
+  isReady: ({ todos }) => !_isEmpty(todos)
+})(TodoList)
 
 const TodoView = ({
-  todos, todoToggle, todoDelete, todoAdd, isLoading, errorCloseById, getReducerErrors
+  todos, todoToggle, todoDelete, todoAdd, getIsLoading, errorCloseById, getReducerErrors
 }) => (
   <div className="todo-list">
     <ErrorList
@@ -18,7 +19,7 @@ const TodoView = ({
     />
     <TodoAdd onSubmit={todoAdd} />
     <TodoListEnhanced
-      isLoading={isLoading}
+      getIsLoading={getIsLoading}
       todos={todos}
       todoToggle={todoToggle}
       todoDelete={todoDelete}
@@ -30,7 +31,7 @@ TodoView.propTypes = {
   todos: todoShape,
   getReducerErrors: PropTypes.func,
   errorCloseById: PropTypes.func,
-  isLoading: PropTypes.func,
+  getIsLoading: PropTypes.func,
   todoAdd: PropTypes.func,
   todoToggle: PropTypes.func,
   todoDelete: PropTypes.func

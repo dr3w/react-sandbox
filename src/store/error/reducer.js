@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { API_START, API_SUCCEEDED, API_FAILED } from 'common/store/constants'
 import ERROR from './actions'
 
 const parse = type => type.split('/')
@@ -8,7 +9,8 @@ const errorReducer = (state = {}, action) => {
   const { type, meta = {}, error } = action
 
   const newState = _.cloneDeep(state)
-  const [reducer, op, apiStatus] = parse(type)
+
+  const [reducer, operation, apiStatus] = parse(type)
   const reducerName = reducer.toLowerCase()
   const id = meta.id || 'root'
 
@@ -25,7 +27,7 @@ const errorReducer = (state = {}, action) => {
     return newState
   } else if (isApi(parse(type))) {
     switch (apiStatus) {
-      case 'API_FAILED':
+      case API_FAILED:
         return _(newState)
           .setWith([reducerName, id], {
             message: error.message,
@@ -33,12 +35,12 @@ const errorReducer = (state = {}, action) => {
             id: meta.id,
             reducer: reducerName,
             key: `${reducerName}_${meta.id}`,
-            op
+            operation
           }, Object)
           .value()
 
-      case 'API_START':
-      case 'API_SUCCEEDED': {
+      case API_START:
+      case API_SUCCEEDED: {
         if (newState[reducerName] && newState[reducerName][id]) {
           delete newState[reducerName][id]
         }

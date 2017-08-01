@@ -6,30 +6,34 @@ import { TodoItem } from 'components'
 const createTodoList = ({ todos, ...props }) => todos && _map(todos, (todo) => {
   const todoToggle = () => props.todoToggle(todo.id, !todo.isDone)
   const todoDelete = () => props.todoDelete(todo.id)
-  const isItemLoading = props.isLoading('todo', todo.id)
+  const isLoading = props.getIsLoading('todo', todo.id)
 
   return (
     <TodoItem
       key={todo.id}
       item={todo}
-      isLoading={isItemLoading}
+      isLoading={isLoading}
       todoToggle={todoToggle}
       todoDelete={todoDelete}
     />
   )
 })
 
-const TodoList = props => (
-  <ul
-    className={`list-group ${props.isLoading('todo') ? 'list-updating' : ''}`}
-  >
-    {createTodoList(props)}
-  </ul>
-)
+const TodoList = (props) => {
+  const isLoading = props.getIsLoading('todo')
+
+  return (
+    <ul
+      className={`list-group ${isLoading ? 'list-updating' : ''}`}
+    >
+      {createTodoList(props)}
+    </ul>
+  )
+}
 
 TodoList.propTypes = {
   todos: PropTypes.object,
-  isLoading: PropTypes.func,
+  getIsLoading: PropTypes.func,
   todoToggle: PropTypes.func,
   todoDelete: PropTypes.func
 }
