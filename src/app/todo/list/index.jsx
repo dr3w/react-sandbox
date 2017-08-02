@@ -7,12 +7,13 @@ import * as errorAC from 'store/error/AC'
 import { initialLoadData, isReady, errorMessage } from 'app/todo/list/logic'
 import { getTodosFilteredByType } from 'store/todo/selectors'
 import { getIsLoading } from 'store/loading/selectors'
-import { getReducerErrors } from 'store/error/selectors'
+import { getReducerErrors, getEntityErrorMessage } from 'store/error/selectors'
 import TodoView from 'app/todo/list/View'
 
 const TodoListContainer = props => <TodoView {...props} />
 
 const mapStateToProps = state => ({
+  getEntityErrorMessage: getEntityErrorMessage(state),
   getReducerErrors: getReducerErrors(state),
   getIsLoading: getIsLoading(state),
   todos: getTodosFilteredByType(state)

@@ -8,3 +8,11 @@ export const getReducerErrors = state => reducer =>
   }, [])
 
 export const getEntityError = state => (reducer, id) => _get(state, ['error', reducer, id])
+
+export const getEntityErrorMessage = state => (reducer, id) => {
+  const error = _get(state, ['error', reducer, id])
+
+  if (error && error.message) return error.message
+
+  return null
+}

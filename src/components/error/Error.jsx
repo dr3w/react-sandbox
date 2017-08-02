@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Error = ({ message, errorDismiss }) => (
-  <div className="alert alert-danger" role="alert">
+const Error = ({ message, errorDismiss }) => {
+  const dismissButton = errorDismiss ? (
     <button
       type="button"
       className="close"
@@ -11,9 +11,15 @@ const Error = ({ message, errorDismiss }) => (
     >
       <span aria-hidden="true">&times;</span>
     </button>
-    {message}
-  </div>
-)
+  ) : null
+
+  return (
+    <div className="alert alert-danger" role="alert">
+      {dismissButton}
+      {message}
+    </div>
+  )
+}
 
 Error.propTypes = {
   message: PropTypes.string,
@@ -21,8 +27,7 @@ Error.propTypes = {
 }
 
 Error.defaultProps = {
-  message: '',
-  errorDismiss: () => null
+  message: ''
 }
 
 export default Error

@@ -8,7 +8,7 @@ const withStatusHandler = ({
   branch(
     errorMessage,
     renderComponent(
-      withProps(props => ({ errorMessage: errorMessage(props) || '' }))(Error)
+      withProps(props => ({ message: errorMessage(props) || '' }))(Error)
     )
   ),
   branch(
