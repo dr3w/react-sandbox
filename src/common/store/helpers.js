@@ -7,4 +7,4 @@ export const mapToArray = immutableMap => immutableMap.valueSeq().toArray()
 
 export const matchApiCall = (type, apiLifecycle) => type.split('/')[2] === apiLifecycle
 
-export const getReducerName = type => type.split('/')[0].toLowerCase()
+export const getReducerNameFromType = type => type.split('/')[0].toLowerCase()

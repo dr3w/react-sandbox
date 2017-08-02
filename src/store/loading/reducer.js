@@ -1,11 +1,11 @@
 import { Map } from 'immutable'
 import { API_START, API_SUCCEEDED, API_FAILED } from 'common/store/constants'
-import { getReducerName, matchApiCall } from 'common/store/helpers'
+import { getReducerNameFromType, matchApiCall } from 'common/store/helpers'
 
 const loadingReducer = (state = new Map({}), action) => {
   const { type, meta = {} } = action
 
-  const reducerName = getReducerName(type)
+  const reducerName = getReducerNameFromType(type)
   const id = meta.id || 'root'
 
   switch (true) {
