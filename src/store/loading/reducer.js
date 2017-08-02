@@ -1,8 +1,6 @@
 import { Map } from 'immutable'
 import { API_START, API_SUCCEEDED, API_FAILED } from 'common/store/constants'
-
-const matchApiCall = (type, apiLifecycle) => type.split('/')[2] === apiLifecycle
-const getReducerName = type => type.split('/')[0].toLowerCase()
+import { getReducerName, matchApiCall } from 'common/store/helpers'
 
 const loadingReducer = (state = new Map({}), action) => {
   const { type, meta = {} } = action

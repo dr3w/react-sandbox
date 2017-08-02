@@ -1,5 +1,5 @@
 import { OrderedMap, Record } from 'immutable'
-import { arrayToMap } from 'common/store/immutableHelpers'
+import { arrayToMap } from 'common/store/helpers'
 import TODO from './actions'
 
 const TodoModel = Record({

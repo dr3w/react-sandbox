@@ -1,58 +1,40 @@
-import _ from 'lodash'
+import { Map, List } from 'immutable'
 import { API_START, API_SUCCEEDED, API_FAILED } from 'common/store/constants'
+import { getReducerName, matchApiCall } from 'common/store/helpers'
 import ERROR from './actions'
 
-// TODO: should hold arrays in reducers
+const errorReducer = (state = new Map({}), action) => {
+  const { type, error, meta = {} } = action
 
-const parse = type => type.split('/')
-const isApi = parsed => parsed.length === 3
-
-const errorReducer = (state = {}, action) => {
-  const { type, meta = {}, error } = action
-
-  const newState = _.cloneDeep(state)
-
-  const [reducer,, apiStatus] = parse(type)
-  const reducerName = reducer.toLowerCase()
+  const reducerName = getReducerName(type)
   const id = meta.id || 'root'
 
-  if (type === ERROR.CLEAR_ALL) {
-    return {}
-  } else if (type === ERROR.CLEAR_BY_REDUCER) {
-    delete newState[reducerName]
-    return newState
-  } else if (type === ERROR.CLEAR_BY_ID) {
-    if (newState[meta.reducer] && newState[meta.reducer][meta.id]) {
-      delete newState[meta.reducer][meta.id]
-    }
-    return newState
-  } else if (isApi(parse(type))) { // handle API actions
-    switch (apiStatus) {
-      case API_FAILED:
-        return _(newState)
-          .setWith([reducerName, id], {
-            message: error.message,
-            stack: error.stack,
-            type,
-            id
-          }, Object)
-          .value()
+  switch (true) {
+    case matchApiCall(type, API_FAILED):
+      return state.mergeDeep({
+        [reducerName]: [{
+          message: error.message,
+          stack: error.stack,
+          type,
+          id
+        }]
+      })
 
-      case API_START:
-      case API_SUCCEEDED: {
-        if (newState[reducerName] && newState[reducerName][id]) {
-          delete newState[reducerName][id]
-        }
+    case matchApiCall(type, API_START):
+    case matchApiCall(type, API_SUCCEEDED):
+    case type === ERROR.CLEAR_BY_ID:
+      return state.updateIn([reducerName], List(), list => list.filter(v => v.get('id') !== id))
 
-        return newState
-      }
+    case type === ERROR.CLEAR_BY_REDUCER:
+      return state.filter((v, key) => key !== reducerName)
 
-      default:
-        return newState
-    }
+    case type === ERROR.CLEAR_ALL:
+      return new Map()
+
+    default:
+      return state
   }
-
-  return newState
 }
 
 export default errorReducer
+
