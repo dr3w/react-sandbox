@@ -6,24 +6,14 @@
       "text": "One more"
     },
     {
-      "id": 1501587121603,
-      "isDone": false,
-      "text": "Todo THIS"
-    },
-    {
       "id": 1501587127764,
       "isDone": true,
       "text": "And this"
     },
     {
-      "id": 1501587134301,
+      "id": 1501682038111,
       "isDone": true,
-      "text": "Set this as done"
-    },
-    {
-      "id": 1501601760435,
-      "isDone": true,
-      "text": "Ho!"
+      "text": "Test"
     }
   ]
 }

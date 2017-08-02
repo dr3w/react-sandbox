@@ -1,26 +1,27 @@
-import _ from 'lodash'
+import { OrderedMap, Record } from 'immutable'
+import { arrayToMap } from 'common/store/immutableHelpers'
 import TODO from './actions'
 
-const todoReducer = (state = {}, action) => {
+const TodoModel = Record({
+  id: null,
+  isDone: null,
+  text: null
+})
+
+const todoReducer = (state = new OrderedMap({}), action) => {
   const { type, payload, meta } = action
-  const newState = _.cloneDeep(state)
 
   switch (type) {
     case TODO.FETCH.API_SUCCEEDED:
-      return payload.reverse().reduce((acc, item) => {
-        acc[item.id] = item
-        return acc
-      }, {})
+      return new OrderedMap(arrayToMap(payload.reverse(), TodoModel))
 
     case TODO.TOGGLE.API_SUCCEEDED:
-      return _(newState)
-        .set([meta.id, 'isDone'], meta.isDone)
-        .value()
+      return state
+        .setIn([meta.id, 'isDone'], meta.isDone)
 
-    case TODO.DELETE.API_SUCCEEDED: {
-      delete newState[meta.id]
-      return newState
-    }
+    case TODO.DELETE.API_SUCCEEDED:
+      return state
+        .filter(value => value.get('id') !== meta.id)
 
     default:
       return state
