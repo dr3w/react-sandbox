@@ -1,3 +1,1 @@
-import _get from 'lodash/get'
-
-export const getTodoType = state => _get(state, ['app', 'type'])
+export const getTodoType = state => state.app.get('type')
