@@ -1,7 +1,7 @@
 import { Map } from 'immutable'
 import APP from './actions'
 
-const appReducer = (state = new Map({}), action) => {
+const appReducer = (state = Map({}), action) => {
   const { type, meta = {} } = action
 
   switch (type) {

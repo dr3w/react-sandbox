@@ -10,15 +10,17 @@ const TodoListEnhanced = withStatusHandler({
 })(TodoList)
 
 const TodoView = ({
-  todos, todoToggle, todoDelete, todoAdd, getIsLoading, errorCloseById, getReducerErrors
+  todos, todoToggle, todoDelete, todoAdd, getIsLoading,
+  errorCloseById, getErrorsByReducer, getErrorsById
 }) => (
   <div className="todo-list">
     <ErrorList
-      errors={getReducerErrors('todo')}
+      errors={getErrorsByReducer('todo')}
       errorCloseById={errorCloseById}
     />
     <TodoAdd onSubmit={todoAdd} />
     <TodoListEnhanced
+      getErrorsById={getErrorsById}
       getIsLoading={getIsLoading}
       todos={todos}
       todoToggle={todoToggle}
@@ -29,7 +31,8 @@ const TodoView = ({
 
 TodoView.propTypes = {
   todos: todoShape,
-  getReducerErrors: PropTypes.func,
+  getErrorsByReducer: PropTypes.func,
+  getErrorsById: PropTypes.func,
   errorCloseById: PropTypes.func,
   getIsLoading: PropTypes.func,
   todoAdd: PropTypes.func,

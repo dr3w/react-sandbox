@@ -8,12 +8,12 @@ const TodoModel = Record({
   text: null
 })
 
-const todoReducer = (state = new OrderedMap({}), action) => {
+const todoReducer = (state = OrderedMap({}), action) => {
   const { type, payload, meta } = action
 
   switch (type) {
     case TODO.FETCH.API_SUCCEEDED:
-      return new OrderedMap(arrayToMap(payload.reverse(), TodoModel))
+      return OrderedMap(arrayToMap(payload.reverse(), TodoModel))
 
     case TODO.TOGGLE.API_SUCCEEDED:
       return state

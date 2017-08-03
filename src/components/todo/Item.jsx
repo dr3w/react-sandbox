@@ -2,9 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import withToggle from 'hoc/withToggle'
 
-const TodoItem = ({ todoToggle, todoDelete, item, show, hide, toggledOn, isLoading }) => (
+const TodoItem = ({ todoToggle, todoDelete, item, show, hide, toggledOn, isLoading, isError }) => (
   <li
-    className={`list-group-item todo-list-item ${isLoading ? 'item-updating' : ''}`}
+    className={
+      `list-group-item todo-list-item
+      ${isLoading ? 'item-updating' : ''}
+      ${isError ? 'item-error' : ''}`
+    }
     onMouseEnter={show}
     onMouseLeave={hide}
   >
@@ -29,6 +33,7 @@ const TodoItem = ({ todoToggle, todoDelete, item, show, hide, toggledOn, isLoadi
 
 TodoItem.propTypes = {
   item: PropTypes.object,
+  isError: PropTypes.bool,
   isLoading: PropTypes.bool,
   todoToggle: PropTypes.func,
   todoDelete: PropTypes.func,

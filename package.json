@@ -22,6 +22,7 @@
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.1",
     "immutable": "^3.8.1",
+    "install": "^0.10.1",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.4",
     "memory-cache": "^0.1.6",

@@ -1,8 +1,9 @@
 import { getTodoType } from 'store/app/selectors'
 import { createSelector } from 'reselect'
 
-export const getAllTodos = state => state.todo.toJS()
-export const getAllTodosMap = state => state.todo
+const getAllTodosMap = state => state.todo
+
+export const getAllTodos = state => getAllTodosMap(state).toJS()
 
 export const getTodosFilteredByType = createSelector(
   getAllTodosMap,

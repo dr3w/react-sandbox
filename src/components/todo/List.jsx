@@ -7,11 +7,13 @@ const createTodoList = ({ todos, ...props }) => todos && _map(todos, (todo) => {
   const todoToggle = () => props.todoToggle(todo.id, !todo.isDone)
   const todoDelete = () => props.todoDelete(todo.id)
   const isLoading = props.getIsLoading('todo', todo.id)
+  const isError = !!props.getErrorsById('todo', todo.id).length
 
   return (
     <TodoItem
       key={todo.id}
       item={todo}
+      isError={isError}
       isLoading={isLoading}
       todoToggle={todoToggle}
       todoDelete={todoDelete}
