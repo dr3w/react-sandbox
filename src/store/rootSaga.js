@@ -1,11 +1,11 @@
 import { fork } from 'redux-saga/effects'
 
-import app from 'store/app/saga'
+import route from 'store/route/saga'
 import todo from 'store/todo/saga'
 
 export default function* root() {
   yield [
-    fork(app),
+    fork(route),
     fork(todo)
   ]
 }

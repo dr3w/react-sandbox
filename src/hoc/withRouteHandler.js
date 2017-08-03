@@ -3,8 +3,8 @@ import { compose } from 'recompose'
 import withRouteOnEnter from 'hoc/withRouteOnEnter'
 import withStatusHandler from 'hoc/withStatusHandler'
 
-const withRouteHandler = ({ initialLoadData, isReady, errorMessage }) => compose(
-  withRouteOnEnter(initialLoadData),
+const withRouteHandler = ({ routeOnEnter, isReady, errorMessage }) => compose(
+  withRouteOnEnter(routeOnEnter),
   withStatusHandler({
     isReady,
     errorMessage

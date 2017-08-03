@@ -1,10 +1,11 @@
 import React from 'react'
+import isEmpty from 'lodash/isEmpty'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import withRouteHandler from 'hoc/withRouteHandler'
 import TODO from 'store/todo/actions'
-import * as AC from 'store/todo/AC'
-import * as appAC from 'store/app/AC'
+import * as routeAC from 'store/route/AC'
+import * as todoAC from 'store/todo/AC'
 import * as errorAC from 'store/error/AC'
 import { getTodosFilteredByType } from 'store/todo/selectors'
 import { getIsLoading } from 'store/loading/selectors'
@@ -15,22 +16,25 @@ const TodoListContainer = props => <TodoView {...props} />
 
 const mapStateToProps = state => ({
   todos: getTodosFilteredByType(state),
+
+  getIsLoading: getIsLoading(state),
   getErrorsById: getErrorsById(state),
   getErrorsByType: getErrorsByType(state),
-  getErrorsByReducer: getErrorsByReducer(state),
-  getIsLoading: getIsLoading(state)
+  getErrorsByReducer: getErrorsByReducer(state)
 })
 
-const mapDispatchToProps = ({
-  initRouteList: appAC.initRouteList,
-  todoToggle: AC.todoToggle,
-  todoDelete: AC.todoDelete,
-  todoAdd: AC.todoAdd,
+const mapDispatchToProps = {
+  initRoute: routeAC.todoList,
+
+  todoAdd: todoAC.todoAdd,
+  todoToggle: todoAC.todoToggle,
+  todoDelete: todoAC.todoDelete,
+
   errorCloseById: errorAC.errorCloseById
-})
+}
 
-const initialLoadData = ({ initRouteList, match }) => initRouteList({ type: match.params.type })
-const isReady = () => true
+const routeOnEnter = ({ initRoute, match }) => initRoute(match.params)
+const isReady = ({ todos }) => !isEmpty(todos)
 const errorMessage = (props) => {
   const errors = props.getErrorsByType('todo', TODO.FETCH.API_FAILED) || []
 
@@ -40,7 +44,7 @@ const errorMessage = (props) => {
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   withRouteHandler({
-    initialLoadData,
+    routeOnEnter,
     isReady,
     errorMessage
   })

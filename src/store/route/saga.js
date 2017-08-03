@@ -6,22 +6,22 @@ import _isEmpty from 'lodash/isEmpty'
 import { takeLatest, put, select } from 'redux-saga/effects'
 
 import { getAllTodos } from 'store/todo/selectors'
-import APP from 'store/app/actions'
-import * as AC from 'store/app/AC'
+import ROUTE from 'store/route/actions'
+import * as appAC from 'store/app/AC'
 import * as todoAC from 'store/todo/AC'
 import * as errorAC from 'store/error/AC'
 
-function* initRouteList({ meta }) {
+function* todoList({ params }) {
   yield put(errorAC.errorClearAll())
-  yield put(AC.setTodoType(meta.type))
+  yield put(appAC.setTodoType(params.type))
 
   const allTodos = yield select(getAllTodos)
 
   if (_isEmpty(allTodos)) yield put(todoAC.fetchAllTodos())
 }
 
-function* appSaga() {
-  yield takeLatest(APP.ROUTE.LIST, initRouteList)
+function* routeSaga() {
+  yield takeLatest(ROUTE.TODO_LIST, todoList)
 }
 
-export default appSaga
+export default routeSaga
