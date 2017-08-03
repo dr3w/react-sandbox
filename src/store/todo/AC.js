@@ -1,10 +1,5 @@
 import TODO from './actions'
 
-export const routeInitList = type => ({
-  type: TODO.ROUTE_INIT.LIST,
-  meta: { type }
-})
-
 export const fetchAllTodos = () => ({
   type: TODO.FETCH.API_REQUESTED
 })
