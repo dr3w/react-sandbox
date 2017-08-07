@@ -9,9 +9,9 @@ import * as errorActions from 'store/error/actions'
 import { getTodosFilteredByType } from 'store/todo/selectors'
 import { getIsLoading } from 'store/loading/selectors'
 import { getErrorsByReducer, getErrorsByType, getErrorsById } from 'store/error/selectors'
-import TodoView from 'app/todo/list/View'
+import TodoListView from 'app/todo/list/View'
 
-const TodoListContainer = props => <TodoView {...props} />
+const TodoListContainer = props => <TodoListView {...props} />
 
 const mapStateToProps = state => ({
   todos: getTodosFilteredByType(state),

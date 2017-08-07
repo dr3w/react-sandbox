@@ -36,6 +36,7 @@ const TodoList = (props) => {
 TodoList.propTypes = {
   todos: PropTypes.object,
   getIsLoading: PropTypes.func,
+  getErrorsById: PropTypes.func,
   todoToggle: PropTypes.func,
   todoDelete: PropTypes.func
 }

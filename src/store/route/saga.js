@@ -14,6 +14,15 @@ import * as errorActions from 'store/error/actions'
 function* todoList({ params }) {
   yield put(errorActions.errorClearAll())
   yield put(appActions.setTodoType(params.type))
+  const allTodos = yield select(getAllTodos)
+
+
+  if (_isEmpty(allTodos)) yield put(todoActions.fetchAllTodos())
+}
+
+function* todoItem({ params }) {
+  yield put(errorActions.errorClearAll())
+  yield put(appActions.setTodoId(params.id))
 
   const allTodos = yield select(getAllTodos)
 
@@ -22,6 +31,7 @@ function* todoList({ params }) {
 
 function* routeSaga() {
   yield takeLatest(ROUTE.TODO_LIST, todoList)
+  yield takeLatest(ROUTE.TODO_ITEM, todoItem)
 }
 
 export default routeSaga

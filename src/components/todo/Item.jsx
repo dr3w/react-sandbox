@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import withToggle from 'hoc/withToggle'
 
 const TodoItem = ({ todoToggle, todoDelete, item, show, hide, toggledOn, isLoading, isError }) => {
@@ -19,6 +20,13 @@ const TodoItem = ({ todoToggle, todoDelete, item, show, hide, toggledOn, isLoadi
       >
         DELETE
       </button>
+      <Link
+        className={`btn btn-xs btn-primary ${toggledOn ? '' : 'hidden'}`}
+        to={`/todo/${item.id}`}
+      >
+        VIEW
+      </Link>
+
       <div
         htmlFor={item.id}
         className="item-label clickable"

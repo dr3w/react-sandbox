@@ -8,6 +8,9 @@ const appReducer = (state = Map({}), action) => {
     case APP.SET_TYPE:
       return state.set('type', meta.type)
 
+    case APP.SET_TODO_ID:
+      return state.set('currentTodoId', +meta.id)
+
     default:
       return state
   }

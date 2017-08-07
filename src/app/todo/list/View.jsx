@@ -9,11 +9,11 @@ const TodoListEnhanced = withStatusHandler({
   isReady: ({ todos }) => !_isEmpty(todos)
 })(TodoList)
 
-const TodoView = ({
+const TodoListView = ({
   todos, todoToggle, todoDelete, todoAdd, getIsLoading,
   errorCloseById, getErrorsByReducer, getErrorsById
 }) => (
-  <div className="todo-list">
+  <div className="todo-list-container">
     <ErrorList
       errors={getErrorsByReducer('todo')}
       errorCloseById={errorCloseById}
@@ -29,7 +29,7 @@ const TodoView = ({
   </div>
 )
 
-TodoView.propTypes = {
+TodoListView.propTypes = {
   todos: todoShape,
   getErrorsByReducer: PropTypes.func,
   getErrorsById: PropTypes.func,
@@ -40,5 +40,5 @@ TodoView.propTypes = {
   todoDelete: PropTypes.func
 }
 
-export default TodoView
+export default TodoListView
 
