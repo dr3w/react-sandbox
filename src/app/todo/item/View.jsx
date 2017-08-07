@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { Link } from 'react-router-dom'
-import { todoShape } from 'common/store/shapes'
+import { todoShape } from 'common/shapes'
 import { TodoItem, ErrorList } from 'components'
 import withStatusHandler from 'hoc/withStatusHandler'
 

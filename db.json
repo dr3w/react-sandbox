@@ -12,12 +12,12 @@
     },
     {
       "id": 1501759248231,
-      "isDone": true,
+      "isDone": false,
       "text": "Do this"
     },
     {
       "id": 1501759252729,
-      "isDone": false,
+      "isDone": true,
       "text": "Hey!"
     }
   ]
