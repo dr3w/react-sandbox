@@ -17,13 +17,8 @@
     },
     {
       "id": 1501759252729,
-      "isDone": true,
-      "text": "Hey!"
-    },
-    {
-      "id": 1501759254313,
       "isDone": false,
-      "text": "ho!"
+      "text": "Hey!"
     }
   ]
 }
