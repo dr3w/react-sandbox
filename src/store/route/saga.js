@@ -7,17 +7,17 @@ import { takeLatest, put, select } from 'redux-saga/effects'
 
 import { getAllTodos } from 'store/todo/selectors'
 import ROUTE from 'store/route/actions'
-import * as appAC from 'store/app/AC'
-import * as todoAC from 'store/todo/AC'
-import * as errorAC from 'store/error/AC'
+import * as appActions from 'store/app/actions'
+import * as todoActions from 'store/todo/actions'
+import * as errorActions from 'store/error/actions'
 
 function* todoList({ params }) {
-  yield put(errorAC.errorClearAll())
-  yield put(appAC.setTodoType(params.type))
+  yield put(errorActions.errorClearAll())
+  yield put(appActions.setTodoType(params.type))
 
   const allTodos = yield select(getAllTodos)
 
-  if (_isEmpty(allTodos)) yield put(todoAC.fetchAllTodos())
+  if (_isEmpty(allTodos)) yield put(todoActions.fetchAllTodos())
 }
 
 function* routeSaga() {

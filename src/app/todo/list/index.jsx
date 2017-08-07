@@ -3,10 +3,9 @@ import isEmpty from 'lodash/isEmpty'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import withRouteHandler from 'hoc/withRouteHandler'
-import TODO from 'store/todo/actions'
-import * as routeAC from 'store/route/AC'
-import * as todoAC from 'store/todo/AC'
-import * as errorAC from 'store/error/AC'
+import TODO, * as todoActions from 'store/todo/actions'
+import * as routeActions from 'store/route/actions'
+import * as errorActions from 'store/error/actions'
 import { getTodosFilteredByType } from 'store/todo/selectors'
 import { getIsLoading } from 'store/loading/selectors'
 import { getErrorsByReducer, getErrorsByType, getErrorsById } from 'store/error/selectors'
@@ -24,13 +23,13 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-  initRoute: routeAC.todoList,
+  initRoute: routeActions.todoList,
 
-  todoAdd: todoAC.todoAdd,
-  todoToggle: todoAC.todoToggle,
-  todoDelete: todoAC.todoDelete,
+  todoAdd: todoActions.todoAdd,
+  todoToggle: todoActions.todoToggle,
+  todoDelete: todoActions.todoDelete,
 
-  errorCloseById: errorAC.errorCloseById
+  errorCloseById: errorActions.errorCloseById
 }
 
 const routeOnEnter = ({ initRoute, match }) => initRoute(match.params)
