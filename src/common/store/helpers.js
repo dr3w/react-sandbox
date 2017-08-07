@@ -1,12 +1,10 @@
-import _ from 'lodash'
-import { DefaultState } from 'common/store/defaults'
+import { OrderedMap } from 'immutable'
 
-export const normalizeResponseCollection = (payload) => {
-  const p = _.isArray(payload) ? payload : [payload]
+export const arrayToMap = (arr, Model) =>
+  arr.reduce((acc, entity) => acc.set(entity.id, new Model(entity)), new OrderedMap({}))
 
-  return p.reduce((acc, data) => {
-    acc[data.id || 0] = new DefaultState({ data })
+export const mapToArray = immutableMap => immutableMap.valueSeq().toArray()
 
-    return acc
-  }, {})
-}
+export const matchApiCall = (type, apiLifecycle) => type.split('/')[2] === apiLifecycle
+
+export const getReducerNameFromType = type => type.split('/')[0].toLowerCase()

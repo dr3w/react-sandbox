@@ -1,40 +1,30 @@
-import _ from 'lodash'
-import { actions, reducer } from 'store/todo'
-import { normalizeResponseCollection } from 'common/store/helpers'
+import { OrderedMap, Record } from 'immutable'
+import { arrayToMap } from 'common/store/helpers'
+import TODO from './actions'
 
-const { TODOS, TODOS_TOGGLE, TODOS_DELETE } = actions
+const TodoModel = Record({
+  id: null,
+  isDone: null,
+  text: null
+})
 
-const todoReducer = (state, action) => {
+const todoReducer = (state = OrderedMap({}), action) => {
   const { type, payload, meta } = action
 
-  const newState = reducer(state, action)
-
   switch (type) {
-    case TODOS.SET_TYPE:
-      return _(_.cloneDeep(newState))
-        .set(['meta', 'type'], meta.type)
-        .value()
+    case TODO.FETCH.API_SUCCEEDED:
+      return OrderedMap(arrayToMap(payload.reverse(), TodoModel))
 
-    case TODOS.FETCH_SUCCEEDED:
-      return _(_.cloneDeep(newState))
-        .set(['data'], normalizeResponseCollection(payload.reverse()))
-        .value()
+    case TODO.TOGGLE.API_SUCCEEDED:
+      return state
+        .setIn([meta.id, 'isDone'], meta.isDone)
 
-    case TODOS_TOGGLE.UPDATE_START:
-      return _(_.cloneDeep(newState))
-        .set(['data', meta.id, 'data', 'isDone'], meta.isDone)
-        .value()
-
-    case TODOS_DELETE.UPDATE_START: {
-      const temp = _.cloneDeep(newState)
-
-      delete temp.data[meta.id]
-
-      return temp
-    }
+    case TODO.DELETE.API_SUCCEEDED:
+      return state
+        .filter(value => value.get('id') !== meta.id)
 
     default:
-      return newState
+      return state
   }
 }
 

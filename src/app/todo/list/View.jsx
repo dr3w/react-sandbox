@@ -1,32 +1,43 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import _isEmpty from 'lodash/isEmpty'
 import { todoShape } from 'common/store/shapes'
-import { TodoList, TodoAdd, StatusDev } from 'components'
+import { TodoList, TodoAdd, ErrorList } from 'components'
 import withStatusHandler from 'hoc/withStatusHandler'
 
-const TodoListEnhanced = withStatusHandler(
-  { isReady: ({ todosStatus }) => todosStatus && todosStatus.isReady }
-)(TodoList)
+const TodoListEnhanced = withStatusHandler({
+  isReady: ({ todos }) => !_isEmpty(todos)
+})(TodoList)
 
-const TodoView = ({ todos, todosStatus, setIsDoneTodo, onTodoAdd, deleteTodo }) => (
+const TodoView = ({
+  todos, todoToggle, todoDelete, todoAdd, getIsLoading,
+  errorCloseById, getErrorsByReducer, getErrorsById
+}) => (
   <div className="todo-list">
-    <StatusDev status={todosStatus} />
-    <TodoAdd onSubmit={onTodoAdd} />
+    <ErrorList
+      errors={getErrorsByReducer('todo')}
+      errorCloseById={errorCloseById}
+    />
+    <TodoAdd onSubmit={todoAdd} />
     <TodoListEnhanced
+      getErrorsById={getErrorsById}
+      getIsLoading={getIsLoading}
       todos={todos}
-      todosStatus={todosStatus}
-      setIsDoneTodo={setIsDoneTodo}
-      deleteTodo={deleteTodo}
+      todoToggle={todoToggle}
+      todoDelete={todoDelete}
     />
   </div>
 )
 
 TodoView.propTypes = {
   todos: todoShape,
-  todosStatus: PropTypes.object,
-  setIsDoneTodo: PropTypes.func,
-  onTodoAdd: PropTypes.func,
-  deleteTodo: PropTypes.func
+  getErrorsByReducer: PropTypes.func,
+  getErrorsById: PropTypes.func,
+  errorCloseById: PropTypes.func,
+  getIsLoading: PropTypes.func,
+  todoAdd: PropTypes.func,
+  todoToggle: PropTypes.func,
+  todoDelete: PropTypes.func
 }
 
 export default TodoView

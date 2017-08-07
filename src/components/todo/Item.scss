@@ -38,9 +38,13 @@
     &.item-updating {
         pointer-events: none;
 
-        .item-text, .checkmark {
-            //color: #777 !important;
+        * {
+            opacity: .5 !important;
         }
+    }
+
+    &.item-error {
+        box-shadow: inset 0 0 0 1px rgba(191, 0, 0, 0.45);
     }
 }
 

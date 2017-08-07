@@ -1,48 +1,24 @@
-import { actions } from 'store/todo'
+import createApiActions from 'common/store/createApiActions'
 
-const { TODOS, TODOS_ADD, TODOS_TOGGLE, TODOS_DELETE } = actions
+const TODO = createApiActions('TODO', ['FETCH', 'TOGGLE', 'ADD', 'DELETE'])
 
-export const initListRoute = type => ({
-  type: TODOS.INIT_LIST_ROUTE,
-  meta: {
-    type
-  }
+TODO.SET_TYPE = 'TODO/SET_TYPE'
+
+export default TODO
+
+export const fetchAllTodos = () => ({
+  type: TODO.FETCH.API_REQUESTED
 })
 
-export const fetchTodos = () => ({
-  type: TODOS.FETCH_REQUESTED
+export const todoToggle = (id, isDone) => ({
+  type: TODO.TOGGLE.API_REQUESTED,
+  meta: { id, isDone }
 })
-
-export const resetStatus = id => ({
-  type: TODOS.RESET_STATUS,
+export const todoDelete = id => ({
+  type: TODO.DELETE.API_REQUESTED,
   meta: { id }
 })
-
-export const setTodoType = type => ({
-  type: TODOS.SET_TYPE,
-  meta: {
-    type
-  }
-})
-
-export const addTodo = data => ({
-  type: TODOS_ADD.UPDATE_REQUESTED,
-  meta: {
-    ...data
-  }
-})
-
-export const setIsDoneTodo = (id, isDone) => ({
-  type: TODOS_TOGGLE.UPDATE_REQUESTED,
-  meta: {
-    id,
-    isDone
-  }
-})
-
-export const deleteTodo = id => ({
-  type: TODOS_DELETE.UPDATE_REQUESTED,
-  meta: {
-    id
-  }
+export const todoAdd = todo => ({
+  type: TODO.ADD.API_REQUESTED,
+  meta: { ...todo }
 })

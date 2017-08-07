@@ -1,17 +1,16 @@
-import _ from 'lodash'
+import { getTodoType } from 'store/app/selectors'
 import { createSelector } from 'reselect'
 
-export const getTodosStatus = state => _.get(state, ['todo', 'status'])
-export const getTodos = state => _.get(state, ['todo', 'data'])
-export const getTodosType = state => _.get(state, ['todo', 'meta', 'type'])
+const getAllTodosMap = state => state.todo
+
+export const getAllTodos = state => getAllTodosMap(state).toJS()
 
 export const getTodosFilteredByType = createSelector(
-  getTodos,
-  getTodosType,
-  (todos, type) => todos && _.pickBy(todos, ({ data }) => (
-      type === 'all' ||
-      (type === 'done' && data.isDone) ||
-      (type === 'todo' && !data.isDone)
-    )
-  )
+  getAllTodosMap,
+  getTodoType,
+  (todos, type) => todos && todos.filter(todo => (
+    type === 'all' ||
+    (type === 'done' && todo.isDone) ||
+    (type === 'todo' && !todo.isDone)
+  )).toJS()
 )

@@ -1,34 +1,24 @@
 {
   "todos": [
     {
-      "id": 1500134080509,
-      "isDone": true,
-      "text": "Another"
-    },
-    {
-      "id": 1500551368550,
-      "isDone": false,
-      "text": "One"
-    },
-    {
-      "id": 1500551374246,
-      "isDone": false,
-      "text": "Two"
-    },
-    {
-      "id": 1500638022910,
-      "isDone": true,
-      "text": "Do this"
-    },
-    {
       "id": 1500890890179,
       "isDone": false,
       "text": "One more"
     },
     {
-      "id": 1500982082997,
+      "id": 1501587127764,
       "isDone": true,
-      "text": "Test"
+      "text": "And this"
+    },
+    {
+      "id": 1501759248231,
+      "isDone": true,
+      "text": "Do this"
+    },
+    {
+      "id": 1501759252729,
+      "isDone": false,
+      "text": "Hey!"
     }
   ]
 }
