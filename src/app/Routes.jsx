@@ -8,6 +8,7 @@ import { getErrorsByReducer, getErrorsByType, getErrorsById } from 'store/error/
 import * as errorActions from 'store/error/actions'
 import * as routeActions from 'store/route/actions'
 
+import RedirectContainer from 'app/Redirect'
 import TodoListContainer from 'app/todo/list'
 import TodoItemContainer from 'app/todo/item'
 
@@ -18,8 +19,9 @@ const mapStateToProps = state => ({
   getErrorsByReducer: getErrorsByReducer(state)
 })
 
-const createMapDispatchToProps = routeAction => ({
-  initRoute: routeAction,
+const createMapDispatchToProps = initRoute => ({
+  initRoute,
+  redirect: routeActions.redirect,
   errorCloseById: errorActions.errorCloseById
 })
 
@@ -32,11 +34,14 @@ const enhance = routeAction => compose(
 )
 
 const Routes = () => (
-  <Switch>
-    <Redirect exact path="/" to="/todos/all" />
-    <Route path="/todos/:type" component={enhance(routeActions.todoList)(TodoListContainer)} />
-    <Route path="/todo/:id" component={enhance(routeActions.todoItem)(TodoItemContainer)} />
-  </Switch>
+  <div>
+    <RedirectContainer />
+    <Switch>
+      <Redirect exact path="/" to="/todos/all" />
+      <Route path="/todos/:type" component={enhance(routeActions.todoList)(TodoListContainer)} />
+      <Route path="/todo/:id" component={enhance(routeActions.todoItem)(TodoItemContainer)} />
+    </Switch>
+  </div>
 )
 
 export default Routes

@@ -18,10 +18,10 @@ export default function* apiSaga({
   try {
     const payload = yield call(callAPI, ...args)
 
-    yield success(payload)
     yield put({ type: actions.API_SUCCEEDED, meta, payload })
+    yield success(payload)
   } catch (error) {
-    yield fail(error)
     yield put({ type: actions.API_FAILED, meta, error })
+    yield fail(error)
   }
 }

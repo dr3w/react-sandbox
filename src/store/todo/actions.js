@@ -14,10 +14,12 @@ export const todoToggle = (id, isDone) => ({
   type: TODO.TOGGLE.API_REQUESTED,
   meta: { id, isDone }
 })
-export const todoDelete = id => ({
+
+export const todoDelete = (id, redirectTo) => ({
   type: TODO.DELETE.API_REQUESTED,
-  meta: { id }
+  meta: { id, redirectTo }
 })
+
 export const todoAdd = todo => ({
   type: TODO.ADD.API_REQUESTED,
   meta: { ...todo }

@@ -14,12 +14,16 @@ const TodoListView = (props) => {
   const { todo } = props
 
   const todoToggle = () => props.todoToggle(todo.id, !todo.isDone)
-  const todoDelete = () => props.todoDelete(todo.id)
+  const todoDelete = () => props.todoDelete(todo.id, '/todos/all')
   const isLoading = props.getIsLoading('todo', todo.id)
   const isError = !!props.getErrorsById('todo', todo.id).length
 
+  const redirectShit = () => props.redirect('/todos/all')
+
   return (
     <div className="todo-item-container">
+      <button onClick={redirectShit}>REDIRECT</button>
+
       <ErrorList
         errors={props.getErrorsByReducer('todo')}
         errorCloseById={props.errorCloseById}

@@ -1,7 +1,8 @@
 import apiSaga from 'common/store/apiSaga'
-import { takeEvery } from 'redux-saga/effects'
+import { takeEvery, put } from 'redux-saga/effects'
 
 import TODO from 'store/todo/actions'
+import * as routeActions from 'store/route/actions'
 
 function* fetchAllTodos() {
   const args = ['todos']
@@ -51,7 +52,8 @@ function* todoDelete({ meta }) {
   yield apiSaga({
     args,
     meta,
-    actions: TODO.DELETE
+    actions: TODO.DELETE,
+    success: () => (meta.redirectTo ? put(routeActions.redirect(meta.redirectTo)) : null)
   })
 }
 
