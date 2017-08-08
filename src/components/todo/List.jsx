@@ -3,23 +3,22 @@ import PropTypes from 'prop-types'
 import _map from 'lodash/map'
 import { TodoItem } from 'components'
 
-const createTodoList = ({ todos, ...props }) => todos && _map(todos, (todo) => {
-  const todoToggle = () => props.todoToggle(todo.id, !todo.isDone)
-  const todoDelete = () => props.todoDelete(todo.id)
-  const isLoading = props.getIsLoading('todo', todo.id)
-  const isError = !!props.getErrorsById('todo', todo.id).length
-
-  return (
-    <TodoItem
-      key={todo.id}
-      item={todo}
-      isError={isError}
-      isLoading={isLoading}
-      todoToggle={todoToggle}
-      todoDelete={todoDelete}
-    />
-  )
-})
+const createTodoList = ({
+  todos, getIsLoading, getErrorsById, todoToggle, todoDelete, isView, redirectTo
+}) =>
+  todos && _map(todos, todo => (
+    <li className="list-group-item" key={todo.id}>
+      <TodoItem
+        todo={todo}
+        getIsLoading={getIsLoading}
+        getErrorsById={getErrorsById}
+        todoToggle={todoToggle}
+        todoDelete={todoDelete}
+        isView={isView}
+        redirectTo={redirectTo}
+      />
+    </li>
+  ))
 
 const TodoList = (props) => {
   const isLoading = props.getIsLoading('todo')
@@ -35,6 +34,8 @@ const TodoList = (props) => {
 
 TodoList.propTypes = {
   todos: PropTypes.object,
+  isView: PropTypes.bool,
+  redirectTo: PropTypes.string,
   getIsLoading: PropTypes.func,
   getErrorsById: PropTypes.func,
   todoToggle: PropTypes.func,

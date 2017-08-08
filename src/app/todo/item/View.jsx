@@ -3,48 +3,45 @@ import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { Link } from 'react-router-dom'
 import { todoShape } from 'common/shapes'
-import { TodoItem, ErrorList } from 'components'
+import { TodoList, ErrorList } from 'components'
 import withStatusHandler from 'hoc/withStatusHandler'
 
-const TodoItemEnhanced = withStatusHandler({
-  isReady: ({ item }) => !_isEmpty(item)
-})(TodoItem)
+const TodoListEnhanced = withStatusHandler({
+  isReady: ({ todos }) => !_isEmpty(todos)
+})(TodoList)
 
 const TodoListView = (props) => {
-  const { todo } = props
-
-  const todoToggle = () => props.todoToggle(todo.id, !todo.isDone)
-  const todoDelete = () => props.todoDelete(todo.id, '/todos/all')
-  const isLoading = props.getIsLoading('todo', todo.id)
-  const isError = !!props.getErrorsById('todo', todo.id).length
-
-  const redirectShit = () => props.redirect('/todos/all')
+  const {
+    todos, getIsLoading, getErrorsById, getErrorsByReducer,
+    errorCloseById, todoToggle, todoDelete
+  } = props
 
   return (
     <div className="todo-item-container">
-      <button onClick={redirectShit}>REDIRECT</button>
-
       <ErrorList
-        errors={props.getErrorsByReducer('todo')}
-        errorCloseById={props.errorCloseById}
+        errors={getErrorsByReducer('todo')}
+        errorCloseById={errorCloseById}
       />
 
       <Link to="/todos/all" className="todo-btn-back btn btn-default">Back</Link>
 
-      <TodoItemEnhanced
-        key={todo.id}
-        item={todo}
-        isError={isError}
-        isLoading={isLoading}
+      <TodoListEnhanced
+        todos={todos}
+        getErrorsById={getErrorsById}
+        getIsLoading={getIsLoading}
         todoToggle={todoToggle}
         todoDelete={todoDelete}
+        redirectTo="/todos/all"
+        isView
       />
     </div>
   )
 }
 
 TodoListView.propTypes = {
-  todo: todoShape,
+  todos: todoShape,
+  isView: PropTypes.bool,
+  redirectTo: PropTypes.string,
   getErrorsById: PropTypes.func,
   getErrorsByReducer: PropTypes.func,
   errorCloseById: PropTypes.func,

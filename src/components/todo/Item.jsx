@@ -3,13 +3,28 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import withToggle from 'hoc/withToggle'
 
-const TodoItem = ({ todoToggle, todoDelete, item, show, hide, toggledOn, isLoading, isError }) => {
-  const liClassName = ['list-group-item', 'todo-list-item']
+const TodoItem = (props) => {
+  const { redirectTo, todo, show, hide, toggledOn, isView } = props
+
+  const todoToggle = () => props.todoToggle(todo.id, !todo.isDone)
+  const todoDelete = () => props.todoDelete(todo.id, redirectTo)
+  const isLoading = props.getIsLoading('todo', todo.id)
+  const isError = !!props.getErrorsById('todo', todo.id).length
+
+  const liClassName = ['todo-list-item']
   if (isLoading) liClassName.push('item-updating')
   if (isError) liClassName.push('item-error')
 
+  const viewLink = !isView &&
+    <Link
+      className={`btn btn-xs btn-primary ${toggledOn ? '' : 'hidden'}`}
+      to={`/todo/${todo.id}`}
+    >
+      VIEW
+    </Link>
+
   return (
-    <li
+    <div
       className={liClassName.join(' ')}
       onMouseEnter={show}
       onMouseLeave={hide}
@@ -20,31 +35,29 @@ const TodoItem = ({ todoToggle, todoDelete, item, show, hide, toggledOn, isLoadi
       >
         DELETE
       </button>
-      <Link
-        className={`btn btn-xs btn-primary ${toggledOn ? '' : 'hidden'}`}
-        to={`/todo/${item.id}`}
-      >
-        VIEW
-      </Link>
+
+      {viewLink}
 
       <div
-        htmlFor={item.id}
+        htmlFor={todo.id}
         className="item-label clickable"
         onClick={!isLoading && todoToggle}
       >
-        <div className={`glyphicon checkmark ${item.isDone ? 'glyphicon-check' : 'glyphicon-unchecked'}`} />
+        <div className={`glyphicon checkmark ${todo.isDone ? 'glyphicon-check' : 'glyphicon-unchecked'}`} />
         <div className="item-text">
-          {item.text}
+          {todo.text}
         </div>
       </div>
-    </li>
+    </div>
   )
 }
 
 TodoItem.propTypes = {
-  item: PropTypes.object,
-  isError: PropTypes.bool,
-  isLoading: PropTypes.bool,
+  todo: PropTypes.object,
+  isView: PropTypes.bool,
+  redirectTo: PropTypes.string,
+  getErrorsById: PropTypes.func,
+  getIsLoading: PropTypes.func,
   todoToggle: PropTypes.func,
   todoDelete: PropTypes.func,
   show: PropTypes.func,

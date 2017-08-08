@@ -11,6 +11,11 @@ export const getTodoById = createSelector(
   getCurrentTodoId,
   (todos, id) => todos.get(id, Map()).toJS()
 )
+export const getTodosFilteredById = createSelector(
+  getAllTodosMap,
+  getCurrentTodoId,
+  (todos, id) => todos.filter(todo => todo.id === id).toJS()
+)
 
 export const getTodosFilteredByType = createSelector(
   getAllTodosMap,

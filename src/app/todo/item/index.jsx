@@ -4,14 +4,14 @@ import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import withStatusHandler from 'hoc/withStatusHandler'
 import TODO, * as todoActions from 'store/todo/actions'
-import { getTodoById } from 'store/todo/selectors'
+import { getTodosFilteredById } from 'store/todo/selectors'
 import { routeContainerShape } from 'common/shapes'
 import TodoItemView from 'app/todo/item/View'
 
 const TodoItemContainer = props => <TodoItemView {...props} />
 
 const mapStateToProps = state => ({
-  todo: getTodoById(state)
+  todos: getTodosFilteredById(state)
 })
 
 const mapDispatchToProps = {
@@ -20,7 +20,7 @@ const mapDispatchToProps = {
   todoDelete: todoActions.todoDelete
 }
 
-const isReady = ({ todo }) => !_isEmpty(todo)
+const isReady = ({ todos }) => !_isEmpty(todos)
 const errorMessage = (props) => {
   const errors = props.getErrorsByType('todo', TODO.FETCH.API_FAILED) || []
 
